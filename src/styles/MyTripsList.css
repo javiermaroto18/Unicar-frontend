@@ -1,0 +1,31 @@
+.my-trips-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.my-trips-list-load-more {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem 0 2rem;
+}
+
+.my-trips-list-load-more-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    font-family: var(--font);
+    color: var(--color-text-muted);
+    transition: color 0.2s;
+}
+
+.my-trips-list-load-more-btn:hover {
+    color: var(--color-primary);
+}
+
+.my-trips-list-load-more-btn .material-symbols-outlined {
+    font-size: 1.25rem;
+}
