@@ -140,13 +140,13 @@
 }
 
 .trip-card-route-place {
-    font-size: 0.8125rem;
+    font-size: 0.7125rem;
     font-weight: 600;
     color: var(--color-text);
 }
 
 .trip-card-route-place-dest {
-    color: var(--color-primary);
+    color: white;
 }
 
 .trip-card-route-more-icon {
@@ -228,7 +228,7 @@
     font-weight: 700;
     font-size: 0.875rem;
     font-family: var(--font);
-    border-radius: var(--radius-md);
+    border-radius: 0.35rem;
     box-shadow: 0 4px 12px rgba(19, 127, 236, 0.2);
     transition: background-color 0.2s, transform 0.2s;
 }

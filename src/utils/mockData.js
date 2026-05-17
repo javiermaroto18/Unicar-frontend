@@ -46,6 +46,20 @@ export const MOCK_TRIPS = [
         seatsTotal: 4,
         seatsAvailable: 3,
     },
+    {
+        id: 4,
+        driver: {
+            name: 'Javier Carrasco',
+            avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDNppfoamjoG39ViLdkUNEjkNibvg1JUPk0ghpPQTEXzkvHZiRy9LPKEPteOMplCfSU9V_5o9PY_wAuR5exUaEndmyFx0k3GfucIwFJKo05eCHHC6FVggw0cnKx2ANBPvvYnS5YBgq_GeniDPvwB5LV4zQb5YyXmfWOwD65hJmhVhQ3P5lA78gh_pZI7tZiNJT2bl0da49yFYQApDRqRhXtzfogDjkBfb2ctanq7nacs3eYkxW58i1BGk1JFVT9ErYxDWOUYVA2m8I',
+            rating: 4.7,
+            faculty: 'E.T.S. Ingenieros Informático',
+        },
+        origin:      { place: 'Campus Sur',  time: '7:00' },
+        destination: { place: 'CC City Center', time: '8:15' },
+        price: '3,00',
+        seatsTotal: 4,
+        seatsAvailable: 3,
+    },
 ];
 
 export const MOCK_MY_TRIPS = [

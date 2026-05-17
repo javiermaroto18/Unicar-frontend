@@ -16,7 +16,9 @@ export default function TripCard({ trip, onReserve }) {
                             alt={driver.name}
                         />
                         <div>
-                            <h4 className="trip-card-driver-name">{driver.name}</h4>
+                            <h4 className="trip-card-driver-name"
+                                style={{ fontFamily: 'Be Vietnam Pro, sans-serif', fontWeight: 500 }} 
+                            >{driver.name}</h4>
                             <div className="trip-card-driver-rating">
                                 <span className="material-symbols-outlined filled-icon trip-card-driver-star">
                                     star
@@ -27,7 +29,13 @@ export default function TripCard({ trip, onReserve }) {
                     </div>
                 </div>
 
-                <div className="trip-card-verified-badge">
+                <div className="trip-card-verified-badge"  
+                    style={{ 
+                        paddingTop: '0.5rem', 
+                        paddingBottom: '0.5rem',
+                        marginBottom: '1rem',
+                     }}
+                >
                     Conductor verificado (carnet validado) | {driver.faculty}
                 </div>
 
@@ -41,7 +49,11 @@ export default function TripCard({ trip, onReserve }) {
                         <div className="trip-card-route-stop">
                             <div>
                                 <p className="trip-card-route-time">Salida {origin.time}</p>
-                                <p className="trip-card-route-place">{origin.place}</p>
+                                <p className="trip-card-route-place" 
+                                    style={{ fontFamily: 'Be Vietnam Pro, sans-serif', fontWeight: 200 }}
+                                >
+                                    {origin.place}
+                                </p>
                             </div>
                             <span className="material-symbols-outlined trip-card-route-more-icon">
                                 more_vert
@@ -50,7 +62,9 @@ export default function TripCard({ trip, onReserve }) {
                         <div className="trip-card-route-stop">
                             <div>
                                 <p className="trip-card-route-time">Llegada {destination.time}</p>
-                                <p className="trip-card-route-place trip-card-route-place-dest">
+                                <p className="trip-card-route-place trip-card-route-place-dest" 
+                                    style={{ fontFamily: 'Be Vietnam Pro, sans-serif', fontWeight: 500 }}
+                                >
                                     {destination.place}
                                 </p>
                             </div>
@@ -63,7 +77,9 @@ export default function TripCard({ trip, onReserve }) {
                         <span className="trip-card-price-label">Precio</span>
                         <div className="trip-card-price-value">
                             {price}€{' '}
-                            <span className="trip-card-price-unit">Por plaza</span>
+                            <span className="trip-card-price-unit" style={{ marginLeft: '0.25rem'}}>
+                                Por plaza
+                            </span>
                         </div>
                     </div>
 
@@ -87,7 +103,8 @@ export default function TripCard({ trip, onReserve }) {
             <div className="trip-card-footer">
                 <button
                     className="trip-card-reserve-btn"
-                    onClick={() => onReserve?.(trip)}
+                    onClick={() => onReserve?.(trip)} 
+                    style={{ fontFamily: 'Be Vietnam Pro, sans-serif', fontWeight: 500 }}
                 >
                     Reservar plaza
                 </button>

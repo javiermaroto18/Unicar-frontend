@@ -6,7 +6,11 @@ export default function TripFilters({ activeTab, onTabChange, onFilterOpen }) {
     return (
         <div className="trip-filters">
             <div className="trip-filters-heading">
-                <h2 className="trip-filters-title">Encuentra tu próximo viaje</h2>
+                <h2 className="trip-filters-title"
+                    style={{ fontFamily: 'Be Vietnam Pro, sans-serif', fontWeight: 700, fontSize: '1.85rem' }}
+                >
+                    Encuentra tu próximo viaje
+                </h2>
                 <p className="trip-filters-subtitle">Explora las rutas disponibles para hoy</p>
             </div>
 

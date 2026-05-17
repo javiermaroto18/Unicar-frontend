@@ -1,0 +1,71 @@
+// Añadir al final de mockData.js
+
+export const MOCK_CONVERSACIONES = [
+    {
+        id: 1,
+        nombre:    'Carlos R.',
+        avatar:    'https://lh3.googleusercontent.com/aida-public/AB6AXuAHGn6NZF77LeiIXM-y8UD7dFnN4pE6zXSbmc2lHwF081s49F1pkLLMf6bFMwrxuLdbAW1rhRiF0iJ4L-SXovAdlqmZMZltDZPcQeYJ_bOwRpulajA3pybRwqvLLoC4ZGGKaCkZH3OeqLFrgzwmacg5BZOwT5POuTgG_jBrW167_On4lV6eBoM3Rl6A637mmidf0xT0OjmBhPRy0-lSlKErABnod5MQN7v4uaNAck_289OtcnAi5zDAJh8ir7WzBZ4K3t4Af0Rprqc',
+        hora:      '10:42',
+        preview:   'Perfecto, nos vemos allí 👍',
+        noLeidos:  2,
+        conectado: true,
+        esGrupo:   false,
+        viaje: {
+            descripcion: 'Viaje del 21 de mayo · Campus Norte → Facultad de Medicina · 10:00',
+        },
+        mensajes: [
+            { id: 1, tipo: 'separador', etiqueta: 'Ayer' },
+            { id: 2, tipo: 'entrante',  texto: 'Hola! Confirmo el viaje de mañana. Salimos puntual a las 10:00 desde la parada principal de Campus Norte.', hora: '09:15', leido: true },
+            { id: 3, tipo: 'saliente',  texto: 'Perfecto, estaré allí. ¿Hay algún problema con llevar una mochila grande?', hora: '09:22', leido: true },
+            { id: 4, tipo: 'entrante',  texto: 'Sin problema, tengo maletero libre 👍', hora: '09:30', leido: true },
+            { id: 5, tipo: 'separador', etiqueta: 'Hoy' },
+            { id: 6, tipo: 'saliente',  texto: 'Buenos días! Confirmo que bajo en 10 minutos', hora: '09:51', leido: true },
+            { id: 7, tipo: 'entrante',  texto: 'Perfecto, nos vemos allí 👍', hora: '10:42', leido: true },
+        ],
+    },
+    {
+        id: 2,
+        nombre:    'Maria G.',
+        avatar:    'https://lh3.googleusercontent.com/aida-public/AB6AXuDB0n_uV8hBUWIRtUeC5zuR2HCyry-w-p4S7enBMuE2c-QtUEsUT2NXBH9UQcBNZrCKhrgU0FZswl9WC_rGuEn-DRXDcJAZwwRo9lVLzOYd_BHgPOEOGD3qr4WwaiUEaLTZXlCRy1phxcTpTXIVKSUAo1L_er-9ygMqfC9_U8yQ5YKGwhVj7HPFb3ZQuzrbBgcBuOiHczlO_SfJ0bMWsb_IneFWatiM3aop5rR4s6yy_eufAHcxvZTpebJDlXjx73pKjOvgapDt8Lo',
+        hora:      'Ayer',
+        preview:   '¿A qué hora sales mañana?',
+        noLeidos:  0,
+        conectado: false,
+        esGrupo:   false,
+        viaje:     null,
+        mensajes: [
+            { id: 1, tipo: 'separador', etiqueta: 'Ayer' },
+            { id: 2, tipo: 'entrante',  texto: '¿A qué hora sales mañana?', hora: '18:30', leido: true },
+        ],
+    },
+    {
+        id: 3,
+        nombre:    'Viaje · Lun 20 May',
+        avatar:    null,
+        hora:      'Lun',
+        preview:   'Carlos R.: Salgo en 5 min',
+        noLeidos:  0,
+        conectado: false,
+        esGrupo:   true,
+        viaje:     null,
+        mensajes: [
+            { id: 1, tipo: 'separador', etiqueta: 'Lunes' },
+            { id: 2, tipo: 'entrante',  texto: 'Salgo en 5 min', hora: '09:55', leido: true },
+        ],
+    },
+    {
+        id: 4,
+        nombre:    'Lucía P.',
+        avatar:    'https://lh3.googleusercontent.com/aida-public/AB6AXuC-9NXFua9IgJqGwHkKaHHHYJLyao7q2cO0sCrYjOBtq9UR6xynyTNGKL7FgpmimUQGxFAC7h2ABXyzhCNRuxzV7TzGRl-2N_X46fIwgZ_HPCeajCt97fHwYNPi5uTMRpEv3lWVep4i8LveM_awjABr4YB9h0Z9mwD8g30BAHMOK8lGHJkbQZFUFq2B-NSCZlbCJKEC6PlnKLV76rc5s-lVSVcaO_tpAGP8ttCBBn9LcLX_eAzAkIfamZZ2IqgOUEyYZ0PFMhnncbQ',
+        hora:      'Dom',
+        preview:   'Muchas gracias!',
+        noLeidos:  0,
+        conectado: false,
+        esGrupo:   false,
+        viaje:     null,
+        mensajes: [
+            { id: 1, tipo: 'separador', etiqueta: 'Domingo' },
+            { id: 2, tipo: 'entrante',  texto: 'Muchas gracias!', hora: '14:10', leido: true },
+        ],
+    },
+];

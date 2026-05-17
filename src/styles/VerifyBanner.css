@@ -49,9 +49,9 @@
     align-items: center;
     padding: 0.5rem 1.25rem;
     background-color: var(--color-amber);
-    color: #000000;
+    color: white;
     font-size: 0.8125rem;
-    font-weight: 700;
+    font-weight: 500;
     border-radius: var(--radius-md);
     white-space: nowrap;
     flex-shrink: 0;
@@ -60,4 +60,6 @@
 
 .verify-banner-cta:hover {
     opacity: 0.85;
+    font-weight: 700;
+    color: #000000;
 }

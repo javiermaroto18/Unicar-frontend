@@ -1,0 +1,176 @@
+.profile-nav {
+    width: 240px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    padding: 1.25rem 0.75rem;
+    border-right: 1px solid var(--color-border);
+    background-color: #131f2b;
+    overflow-y: auto;
+}
+
+.profile-nav-usuario {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.5rem 1rem;
+}
+
+.profile-nav-avatar-contenedor {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.profile-nav-avatar {
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 2px solid var(--color-border);
+}
+
+.profile-nav-verificado-insignia {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    background-color: var(--color-primary);
+    border-radius: var(--radius-full);
+    width: 1.1rem;
+    height: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--color-bg);
+}
+
+.profile-nav-verificado-insignia .material-symbols-outlined {
+    font-size: 0.6rem;
+    color: #ffffff;
+    font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 20;
+}
+
+.profile-nav-nombre {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--color-text);
+    line-height: 1.2;
+}
+
+.profile-nav-email {
+    font-size: 0.7rem;
+    color: var(--color-text-dim);
+    margin-top: 0.1rem;
+}
+
+.profile-nav-puntuacion {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.5rem 0.75rem;
+}
+
+.profile-nav-estrellas {
+    display: flex;
+    gap: 0.1rem;
+}
+
+.pn-star {
+    font-size: 0.9rem;
+}
+
+.pn-star--full {
+    color: var(--color-amber);
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+.pn-star--half {
+    color: var(--color-amber);
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+}
+
+.profile-nav-valor-puntuacion {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.profile-nav-cantidad-viajes {
+    font-weight: 400;
+    color: var(--color-text-dim);
+    font-size: 0.7rem;
+}
+
+.profile-nav-separador {
+    height: 1px;
+    background-color: var(--color-border);
+    margin: 0.5rem 0.25rem;
+}
+
+.profile-nav-etiqueta-seccion {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-dim);
+    padding: 0.625rem 0.75rem 0.25rem;
+}
+
+.pnav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    font-family: var(--font);
+    color: var(--color-text-muted);
+    text-align: left;
+    transition: background-color 0.15s, color 0.15s;
+    position: relative;
+}
+
+.pnav-item .material-symbols-outlined {
+    font-size: 1.125rem;
+    flex-shrink: 0;
+}
+
+.pnav-item:hover {
+    background-color: var(--color-hover);
+    color: var(--color-text);
+}
+
+.pnav-item--active {
+    background-color: rgba(19, 127, 236, 0.1);
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.pnav-item--danger {
+    color: #f87171;
+    margin-top: 0.25rem;
+}
+
+.pnav-item--danger:hover {
+    background-color: rgba(248, 113, 113, 0.08);
+    color: #ef4444;
+}
+
+.pnav-item-insignia {
+    margin-left: auto;
+    font-size: 0.625rem;
+    font-weight: 900;
+    border-radius: var(--radius-full);
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.pnav-item-insignia--advertencia {
+    background-color: var(--color-amber);
+    color: #000;
+}

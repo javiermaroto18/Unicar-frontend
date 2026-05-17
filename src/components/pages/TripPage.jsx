@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
-import AppLayout                from '../common/AppLayout.jsx';
-import PageHeader               from '../common/PageHeader.jsx';
-import MyTripsSegmentedControl  from '../trips/MyTripsSegmentedControl.jsx';
-import MyTripsList              from '../trips/MyTripsList.jsx';
+import AppLayout from '../common/AppLayout.jsx';
+import PageHeader from '../common/PageHeader.jsx';
+import MyTripsSegmentedControl from '../trips/MyTripsSegmentedControl.jsx';
+import MyTripsList from '../trips/MyTripsList.jsx';
 
 import { MOCK_USER, MOCK_MY_TRIPS } from '../../utils/mockData.js';
 
