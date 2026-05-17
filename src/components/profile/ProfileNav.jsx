@@ -1,3 +1,5 @@
+import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 import '../../styles/ProfileNav.css';
 
 const NAV_SECTIONS = [
@@ -38,15 +40,35 @@ function StarRating({ score }) {
     );
 }
 
-export default function ProfileNav({ user, activeSection, onSectionChange, onLogout }) {
+export default function ProfileNav({ activeSection, onSectionChange }) {
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
+
+    // Protección extra: si no hay usuario (está cargando), no renderizamos
+    if (!user) return null;
+
+    const handleLogout = async () => {
+        await logout();
+        navigate('/auth');
+    };
+
     return (
         <nav className="profile-nav">
             <div className="profile-nav-usuario">
                 <div className="profile-nav-avatar-contenedor">
-                    <img className="profile-nav-avatar" src={user.avatar} alt={user.name} />
-                    <div className="profile-nav-verificado-insignia" title="Verificado">
-                        <span className="material-symbols-outlined">verified</span>
-                    </div>
+                    {/* Le pasamos el avatar real o el fallback de CSS */}
+                    {user.avatar ? (
+                        <img className="profile-nav-avatar" src={user.avatar} alt={user.name} />
+                    ) : (
+                         <span className="material-symbols-outlined profile-nav-avatar" style={{display:'flex', alignItems:'center', justifyContent:'center', background:'#374151', color:'white'}}>person</span>
+                    )}
+                    
+                    {/* Solo mostramos la insignia si está verificado en base de datos */}
+                    {user.is_verified_driver ? (
+                        <div className="profile-nav-verificado-insignia" title="Conductor Verificado">
+                            <span className="material-symbols-outlined">verified</span>
+                        </div>
+                    ) : null}
                 </div>
                 <div>
                     <p className="profile-nav-nombre">{user.name}</p>
@@ -54,11 +76,11 @@ export default function ProfileNav({ user, activeSection, onSectionChange, onLog
                 </div>
             </div>
 
+            {/* Dejamos las estrellas hardcodeadas por ahora hasta tener base de datos de reviews */}
             <div className="profile-nav-puntuacion">
-                <StarRating score={user.rating} />
+                <StarRating score={4.8} />
                 <span className="profile-nav-valor-puntuacion">
-                    {user.rating}{' '}
-                    <span className="profile-nav-cantidad-viajes">({user.tripCount} viajes)</span>
+                    4.8 <span className="profile-nav-cantidad-viajes">(12 viajes)</span>
                 </span>
             </div>
 
@@ -75,7 +97,8 @@ export default function ProfileNav({ user, activeSection, onSectionChange, onLog
                         >
                             <span className="material-symbols-outlined">{icon}</span>
                             {itemLabel}
-                            {warn && <span className="pnav-item-insignia pnav-item-insignia--advertencia">!</span>}
+                            {/* Ocultamos el warning si ya está verificado */}
+                            {warn && user.is_verified_driver === 0 && <span className="pnav-item-insignia pnav-item-insignia--advertencia">!</span>}
                         </button>
                     ))}
                 </div>
@@ -83,7 +106,7 @@ export default function ProfileNav({ user, activeSection, onSectionChange, onLog
 
             <div className="profile-nav-separador" />
 
-            <button className="pnav-item pnav-item--danger" onClick={onLogout}>
+            <button className="pnav-item pnav-item--danger" onClick={handleLogout}>
                 <span className="material-symbols-outlined">logout</span>
                 Cerrar sesión
             </button>

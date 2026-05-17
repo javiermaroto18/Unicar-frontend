@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import '../../styles/VerifyBanner.css';
 import { useState, startTransition } from 'react';
 
@@ -18,9 +19,9 @@ export default function VerifyBanner({ onVerify }) {
                     </p>
                 </div>
             </div>
-            <a className="verify-banner-cta" href="/profile?section=verification">
+            <Link className="verify-banner-cta" to="/profile?section=verification">
                 Verificar ahora
-            </a>
+            </Link>
         </div>
     );
 }

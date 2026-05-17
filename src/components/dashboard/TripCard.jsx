@@ -1,8 +1,18 @@
 import '../../styles/TripCard.css';
 
 export default function TripCard({ trip, onReserve }) {
-    const { driver, origin, destination, price } = trip;
-    const takenSeats = trip.seatsTotal - trip.seatsAvailable;
+    // Valores seguros por defecto en caso de que falten datos de la BD
+    const driver = trip.driver || {};
+    const origin = trip.origin || {};
+    const destination = trip.destination || {};
+    
+    // Aseguramos que sea un número y le damos formato decimal
+    const priceValue = Number(trip.price || 0).toFixed(2);
+    
+    // Cálculos de asientos seguros contra NaN
+    const seatsTotal = trip.seatsTotal || 0;
+    const seatsAvailable = trip.seatsAvailable !== undefined ? trip.seatsAvailable : seatsTotal;
+    const takenSeats = Math.max(0, seatsTotal - seatsAvailable);
 
     return (
         <div className="trip-card">
@@ -10,20 +20,22 @@ export default function TripCard({ trip, onReserve }) {
 
                 <div className="trip-card-driver">
                     <div className="trip-card-driver-info">
-                        <img
-                            className="trip-card-driver-avatar"
-                            src={driver.avatar}
-                            alt={driver.name}
-                        />
+                        {driver.avatar ? (
+                            <img className="trip-card-driver-avatar" src={driver.avatar} alt={driver.name || 'Conductor'} />
+                        ) : (
+                            <span className="material-symbols-outlined trip-card-driver-avatar" style={{display:'flex', alignItems:'center', justifyContent:'center', background:'#374151', color:'white'}}>
+                                person
+                            </span>
+                        )}
                         <div>
                             <h4 className="trip-card-driver-name"
                                 style={{ fontFamily: 'Be Vietnam Pro, sans-serif', fontWeight: 500 }} 
-                            >{driver.name}</h4>
+                            >{driver.name || 'Conductor'}</h4>
                             <div className="trip-card-driver-rating">
                                 <span className="material-symbols-outlined filled-icon trip-card-driver-star">
                                     star
                                 </span>
-                                <span className="trip-card-driver-score">{driver.rating}</span>
+                                <span className="trip-card-driver-score">{driver.rating || 'Nuevo'}</span>
                             </div>
                         </div>
                     </div>
@@ -36,7 +48,7 @@ export default function TripCard({ trip, onReserve }) {
                         marginBottom: '1rem',
                      }}
                 >
-                    Conductor verificado (carnet validado) | {driver.faculty}
+                    Conductor verificado (carnet validado) {driver.faculty ? `| ${driver.faculty}` : ''}
                 </div>
 
                 <div className="trip-card-route">
@@ -48,11 +60,11 @@ export default function TripCard({ trip, onReserve }) {
                     <div className="trip-card-route-stops">
                         <div className="trip-card-route-stop">
                             <div>
-                                <p className="trip-card-route-time">Salida {origin.time}</p>
+                                <p className="trip-card-route-time">Salida {origin.time || '--:--'}</p>
                                 <p className="trip-card-route-place" 
                                     style={{ fontFamily: 'Be Vietnam Pro, sans-serif', fontWeight: 200 }}
                                 >
-                                    {origin.place}
+                                    {origin.place || 'Ubicación desconocida'}
                                 </p>
                             </div>
                             <span className="material-symbols-outlined trip-card-route-more-icon">
@@ -61,11 +73,11 @@ export default function TripCard({ trip, onReserve }) {
                         </div>
                         <div className="trip-card-route-stop">
                             <div>
-                                <p className="trip-card-route-time">Llegada {destination.time}</p>
+                                <p className="trip-card-route-time">Llegada {destination.time || '--:--'}</p>
                                 <p className="trip-card-route-place trip-card-route-place-dest" 
                                     style={{ fontFamily: 'Be Vietnam Pro, sans-serif', fontWeight: 500 }}
                                 >
-                                    {destination.place}
+                                    {destination.place || 'Ubicación desconocida'}
                                 </p>
                             </div>
                         </div>
@@ -76,7 +88,7 @@ export default function TripCard({ trip, onReserve }) {
                     <div>
                         <span className="trip-card-price-label">Precio</span>
                         <div className="trip-card-price-value">
-                            {price}€{' '}
+                            {priceValue}€{' '}
                             <span className="trip-card-price-unit" style={{ marginLeft: '0.25rem'}}>
                                 Por plaza
                             </span>
@@ -85,7 +97,7 @@ export default function TripCard({ trip, onReserve }) {
 
                     <div className="trip-card-seats">
                         <div className="trip-card-seats-bar">
-                            {Array.from({ length: trip.seatsTotal }).map((_, i) => (
+                            {Array.from({ length: seatsTotal }).map((_, i) => (
                                 <div
                                     key={i}
                                     className={`trip-card-seats-dot${i < takenSeats ? ' trip-card-seats-dot-taken' : ''}`}
@@ -93,7 +105,7 @@ export default function TripCard({ trip, onReserve }) {
                             ))}
                         </div>
                         <span className="trip-card-seats-label">
-                            {trip.seatsAvailable} {trip.seatsAvailable === 1 ? 'plaza libre' : 'plazas libres'}
+                            {seatsAvailable} {seatsAvailable === 1 ? 'plaza libre' : 'plazas libres'}
                         </span>
                     </div>
                 </div>

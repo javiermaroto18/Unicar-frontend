@@ -1,7 +1,7 @@
 import '../../styles/MyTripsList.css';
 import MyTripCard from './MyTripCard.jsx';
 
-export default function MyTripsList({ trips, onLoadMore, onViewTicket, onViewDetails }) {
+export default function MyTripsList({ trips, onLoadMore, onViewTicket, onViewDetails, isDriver }) {
     return (
         <>
             <div className="my-trips-list">
@@ -11,6 +11,7 @@ export default function MyTripsList({ trips, onLoadMore, onViewTicket, onViewDet
                         trip={trip}
                         onViewTicket={onViewTicket}
                         onViewDetails={onViewDetails}
+                        isDriver={isDriver}
                     />
                 ))}
             </div>

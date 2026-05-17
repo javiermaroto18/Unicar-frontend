@@ -1,6 +1,6 @@
 import '../../styles/MyTripCard.css';
 
-export default function MyTripCard({ trip, onViewTicket, onViewDetails }) {
+export default function MyTripCard({ trip, onViewTicket, onViewDetails, isDriver }) {
     const isUpcoming = trip.status === 'upcoming';
 
     return (
@@ -46,11 +46,11 @@ export default function MyTripCard({ trip, onViewTicket, onViewDetails }) {
                 <div className="my-trip-card-driver">
                     <div
                         className="my-trip-card-driver-avatar"
-                        style={{ backgroundImage: `url('${trip.driver.avatar}')` }}
+                        style={{ backgroundImage: `url('${trip.driver?.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(trip.driver?.name || 'C')}')` }}
                     />
                     <div>
-                        <span className="my-trip-card-driver-label">Conductor</span>
-                        <span className="my-trip-card-driver-name">{trip.driver.name}</span>
+                        <span className="my-trip-card-driver-label">{isDriver ? 'Tú eres el' : 'Conductor'}</span>
+                        <span className="my-trip-card-driver-name">{isDriver ? 'Conductor' : trip.driver?.name}</span>
                     </div>
                 </div>
 
@@ -58,10 +58,19 @@ export default function MyTripCard({ trip, onViewTicket, onViewDetails }) {
                     <span className={`my-trip-card-price-${isUpcoming ? 'upcoming' : 'completed'}`}>
                         {trip.price}€
                     </span>
-                    {isUpcoming
-                        ? <button className="my-trip-card-btn-ticket" onClick={() => onViewTicket?.(trip)}>Ver billete</button>
-                        : <button className="my-trip-card-btn-details" onClick={() => onViewDetails?.(trip)}>Ver detalles</button>
-                    }
+                    {isDriver ? (
+                        <button className="my-trip-card-btn-details" onClick={() => onViewDetails?.(trip)}>
+                            Ver detalles
+                        </button>
+                    ) : isUpcoming ? (
+                        <button className="my-trip-card-btn-ticket" onClick={() => onViewTicket?.(trip)}>
+                            Ver billete
+                        </button>
+                    ) : (
+                        <button className="my-trip-card-btn-details" onClick={() => onViewDetails?.(trip)}>
+                            Ver detalles
+                        </button>
+                    )}
                 </div>
             </div>
 

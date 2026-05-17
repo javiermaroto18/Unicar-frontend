@@ -1,8 +1,8 @@
-import { apiService } from './apiService';
+import apiClient from './apiClient';
 
-const createBooking = (tripId) => {
-    // The body is empty as the user is identified by the token
-    return apiService.post(`trips/${tripId}/bookings`, {});
+const createBooking = async (bookingData) => {
+    const response = await apiClient.post('/bookings', bookingData);
+    return response;
 };
 
 export const bookingService = {

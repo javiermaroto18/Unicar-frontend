@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import '../../styles/Sidebar.css';
 
@@ -62,16 +63,16 @@ export default function Sidebar({ activeHref = '/dashboard', onPublish }) {
 
             <nav className="sidebar-nav">
                 {NAV_LINKS.map(({ icon, label, href, filled }) => (
-                    <a
+                    <Link
                         key={href}
-                        href={href}
+                        to={href}
                         className={`sidebar-nav-item${activeHref === href ? ' sidebar-nav-item-active' : ''}`}
                     >
                         <span className={`material-symbols-outlined${filled ? ' filled-icon' : ''}`}>
                             {icon}
                         </span>
                         {label}
-                    </a>
+                    </Link>
                 ))}
             </nav>
 
