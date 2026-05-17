@@ -130,3 +130,47 @@
         display: block;
     }
 }
+
+.topbar-logout-btn {
+    background-color: transparent;
+    border: none;
+    color: var(--color-texto-secundario);
+    cursor: pointer;
+    margin-left: 1rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.topbar-logout-btn:hover {
+    color: var(--color-primario);
+}
+
+.topbar-auth-links {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.topbar-auth-link {
+    text-decoration: none;
+    color: var(--color-texto-principal);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.topbar-auth-link:hover {
+    background-color: var(--color-fondo-hover);
+}
+
+.topbar-auth-link-solid {
+    background-color: var(--color-primario);
+    color: white;
+}
+
+.topbar-auth-link-solid:hover {
+    background-color: var(--color-primario-hover);
+    color: white;
+}

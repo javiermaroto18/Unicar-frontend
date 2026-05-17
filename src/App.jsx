@@ -3,6 +3,7 @@ import DashboardPage from './components/pages/DashboardPage.jsx';
 import TripPage from './components/pages/TripPage.jsx';
 import ProfilePage from './components/pages/ProfilePage.jsx';
 import ChatPage from './components/pages/ChatPage.jsx';
+import AuthPage from './components/pages/AuthPage.jsx';
 import './App.css';
 
 export default function App() {
@@ -13,6 +14,7 @@ export default function App() {
                 <Route path="/trips" element={<TripPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/chat" element={<ChatPage />} />
+                <Route path="/auth" element={<AuthPage />} />
             </Routes>
         </BrowserRouter>
     );

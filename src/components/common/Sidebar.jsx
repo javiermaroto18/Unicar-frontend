@@ -1,3 +1,4 @@
+import { useAuth } from '../../context/AuthContext';
 import '../../styles/Sidebar.css';
 
 const NAV_LINKS = [
@@ -13,7 +14,12 @@ const SHORTCUTS = [
     { label: 'CC City Center' },
 ];
 
-export default function Sidebar({ activeHref = '/dashboard', user, onPublish }) {
+// 1. Quitamos "user" de las props que recibe el componente
+export default function Sidebar({ activeHref = '/dashboard', onPublish }) {
+    
+    // 2. Extraemos el usuario real de nuestro estado global
+    const { user } = useAuth();
+
     return (
         <aside className="sidebar">
             <div className="sidebar-brand">
@@ -24,17 +30,34 @@ export default function Sidebar({ activeHref = '/dashboard', user, onPublish }) 
             </div>
 
             <div className="sidebar-profile">
-                <div className="sidebar-profile-card">
-                    <img
-                        className="sidebar-profile-avatar"
-                        src={user.avatar}
-                        alt={`Foto de perfil de ${user.name}`}
-                    />
-                    <div>
-                        <span className="sidebar-profile-name">{user.name}</span>
-                        <span className="sidebar-profile-role">Perfil</span>
+                {/* 3. Comprobamos que el usuario ya ha cargado */}
+                {user ? (
+                    <div className="sidebar-profile-card">
+                        {/* Si tiene avatar, lo mostramos. Si no, mostramos un icono por defecto */}
+                        {user.avatar ? (
+                            <img
+                                className="sidebar-profile-avatar"
+                                src={user.avatar}
+                                alt={`Foto de perfil de ${user.name}`}
+                            />
+                        ) : (
+                            <span 
+                                className="material-symbols-outlined sidebar-profile-avatar" 
+                                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#374151', color: '#9CA3AF' }}
+                            >
+                                person
+                            </span>
+                        )}
+                        <div>
+                            <span className="sidebar-profile-name">{user.name}</span>
+                            <span className="sidebar-profile-role">Perfil</span>
+                        </div>
                     </div>
-                </div>
+                ) : (
+                    <div className="sidebar-profile-card">
+                        <span className="sidebar-profile-name">Cargando...</span>
+                    </div>
+                )}
             </div>
 
             <nav className="sidebar-nav">
