@@ -1,0 +1,91 @@
+.landing-buscador {
+    max-width: 1280px;
+    margin: -5rem auto 0;
+    width: 100%;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 30;
+}
+
+.landing-buscador_tarjeta {
+    background-color: #192633;
+    border-radius: var(--radius-2xl);
+    padding: 2rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid #1e293b;
+}
+
+.landing-buscador_titulo {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.landing-buscador_formulario {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: end;
+}
+
+/* Campo de búsqueda */
+.landing-campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.landing-campo_etiqueta {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.landing-campo_wrap {
+    position: relative;
+}
+
+.landing-campo_icono {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-primary);
+    font-size: 1.25rem;
+    pointer-events: none;
+}
+
+.landing-campo_input {
+    width: 100%;
+    border-radius: var(--radius-md);
+    background-color: #111a22;
+    border: none;
+    color: #ffffff;
+    padding: 0.875rem 1rem 0.875rem 3rem;
+    font-size: 0.875rem;
+    font-family: var(--landing-font, "Be Vietnam Pro", sans-serif);
+    box-shadow: 0 0 0 1px #334155 inset;
+    outline: none;
+    transition: box-shadow 0.2s;
+}
+
+.landing-campo_input:focus {
+    box-shadow: 0 0 0 2px var(--color-primary) inset;
+}
+
+.landing-campo_input::placeholder {
+    color: #64748b;
+}
+
+.landing-campo_input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1) opacity(0.5);
+}
+
+@media (min-width: 768px) {
+    .landing-buscador_formulario {
+        grid-template-columns: 1fr 1fr 1fr auto;
+    }
+}

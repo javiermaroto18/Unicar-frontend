@@ -1,0 +1,104 @@
+/* ============================================================
+   Variables locales landing — extienden las globales del proyecto
+   con tokens específicos de esta página
+   ============================================================ */
+.landing-pagina {
+    --landing-bg:           #101922;
+    --landing-superficie:   #192633;
+    --landing-input:        #111a22;
+    --landing-borde:        #1e293b;
+    --landing-texto:        #f1f5f9;
+    --landing-texto-tenue:  #94a3b8;
+    --landing-max-ancho:    1280px;
+    --landing-font:         "Be Vietnam Pro", sans-serif;
+}
+
+.landing-pagina {
+    position: relative;
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    flex-direction: column;
+    margin: 0 auto;
+    background-color: var(--landing-bg);
+    font-family: var(--landing-font);
+    color: var(--landing-texto);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+/* ============================================================
+   Botones compartidos dentro de la landing
+   ============================================================ */
+.landing-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: var(--landing-font);
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0.625rem 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.landing-btn_primario {
+    background-color: var(--color-primary);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(19, 127, 236, 0.2);
+}
+.landing-btn_primario:hover { background-color: var(--color-primary-hover); }
+
+.landing-btn_pastilla { border-radius: var(--radius-full); }
+
+.landing-btn_fantasma {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+}
+.landing-btn_fantasma:hover { background-color: rgba(255, 255, 255, 0.2); }
+
+.landing-btn_oscuro {
+    background-color: #ffffff;
+    color: #0f172a;
+    border-radius: var(--radius-xl);
+}
+.landing-btn_oscuro:hover { transform: scale(1.05); }
+
+.landing-btn_tenue {
+    background-color: #1e293b;
+    color: #ffffff;
+    border-radius: var(--radius-xl);
+}
+.landing-btn_tenue:hover { background-color: #334155; }
+
+.landing-btn_grande {
+    font-size: 1.125rem;
+    padding: 1.25rem 2rem;
+}
+
+.landing-btn_buscar {
+    height: 52px;
+    padding: 0 1.5rem;
+    font-size: 0.875rem;
+    border-radius: var(--radius-md);
+    align-self: flex-end;
+    box-shadow: 0 4px 14px rgba(19, 127, 236, 0.2);
+}
+
+/* ============================================================
+   Título de sección compartido
+   ============================================================ */
+.landing-titulo-seccion {
+    color: #ffffff;
+    font-size: 1.875rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 4rem;
+}

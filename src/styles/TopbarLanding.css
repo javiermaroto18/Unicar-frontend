@@ -1,0 +1,80 @@
+.landing-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: rgba(16, 25, 34, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 1rem 1rem 0.5rem;
+    border-bottom: 1px solid #1e293b;
+}
+
+.landing-topbar_interior {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 64px;
+}
+
+.landing-topbar_izquierda {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.landing-topbar_logo {
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    cursor: pointer;
+    font-family: var(--landing-font, "Be Vietnam Pro", sans-serif);
+}
+
+.landing-topbar_nav {
+    display: none;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.landing-topbar_nav a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.landing-topbar_nav a:hover {
+    color: var(--color-primary);
+}
+
+.landing-topbar_acciones {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.landing-topbar_login {
+    color: #cbd5e1;
+    font-size: 0.875rem;
+    font-weight: 700;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    transition: color 0.2s;
+    font-family: var(--landing-font, "Be Vietnam Pro", sans-serif);
+}
+
+.landing-topbar_login:hover {
+    color: var(--color-primary);
+}
+
+@media (min-width: 768px) {
+    .landing-topbar_nav {
+        display: flex;
+    }
+}

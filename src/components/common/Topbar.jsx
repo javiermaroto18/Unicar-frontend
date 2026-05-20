@@ -13,6 +13,8 @@ export default function Topbar({ hasNotifications = false, showSearch = false, o
     }
 
     async function handleLogout() {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
         await logout();
         navigate('/auth');
     }
