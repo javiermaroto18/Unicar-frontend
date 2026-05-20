@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import HeroAuth from '../auth/HeroAuth';
 import FormularioLogin from '../auth/FormularioLogin';
@@ -9,6 +9,13 @@ import '../../styles/AuthPage.css';
 export default function AuthPage() {
     // Solo necesitamos el estado para saber qué pestaña está activa
     const [tabActivo, setTabActivo] = useState('registro');
+
+    useEffect(() => {
+        const hash = window.location.hash.substring(1);
+        if (hash === 'login' || hash === 'registro') {
+            setTabActivo(hash);
+        }
+    }, []);
 
     return (
         <div className="auth-pagina">
