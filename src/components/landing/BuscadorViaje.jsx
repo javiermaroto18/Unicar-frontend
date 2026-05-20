@@ -7,6 +7,7 @@ export default function BuscadorViaje({onBuscar}){
     const [destino, setDestino] = useState('');
     const [fecha, setFecha] = useState('');
     
+    {/* Función para manejar el envío del formulario */}
     function handleSubmit(e){
         e.preventDefault();
         onBuscar?.({origen, destino, fecha});
@@ -46,7 +47,7 @@ export default function BuscadorViaje({onBuscar}){
                     </div>
 
                     <div className="landing-campo">
-                        <label className="landing-campo_etiqueta">Destino</label>
+                        <label className="landing-campo_etiqueta">Fecha</label> 
                         <div className="landing-campo_wrap">
                             <span className="material-symbols-outlined landing-campo_icono">calendar_today</span>
                             <input 
@@ -62,7 +63,7 @@ export default function BuscadorViaje({onBuscar}){
                         type="submit"
                         className="landing-btn landing-btn_primario landing-btn_buscar"
                     >
-                        Buscador Viaje
+                        Buscar Viaje
                     </button>
                 </form>
             </div>

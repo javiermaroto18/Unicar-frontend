@@ -22,7 +22,6 @@ const BENEFICIOS = [
     },
 ];
 
-
 export default function BeneficiosLanding(){
     return(
         <section className="landing-beneficios" id='beneficios'>
@@ -34,8 +33,9 @@ export default function BeneficiosLanding(){
                     </p>
                 </div>
                 <div className="landing-beneficios-grid">
+                    {/* Mapa de los beneficios de UniCar */}
                     {BENEFICIOS.map(({icono, color, titulo, texto}) => (
-                        <div className='landing-beneficio-card'>
+                        <div key={titulo} className='landing-beneficio-card'>
                             <div className={`landing-beneficio-card_icono landing-beneficio-card_icono-${color}`}>
                                 <span className="material-symbols-outlined">{icono}</span>
                             </div>                            

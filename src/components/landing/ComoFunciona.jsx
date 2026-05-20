@@ -23,7 +23,8 @@ export default function ComoFunciona(){
     return(
         <section className="landing-como-funciona" id='como-funciona'>
             <h3 className="landing-titulo-seccion">¿Cómo funciona?</h3>
-            <div className="landing-pasod-grid">
+            <div className="landing-pasos-grid">
+                {/* Mapa de los pasos para usar UniCar */}
                 {PASOS.map(({icono, titulo, texto}) =>(
                     <div key={titulo} className="landing-paso-card">
                         <div className="landing-paso-card_icono landing-paso-card_icono-azul">

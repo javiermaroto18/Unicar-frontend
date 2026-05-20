@@ -8,7 +8,8 @@
 .landing-hero_fondo {
     position: absolute;
     inset: 0;
-    background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBejfZPmKI-j2RWGsiv4Zg1C0OlzoT2ci_z5mO-Poml4pmkcPUWHP7-eeUgCNm7D5nZKRrPPPxa4g34bC-d9LHwLrCAlOto7d9GvowsrMuJaptxdDx1zkbL0iIGAXwPJyXys8yG5VjqUXUVp_gja4Kr5zOghSC9R5FPpZ9G2_RXMQH7dwx8HFHd7oYJmtpYGI8_a2ONcjQy9wqDgo6C-8lPJ3uawKxd-wSjW85HKvczeI_OHkc7F9PA6DRqIWzjaLkgRw6Z5lrFDlI");
+    /* Usa esta url para pruebas, queda genial */
+    background-image: url("https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1920&q=80");
     background-size: cover;
     background-position: center;
 }
@@ -31,6 +32,9 @@
     justify-content: center;
     align-items: flex-start;
     gap: 1.5rem;
+    
+    /* AÑADIDO: Como el buscador solapa 5rem por abajo, empujamos el texto hacia arriba para que no colisionen */
+    padding-bottom: 5rem;
 }
 
 .landing-hero_etiqueta {

@@ -151,7 +151,11 @@
    CTA Final
    ============================================================ */
 .landing-cta-final {
-    padding: 6rem 2rem;
+    /* REDUCIDO: de 6rem a 3.5rem para que la franja sea mucho más compacta */
+    padding: 3.5rem 2rem; 
+    /* AÑADIDO: Una sutil línea superior ayuda a separar esta sección visualmente */
+    border-top: 1px solid #1e293b; 
+    background-color: var(--landing-bg);
 }
 
 .landing-cta-final_interior {
@@ -161,7 +165,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    gap: 3rem;
+    /* REDUCIDO: de 3rem a 2rem para acercar más los botones al texto */
+    gap: 2rem; 
 }
 
 .landing-cta-final_texto {
@@ -170,18 +175,19 @@
 }
 
 .landing-cta-final_titulo {
-    font-size: 2.25rem;
+    /* REDUCIDO: Un poco más pequeño (de 2.25rem a 2rem) para mantener la armonía */
+    font-size: 2rem; 
     font-weight: 900;
     color: #ffffff;
-    margin-bottom: 1rem;
-    line-height: 1.15;
+    margin-bottom: 0.75rem;
+    line-height: 1.2;
     letter-spacing: -0.02em;
 }
 
 .landing-cta-final_subtitulo {
     color: #94a3b8;
     font-size: 1.125rem;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 .landing-cta-final_acciones {

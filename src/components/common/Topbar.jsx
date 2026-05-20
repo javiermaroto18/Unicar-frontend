@@ -13,7 +13,7 @@ export default function Topbar({ hasNotifications = false, showSearch = false, o
     }
 
     async function handleLogout() {
-        localStorage.removeItem('token');
+        localStorage.removeItem('authToken');
         localStorage.removeItem('user');
         await logout();
         navigate('/auth');
@@ -51,7 +51,7 @@ export default function Topbar({ hasNotifications = false, showSearch = false, o
                             <span className="topbar-user-greeting">
                                 Hola, <strong>{user.name}</strong>
                             </span>
-                            {user.avatar ? (
+                            {/* {user.avatar ? (
                                 <img
                                     className="topbar-user-avatar"
                                     src={user.avatar}
@@ -61,7 +61,7 @@ export default function Topbar({ hasNotifications = false, showSearch = false, o
                                 <span className="material-symbols-outlined topbar-user-avatar-default">
                                     person
                                 </span>
-                            )}
+                            )} */}
                             <button onClick={handleLogout} className="topbar-logout-btn">
                                 Salir
                             </button>
