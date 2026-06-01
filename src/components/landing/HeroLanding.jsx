@@ -4,8 +4,8 @@ import '../../styles/HeroLanding.css'
 export default function HeroLanding({ isLogged, displayAvatars, onBuscar, onOfrecer }){
     return(
         <div className="landing-hero">
+            {/* Overlay oscuro */}
             <div className="landing-hero_fondo"></div>
-            {/* AÑADIDO: Tu overlay oscuro que definiste en el CSS */}
             <div className="landing-hero_overlay"></div> 
             
             <div className="landing-hero_contenido">
@@ -29,7 +29,6 @@ export default function HeroLanding({ isLogged, displayAvatars, onBuscar, onOfre
                     </button>
                 </div>
             {/* 
-                {/* AÑADIDO: La prueba social con las fotos }
                 {displayAvatars && displayAvatars.length > 0 && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>
                         <div style={{ display: 'flex', paddingLeft: '10px' }}>

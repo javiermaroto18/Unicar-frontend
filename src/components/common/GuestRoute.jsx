@@ -6,5 +6,5 @@ export default function GuestRoute({ children }) {
         return <Navigate to="/dashboard" replace={true} />;
     }
         
-    return children;    // Si NO tiene token, le dejamos ver la página solicitada (el AuthPage)
+    return children;    // Si NO tiene token, le dejamos ver la página el AuthPage
 }

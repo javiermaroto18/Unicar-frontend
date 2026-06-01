@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import { profileService } from '../../api/profileService';
 import '../../styles/ProfileShared.css';
 import '../../styles/ProfileSectionOthers.css';
 
@@ -43,10 +45,29 @@ const PREFS_CONFIG = [
     },
 ];
 
-export default function ProfileSectionTripPrefs({ onSave }) {
-    const [prefs, setPrefs] = useState(() =>
-        Object.fromEntries(PREFS_CONFIG.map(p => [p.key, p.default]))
-    );
+export default function ProfileSectionTripPrefs() {
+    const { user } = useAuth();
+    // Estados para manejar las preferencias y el estado de carga
+    const [isLoading, setIsLoading] = useState(false);
+    const initialPrefs = user?.preferences || Object.fromEntries(PREFS_CONFIG.map(p => [p.key, p.default]));    
+    const [prefs, setPrefs] = useState(initialPrefs);
+    const hasChanges = JSON.stringify(prefs) !== JSON.stringify(initialPrefs);
+
+    async function handleSave() {
+        if (!hasChanges) return;
+
+        setIsLoading(true);
+        try {
+            await profileService.updatePreferences({ preferences: prefs });
+            
+            alert("Preferencias actualizadas correctamente. (Recarga para ver los cambios)");
+        } catch (error) {
+            console.error(error);
+            alert("Error al actualizar las preferencias.");
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     return (
         <section className="psection">
@@ -55,7 +76,18 @@ export default function ProfileSectionTripPrefs({ onSave }) {
                     <h2 className="psection-titulo">Preferencias de viaje</h2>
                     <p className="psection-subtitulo">Los pasajeros verán esto antes de reservar tu coche.</p>
                 </div>
-                <button className="btn-save" onClick={() => onSave?.(prefs)}>Guardar cambios</button>
+                
+                <button 
+                    className="btn-save" 
+                    onClick={handleSave} 
+                    disabled={isLoading || !hasChanges}
+                    style={{ 
+                        opacity: (!hasChanges && !isLoading) ? 0.5 : 1, 
+                        cursor: (!hasChanges && !isLoading) ? 'not-allowed' : 'pointer' 
+                    }}
+                >
+                    {isLoading ? 'Guardando...' : 'Guardar cambios'}
+                </button>
             </div>
 
             <div className="prof-prefs-grid">

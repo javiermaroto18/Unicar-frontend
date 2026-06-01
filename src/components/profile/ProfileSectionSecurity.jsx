@@ -1,9 +1,88 @@
 import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext';
+import { profileService } from '../../api/profileService';
+import { authService } from '../../api/authService';
+
 import '../../styles/ProfileShared.css';
 import '../../styles/ProfileSectionOthers.css';
 
 export default function ProfileSectionSecurity() {
-    const [notificationsOn, setNotificationsOn] = useState(true);
+    const { user, logout } = useAuth();
+    const [isLoading, setIsLoading] = useState(false);
+    const [notificationsOn, setNotificationsOn] = useState(
+        user?.preferences?.notifications_on ?? true
+    );
+    const [showPasswordForm, setShowPasswordForm] = useState(false);
+    const [passwords, setPasswords] = useState({ current: '', new: '', confirm: '' });
+
+    // Toggle de notificaciones
+    const handleToggleNotifications = async (e) => {
+        const isChecked = e.target.checked;
+        setNotificationsOn(isChecked);
+        try {
+            const currentPrefs = user?.preferences || {};
+            await profileService.updatePreferences({
+                preferences: { ...currentPrefs, notifications_on: isChecked }
+            });
+        } catch (error) {
+            console.error(error);
+            setNotificationsOn(!isChecked); // Revertir si falla
+            alert("Error al actualizar las notificaciones.");
+        }
+    };
+
+    // Cambiar contraseña
+    const handleChangePassword = async (e) => {
+        e.preventDefault();
+        if (passwords.new !== passwords.confirm) {
+            return alert("Las contraseñas nuevas no coinciden.");
+        }
+        setIsLoading(true);
+        try {
+            await profileService.changePassword({
+                current_password: passwords.current,
+                new_password: passwords.new,
+                new_password_confirmation: passwords.confirm
+            });
+            alert("Contraseña actualizada con éxito.");
+            setShowPasswordForm(false);
+            setPasswords({ current: '', new: '', confirm: '' });
+        } catch (error) {
+            alert(error.message || "Error al cambiar la contraseña.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Cerrar todas las sesiones
+    const handleLogoutAll = async () => {
+        if (!window.confirm("Esto cerrará tu sesión en todos los demás dispositivos y en la tuya. ¿Deseas Continuar?")) return;
+        setIsLoading(true);
+        try {
+            await authService.logoutAllDevices();
+            alert("Sesiones cerradas en todos los dispositivos.");
+        } catch (error) {
+            alert("Error al cerrar las sesiones.");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // Eliminar cuenta
+    const handleDeleteAccount = async () => {
+        const confirmText = prompt('Escribe "ELIMINAR" para confirmar que quieres borrar tu cuenta para siempre:');
+        if (confirmText !== 'ELIMINAR') return;
+        
+        setIsLoading(true);
+        try {
+            await profileService.deleteAccount();
+            alert("Cuenta eliminada. Lamentamos verte partir.");
+            logout(); // Expulsa al usuario al login
+        } catch (error) {
+            alert("Error al eliminar la cuenta.");
+            setIsLoading(false);
+        }
+    };
 
     return (
         <section className="psection">
@@ -15,19 +94,52 @@ export default function ProfileSectionSecurity() {
             </div>
 
             <div className="prof-security-cards">
-                <div className="prof-sec-card">
-                    <div className="prof-sec-card-izquierda">
-                        <div className="prof-sec-card-icono">
-                            <span className="material-symbols-outlined">key</span>
+                {/* TARJETA CONTRASEÑA */}
+                <div className="prof-sec-card" style={{ flexDirection: 'column', alignItems: 'stretch' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div className="prof-sec-card-izquierda">
+                            <div className="prof-sec-card-icono">
+                                <span className="material-symbols-outlined">key</span>
+                            </div>
+                            <div>
+                                <p className="prof-sec-card-titulo">Contraseña</p>
+                                <p className="prof-sec-card-subtexto">Mantén tu cuenta segura</p>
+                            </div>
                         </div>
-                        <div>
-                            <p className="prof-sec-card-titulo">Contraseña</p>
-                            <p className="prof-sec-card-subtexto">Última modificación hace 3 meses</p>
-                        </div>
+                        <button 
+                            className="prof-boton-accion-seguridad" 
+                            onClick={() => setShowPasswordForm(!showPasswordForm)}
+                        >
+                            {showPasswordForm ? 'Cancelar' : 'Cambiar'}
+                        </button>
                     </div>
-                    <button className="prof-boton-accion-seguridad">Cambiar</button>
+
+                    {/* Formulario desplegable cambio contraseña */}
+                    {showPasswordForm && (
+                        <form onSubmit={handleChangePassword} style={{ marginTop: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderTop: '1px solid var(--color-border)', paddingTop: '1.5rem' }}>
+                            <div className="pfield">
+                                <label className="pfield-etiqueta">Contraseña actual</label>
+                                <input className="pfield-entrada" type="password" required
+                                    value={passwords.current} onChange={e => setPasswords({...passwords, current: e.target.value})} />
+                            </div>
+                            <div className="pfield">
+                                <label className="pfield-etiqueta">Nueva contraseña</label>
+                                <input className="pfield-entrada" type="password" required minLength="8"
+                                    value={passwords.new} onChange={e => setPasswords({...passwords, new: e.target.value})} />
+                            </div>
+                            <div className="pfield">
+                                <label className="pfield-etiqueta">Confirmar nueva contraseña</label>
+                                <input className="pfield-entrada" type="password" required minLength="8"
+                                    value={passwords.confirm} onChange={e => setPasswords({...passwords, confirm: e.target.value})} />
+                            </div>
+                            <button type="submit" className="btn-save" disabled={isLoading} style={{ alignSelf: 'flex-start' }}>
+                                {isLoading ? 'Guardando...' : 'Actualizar contraseña'}
+                            </button>
+                        </form>
+                    )}
                 </div>
 
+                {/* TARJETA SESIONES */}
                 <div className="prof-sec-card">
                     <div className="prof-sec-card-izquierda">
                         <div className="prof-sec-card-icono">
@@ -35,12 +147,15 @@ export default function ProfileSectionSecurity() {
                         </div>
                         <div>
                             <p className="prof-sec-card-titulo">Sesiones activas</p>
-                            <p className="prof-sec-card-subtexto">1 dispositivo conectado actualmente</p>
+                            <p className="prof-sec-card-subtexto">Cierra la sesión en otros móviles o PCs</p>
                         </div>
                     </div>
-                    <button className="prof-boton-accion-seguridad">Ver sesiones</button>
+                    <button className="prof-boton-accion-seguridad" onClick={handleLogoutAll} disabled={isLoading}>
+                        Cerrar otras sesiones
+                    </button>
                 </div>
 
+                {/* TARJETA NOTIFICACIONES */}
                 <div className="prof-sec-card">
                     <div className="prof-sec-card-izquierda">
                         <div className="prof-sec-card-icono">
@@ -48,27 +163,29 @@ export default function ProfileSectionSecurity() {
                         </div>
                         <div>
                             <p className="prof-sec-card-titulo">Notificaciones</p>
-                            <p className="prof-sec-card-subtexto">Gestiona qué alertas quieres recibir</p>
+                            <p className="prof-sec-card-subtexto">Recibir correos de mis reservas y viajes</p>
                         </div>
                     </div>
                     <label className="prof-toggle-switch">
-                        <input type="checkbox" checked={notificationsOn}
-                            onChange={e => setNotificationsOn(e.target.checked)} />
+                        <input type="checkbox" checked={notificationsOn} onChange={handleToggleNotifications} disabled={isLoading} />
                         <span className="prof-toggle-switch-pista" />
                     </label>
                 </div>
 
+                {/* TARJETA ELIMINAR CUENTA */}
                 <div className="prof-sec-card prof-sec-card--danger">
                     <div className="prof-sec-card-izquierda">
-                        <div className="prof-sec-card-icono prof-sec-card-icono--danger">
+                        <div className="prof-sec-card-icono prof-sec-card-icono--peligro">
                             <span className="material-symbols-outlined">delete_forever</span>
                         </div>
                         <div>
-                            <p className="prof-sec-card-titulo">Eliminar cuenta</p>
+                            <p className="prof-sec-card-titulo" style={{ color: '#f87171' }}>Eliminar cuenta</p>
                             <p className="prof-sec-card-subtexto">Esta acción es irreversible</p>
                         </div>
                     </div>
-                    <button className="prof-boton-accion-seguridad prof-boton-accion-seguridad--peligro">Eliminar</button>
+                    <button className="prof-boton-accion-seguridad prof-boton-accion-seguridad--peligro" onClick={handleDeleteAccount} disabled={isLoading}>
+                        Eliminar
+                    </button>
                 </div>
             </div>
         </section>

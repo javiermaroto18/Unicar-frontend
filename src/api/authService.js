@@ -16,8 +16,15 @@ const logout = async () => {
     return response.data;
 };
 
+const logoutAllDevices = async () => {
+    const response = await apiClient.post('/logout-all');
+    localStorage.removeItem('authToken');
+    return response.data;
+};
+
 export const authService = {
     login,
     register,
     logout,
+    logoutAllDevices
 };

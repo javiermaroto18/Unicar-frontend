@@ -26,6 +26,13 @@ const NAV_SECTIONS = [
     },
 ];
 
+async function handleLogout() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('user');
+    navigate('/auth');
+    await logout();
+}
+
 function StarRating({ score }) {
     const full = Math.floor(score);
     const half = score % 1 >= 0.5;
@@ -44,7 +51,7 @@ export default function ProfileNav({ activeSection, onSectionChange }) {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
-    // Protección extra: si no hay usuario (está cargando), no renderizamos
+    // Si no hay usuario (está cargando), no renderizamos
     if (!user) return null;
 
     const handleLogout = async () => {
@@ -56,7 +63,7 @@ export default function ProfileNav({ activeSection, onSectionChange }) {
         <nav className="profile-nav">
             <div className="profile-nav-usuario">
                 <div className="profile-nav-avatar-contenedor">
-                    {/* Le pasamos el avatar real o el fallback de CSS */}
+                    {/* Sirve para mostrar el avatar del usuario o un fallback si no tiene */}
                     {user.avatar ? (
                         <img className="profile-nav-avatar" src={user.avatar} alt={user.name} />
                     ) : (

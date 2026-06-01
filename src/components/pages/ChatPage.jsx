@@ -21,11 +21,7 @@ export default function ChatPage() {
             hasNotifications
             onPublish={() => { window.location.href = '/publish'; }}
         >
-            {/*
-             * El chat tiene su propio layout interno de dos columnas
-             * igual que el perfil — anula el padding del contenedor padre
-             * con height y overflow propios.
-             */}
+            {/* El chat tiene su propio layout interno de dos columnas igual que el perfil */}
             <div className="chat-diseno">
                 <ListaConversaciones
                     conversaciones={MOCK_CONVERSACIONES}

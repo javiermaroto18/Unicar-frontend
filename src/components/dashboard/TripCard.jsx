@@ -6,13 +6,18 @@ export default function TripCard({ trip, onReserve }) {
     const origin = trip.origin || {};
     const destination = trip.destination || {};
     
-    // Aseguramos que sea un número y le damos formato decimal
     const priceValue = Number(trip.price || 0).toFixed(2);
-    
-    // Cálculos de asientos seguros contra NaN
     const seatsTotal = trip.seatsTotal || 0;
     const seatsAvailable = trip.seatsAvailable !== undefined ? trip.seatsAvailable : seatsTotal;
     const takenSeats = Math.max(0, seatsTotal - seatsAvailable);
+
+    // Lógica para mostrar la fecha en un formato entendible, con varias opciones de datos
+    let dateDisplay = trip.date || trip.dateLabel || 'Fecha pendiente';
+    if (!trip.date && !trip.dateLabel && trip.departure_time) {
+        const d = new Date(trip.departure_time);
+        dateDisplay = d.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' });
+        dateDisplay = dateDisplay.charAt(0).toUpperCase() + dateDisplay.slice(1);
+    }
 
     return (
         <div className="trip-card">
@@ -49,6 +54,11 @@ export default function TripCard({ trip, onReserve }) {
                      }}
                 >
                     Conductor verificado (carnet validado) {driver.faculty ? `| ${driver.faculty}` : ''}
+                </div>
+
+                <div className="trip-card-date">
+                    <span className="material-symbols-outlined">calendar_month</span>
+                    <span>{dateDisplay}</span>
                 </div>
 
                 <div className="trip-card-route">

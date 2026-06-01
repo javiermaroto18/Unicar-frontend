@@ -15,8 +15,8 @@ export default function Topbar({ hasNotifications = false, showSearch = false, o
     async function handleLogout() {
         localStorage.removeItem('authToken');
         localStorage.removeItem('user');
-        await logout();
         navigate('/auth');
+        await logout();
     }
 
     return (

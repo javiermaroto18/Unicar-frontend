@@ -28,23 +28,28 @@ export default function ProfilePage() {
     const sectionFromUrl = searchParams.get('section') || 'info';
     const [activeSection, setActiveSection] = useState(sectionFromUrl);
 
+    // Manejamos el cambio de seccion con una funcion que actualiza la URL del navegador
+    const handleSectionChange = (newSection) => {
+        setActiveSection(newSection);
+        
+        // Actualiza la URL del navegador sin recargar la página
+        const newUrl = `${window.location.pathname}?section=${newSection}`;
+        window.history.pushState({ path: newUrl }, '', newUrl);
+    };
+
     return (
         <AppLayout
             user={MOCK_USER}
             activeHref="/profile"
             hasNotifications
             onPublish={() => { window.location.href = '/publish'; }}
+            hideTopbar={true}
         >
-            {/*
-             * El perfil tiene su propio layout interno de dos columnas
-             * (subnav + content) que vive dentro del app-layout__content.
-             * Por eso necesita anular el padding del contenedor padre.
-             */}
             <div className="profile-layout">
                 <ProfileNav
                     user={MOCK_PROFILE_USER}
                     activeSection={activeSection}
-                    onSectionChange={setActiveSection}
+                    onSectionChange={handleSectionChange}
                     onLogout={() => { window.location.href = '/login'; }}
                 />
                 <div className="profile-content">

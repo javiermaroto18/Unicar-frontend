@@ -17,7 +17,7 @@ export default function FormularioRegistro() {
         setIsLoading(true);
 
         try {
-            // Mapeamos "nombre" a "name" para que Laravel lo acepte correctamente
+            // Mapeamos "name" para que Laravel lo acepte correctamente
             await register({ name: nombre, email, password });
             navigate('/dashboard');
         } catch (error) {

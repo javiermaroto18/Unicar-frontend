@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import '../../styles/VerifyBanner.css';
 import { useState, startTransition } from 'react';
 
+// Este componente se muestra en el dashboard cuando el usuario no ha verificado su cuenta. 
 export default function VerifyBanner({ onVerify }) {
     return (
         <div className="verify-banner">

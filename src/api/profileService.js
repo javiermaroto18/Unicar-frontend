@@ -1,18 +1,28 @@
 import apiClient from './apiClient';
 
 const getProfile = async () => {
-    // El endpoint en nuestro backend de Laravel es /me, no /profile
     const response = await apiClient.get('/me');
     return response;
 };
 
 const updateProfile = async (profileData) => {
-    // Cuando hagamos la edición del perfil en el backend, usaremos esta ruta
-    const response = await apiClient.put('/me', profileData);
+    const response = await apiClient.post('/me', profileData);
+    return response;
+};
+
+const updatePreferences = async (data) => {
+    const response = await apiClient.put('/me/preferences', data);
+    return response;
+};
+
+const changePassword = async (data) => {
+    const response = await apiClient.put('/me/change-password', data);
     return response;
 };
 
 export const profileService = {
     getProfile,
     updateProfile,
+    updatePreferences,
+    changePassword
 };

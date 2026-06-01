@@ -14,7 +14,7 @@ export default function CtaFinal({ isLogged, onCrearCuenta, onIrDashboard, onVer
                     </p>
                 </div>
                 <div className="landing-cta-final_acciones">
-                    {/* Renderizado condicional del botón principal */}
+                    {/* Este boton solo aparece si el usuario está logueado */}
                     {isLogged ? (
                         <button 
                             className="landing-btn landing-btn_oscuro landing-btn_grande"

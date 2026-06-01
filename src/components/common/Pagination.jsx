@@ -52,7 +52,6 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         );
     }
 
-    // --- Render ---
 
     return (
         <div className="pagination">

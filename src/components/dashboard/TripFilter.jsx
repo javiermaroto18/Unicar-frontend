@@ -15,7 +15,7 @@ export default function TripFilters({ activeTab, onTabChange, onFilterOpen }) {
             </div>
 
             <div className="trip-filters-controls">
-                <div className="trip-filters-tabs">
+                {/* <div className="trip-filters-tabs">
                     {TABS.map(tab => (
                         <button
                             key={tab}
@@ -25,7 +25,7 @@ export default function TripFilters({ activeTab, onTabChange, onFilterOpen }) {
                             {tab}
                         </button>
                     ))}
-                </div>
+                </div> */}
 
                 <button className="trip-filters-dropdown-btn" onClick={onFilterOpen}>
                     <span className="material-symbols-outlined">filter_list</span>

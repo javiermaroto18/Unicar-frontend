@@ -15,10 +15,7 @@ const SHORTCUTS = [
     { label: 'CC City Center' },
 ];
 
-// 1. Quitamos "user" de las props que recibe el componente
 export default function Sidebar({ activeHref = '/dashboard', onPublish }) {
-    
-    // 2. Extraemos el usuario real de nuestro estado global
     const { user } = useAuth();
 
     return (
@@ -31,10 +28,10 @@ export default function Sidebar({ activeHref = '/dashboard', onPublish }) {
             </div>
 
             <div className="sidebar-profile">
-                {/* 3. Comprobamos que el usuario ya ha cargado */}
+                {/* Comprobamos que el usuario ya ha cargado */}
                 {user ? (
                     <div className="sidebar-profile-card">
-                        {/* Si tiene avatar, lo mostramos. Si no, mostramos un icono por defecto */}
+                        {/* Si tiene avatar lo mostramos, en caso de que n o, mostramos un icono por defecto */}
                         {user.avatar ? (
                             <img
                                 className="sidebar-profile-avatar"
