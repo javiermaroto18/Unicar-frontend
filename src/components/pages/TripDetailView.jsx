@@ -45,11 +45,7 @@ export default function TripDetailView() {
                     seatsAvailable: dataCruda.seats_available !== undefined ? dataCruda.seats_available : dataCruda.seats_total,
                     seatsTotal: dataCruda.seats_total,
                     driver: dataCruda.driver || dataCruda.user || { name: 'Conductor anónimo' },
-                    // Mapeamos las reservas si existen en el backend, o dejamos estas de prueba para lucir el TFG
-                    bookings: dataCruda.bookings || [
-                        { id: 101, user: { name: 'Alejandro Ramos (Alumno)', faculty: 'Ingeniería' }, seats_booked: 2 },
-                        { id: 102, user: { name: 'Marta Gómez (Alumna)', faculty: 'Diseño Digital' }, seats_booked: 1 }
-                    ]
+                    bookings: dataCruda.bookings || []
                 });
             } catch (error) {
                 console.error("Error al cargar detalles del viaje:", error);
@@ -106,9 +102,6 @@ export default function TripDetailView() {
                         </div>
 
                         {esElConductor ? (
-                            /* ============================================================
-                               WIDGET EXCLUSIVO DEL CONDUCTOR: Pasajeros e ingresos
-                               ============================================================ */
                             <aside className="col-right">
                                 <div className="booking-card">
                                     <div className="booking-card__price-row">

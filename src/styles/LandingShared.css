@@ -1,6 +1,5 @@
 /* ============================================================
-   Variables locales landing — extienden las globales del proyecto
-   con tokens específicos de esta página
+                    Variables locales landing 
    ============================================================ */
 .landing-pagina {
     --landing-bg:           #101922;
@@ -27,9 +26,6 @@
     overflow-x: hidden;
 }
 
-/* ============================================================
-   Botones compartidos dentro de la landing
-   ============================================================ */
 .landing-btn {
     display: inline-flex;
     align-items: center;
@@ -92,9 +88,6 @@
     box-shadow: 0 4px 14px rgba(19, 127, 236, 0.2);
 }
 
-/* ============================================================
-   Título de sección compartido
-   ============================================================ */
 .landing-titulo-seccion {
     color: #ffffff;
     font-size: 1.875rem;

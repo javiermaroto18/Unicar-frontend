@@ -1,6 +1,3 @@
-/* ============================================================
-   Profile Layout — contenedor de subnav + content
-   ============================================================ */
 .profile-layout {
     display: flex;
     height: calc(100vh - var(--topbar-height));
@@ -14,9 +11,6 @@
     background-color: #0d1520;
 }
 
-/* ============================================================
-   Section shell
-   ============================================================ */
 .psection {
     max-width: 52rem;
     margin: 0 auto;
@@ -62,9 +56,6 @@
 .btn-save:hover  { background-color: var(--color-primary-hover); }
 .btn-save:active { transform: scale(0.97); }
 
-/* ============================================================
-   Form & Fields
-   ============================================================ */
 .pform {
     display: flex;
     flex-direction: column;

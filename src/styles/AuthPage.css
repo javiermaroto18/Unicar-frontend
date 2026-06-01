@@ -1,7 +1,5 @@
 /* ============================================================
-   Variables locales — esta vista usa Inter, no Be Vietnam Pro,
-   y tiene una paleta ligeramente distinta al dashboard.
-   Se definen con prefijo auth- para no pisar las globales.
+                        Variables locales 
    ============================================================ */
 .auth-pagina {
     --auth-bg:              #020617;
@@ -18,9 +16,6 @@
     --auth-font:            "Inter", sans-serif;
 }
 
-/* ============================================================
-   Layout raíz
-   ============================================================ */
 .auth-pagina {
     display: flex;
     height: 100vh;
@@ -31,9 +26,6 @@
     -webkit-font-smoothing: antialiased;
 }
 
-/* ============================================================
-   Hero — lado izquierdo
-   ============================================================ */
 .auth-hero {
     display: none;
     position: relative;
@@ -106,7 +98,6 @@
     color: var(--auth-texto);
 }
 
-/* Social proof */
 .auth-prueba-social {
     display: flex;
     align-items: center;
@@ -147,9 +138,6 @@
     font-weight: 700;
 }
 
-/* ============================================================
-   Auth — lado derecho
-   ============================================================ */
 .auth-formulario-lado {
     width: 100%;
     display: flex;

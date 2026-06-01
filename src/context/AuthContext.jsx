@@ -18,7 +18,6 @@ export function AuthProvider({ children }) {
             if (token) {
                 try {
                     const response = await profileService.getProfile();
-                    // Extraemos el objeto que viene dentro de la propiedad "data" de Laravel
                     setUser(response.data); 
                 } catch (error) {
                     console.error("Failed to fetch profile, token might be invalid.", error);
@@ -33,15 +32,14 @@ export function AuthProvider({ children }) {
     }, []);
 
     const login = async (credentials) => {
-        // OPTIMIZACIÓN: Extraemos el token y el user directamente de la respuesta del login
+        // Extraemos el token y el user directamente de la respuesta del login
         const { token, user: loggedInUser } = await authService.login(credentials);
         
         localStorage.setItem('authToken', token);
-        setUser(loggedInUser); // Nos ahorramos la segunda petición a la API
+        setUser(loggedInUser); // Aplicamos el user directamente desde la respuesta del login y ahorrar peticiones a la API
     };
 
     const register = async (userData) => {
-        // Lo mismo para el registro
         const { token, user: registeredUser } = await authService.register(userData);
         
         localStorage.setItem('authToken', token);
@@ -50,7 +48,7 @@ export function AuthProvider({ children }) {
 
     const logout = async () => {
         await authService.logout();
-        localStorage.removeItem('authToken'); // Aseguramos que se borra de React
+        localStorage.removeItem('authToken');
         setUser(null);
     };
 

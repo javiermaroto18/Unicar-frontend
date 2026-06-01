@@ -48,10 +48,8 @@ export default function TicketView() {
     if (isLoading) return <div style={{ padding: '5rem', textAlign: 'center', color: 'white' }}>Generando billete...</div>;
     if (!trip) return <div style={{ padding: '5rem', textAlign: 'center', color: 'white' }}>Billete no encontrado</div>;
 
-    // Generamos un código localizador aleatorio para el TFG (Ej: UC-A7X9)
-    const locatorCode = `UC-${id.toString().padStart(4, '0')}X`;
-    // Usamos una API gratuita para generar un QR real que contenga ese código
-    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${locatorCode}`;
+    const locatorCode = `UC-${id.toString().padStart(4, '0')}X`;  // Generamos un código localizador aleatorio para el TFG (Ej: UC-A7X9)
+    const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${locatorCode}`; // Usamos una API gratuita para generar un QR real que contenga ese código
 
     return (
         <div className="ticket-page">

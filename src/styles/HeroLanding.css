@@ -32,8 +32,6 @@
     justify-content: center;
     align-items: flex-start;
     gap: 1.5rem;
-    
-    /* AÑADIDO: Como el buscador solapa 5rem por abajo, empujamos el texto hacia arriba para que no colisionen */
     padding-bottom: 5rem;
 }
 

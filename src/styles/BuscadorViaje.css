@@ -90,7 +90,7 @@
     }
 }
 
-/* AÑADIDO: Forzamos la altura del botón para que encaje perfecto con los inputs */
+/* Forzamos la altura del botón para que encaje perfecto con los inputs */
 .landing-btn_buscar {
     height: 46px; 
     padding: 0 2rem;
