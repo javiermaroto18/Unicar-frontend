@@ -5,6 +5,11 @@ const createBooking = async (bookingData) => {
     return response;
 };
 
+const cancelBooking = async (bookingId) => {
+    const response = await apiClient.patch(`/bookings/${bookingId}/cancel`);
+    return response;
+};
 export const bookingService = {
     createBooking,
+    cancelBooking,
 };

@@ -53,5 +53,6 @@ apiClient.get = (endpoint, config) => apiClient(endpoint, { ...config, method: '
 apiClient.post = (endpoint, body, config) => apiClient(endpoint, { ...config, body, method: 'POST' });
 apiClient.put = (endpoint, body, config) => apiClient(endpoint, { ...config, body, method: 'PUT' });
 apiClient.delete = (endpoint, config) => apiClient(endpoint, { ...config, method: 'DELETE' });
+apiClient.patch = (endpoint, body, config) => apiClient(endpoint, { ...config, body, method: 'PATCH' });
 
 export default apiClient;

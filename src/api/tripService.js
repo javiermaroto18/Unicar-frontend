@@ -26,10 +26,16 @@ const getMyBookings = async () => {
     return response;
 };
 
+const cancelTrip = async (tripId) => {
+    const response = await apiClient.patch(`/trips/${tripId}/cancel`);
+    return response;
+};
+
 export const tripService = {
     getAllTrips,
     getTripById,
     createTrip,
     getMyPublishedTrips,
     getMyBookings,
+    cancelTrip
 };
