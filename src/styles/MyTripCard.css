@@ -238,8 +238,8 @@
 
 .my-trip-card-btn-ticket {
     padding: 0.5rem 1.25rem;
-    background-color: var(--color-primary);
-    color: #ffffff;
+    background-color: transparent;
+    color: var(--color-text-muted);
     font-size: 0.8125rem;
     font-weight: 700;
     font-family: var(--font);
@@ -249,14 +249,15 @@
 }
 
 .my-trip-card-btn-ticket:hover {
-    background-color: var(--color-primary-hover);
+    border-color: var(--color-text-muted);
+    color: var(--color-text);
 }
 
 .my-trip-card-btn-details {
     padding: 0.4375rem 1.25rem;
-    background-color: transparent;
+    background-color: var(--color-primary);
+    color: #ffffff;
     border: 2px solid var(--color-border);
-    color: var(--color-text-muted);
     font-size: 0.8125rem;
     font-weight: 700;
     font-family: var(--font);
@@ -265,8 +266,7 @@
 }
 
 .my-trip-card-btn-details:hover {
-    border-color: var(--color-text-muted);
-    color: var(--color-text);
+    background-color: var(--color-primary-hover);    
 }
 
 /* Diseño responsivo - Escritorio (≥768px): disposición horizontal */

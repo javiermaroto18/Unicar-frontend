@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { tripService } from '../../api/tripService';
@@ -10,6 +12,7 @@ import MyTripsList from '../trips/MyTripsList.jsx';
 export default function TripsPage() {
     const { user } = useAuth();
     const [activeTab, setActiveTab] = useState('passenger');
+    const navigate = useNavigate();
     
     const [trips, setTrips] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -50,9 +53,18 @@ export default function TripsPage() {
 
                     const conductor = trip.driver || trip.user || { name: 'Conductor', avatar: null };
 
+                    const isCancelled = activeTab === 'passenger' ? item.status === 'cancelled' : trip.status === 'cancelled';
+                    
+                    let estadoFinal = 'completed';
+                    if (isCancelled) {
+                        estadoFinal = 'cancelled';
+                    } else if (trip.status === 'scheduled') {
+                        estadoFinal = 'upcoming';
+                    }
+
                     return {
                         id: trip.id,
-                        status: trip.status === 'scheduled' ? 'upcoming' : 'completed',
+                        status: estadoFinal, // Ahora puede ser 'upcoming', 'completed' o 'cancelled'
                         dateLabel: dateLabel.charAt(0).toUpperCase() + dateLabel.slice(1),
                         image: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=800&q=80',
                         origin: { place: trip.origin, time: horaSalida },
@@ -75,12 +87,16 @@ export default function TripsPage() {
 
 
     function handleViewTicket(trip) {
-        window.location.href = `/ticket/${trip.id}`;
+        navigate(`/ticket/${trip.id}`);
     }
 
     function handleViewDetails(trip) {
-        // Apuntamos a la vista unificada de detalles
-        window.location.href = `/checkout/${trip.id}`;
+        if (activeTab === 'driver') {
+            navigate(`/manage-trip/${trip.id}`);
+        } else {
+            if (trip.status === 'completed') { navigate(`/ticket/${trip.id}`); }// Si el viaje ya se hizo, le mandamos directamente al recibo/ticket
+            else { navigate(`/trip-details/${trip.id}`); }
+        }
     }
 
     function handleLoadMore() {

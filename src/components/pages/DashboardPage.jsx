@@ -61,6 +61,7 @@ export default function DashboardPage() {
 
                     return {
                         id: trip.id,
+                        departure_time: trip.departure_time,
                         driver: conductor,
                         origin: {
                             place: trip.origin,

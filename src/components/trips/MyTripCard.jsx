@@ -2,6 +2,7 @@ import '../../styles/MyTripCard.css';
 
 export default function MyTripCard({ trip, onViewTicket, onViewDetails, isDriver }) {
     const isUpcoming = trip.status === 'upcoming';
+    const isCancelled = trip.status === 'cancelled';
 
     return (
         <div className={`my-trip-card${!isUpcoming ? ' my-trip-card-completed' : ''}`}>
@@ -10,8 +11,11 @@ export default function MyTripCard({ trip, onViewTicket, onViewDetails, isDriver
                 className={`my-trip-card-preview${!isUpcoming ? ' my-trip-card-preview-completed' : ''}`}
                 style={{ backgroundImage: `url('${trip.image}')` }}
             >
-                <span className={`my-trip-card-badge my-trip-card-badge-${isUpcoming ? 'upcoming' : 'completed'}`}>
-                    {isUpcoming ? 'PRÓXIMO' : 'COMPLETADO'}
+                <span 
+                    className={`my-trip-card-badge my-trip-card-badge-${isUpcoming ? 'upcoming' : 'completed'}`}
+                    style={isCancelled ? { backgroundColor: '#EF4444', color: 'white', borderColor: '#EF4444' } : {}}
+                >
+                    {isCancelled ? 'CANCELADO' : isUpcoming ? 'PRÓXIMO' : 'COMPLETADO'}
                 </span>
             </div>
 
@@ -58,17 +62,33 @@ export default function MyTripCard({ trip, onViewTicket, onViewDetails, isDriver
                     <span className={`my-trip-card-price-${isUpcoming ? 'upcoming' : 'completed'}`}>
                         {trip.price}€
                     </span>
-                    {isDriver ? (
+                    
+                    {/* Renderizado inteligente del botón según el estado y rol */}
+                    {isCancelled ? (
+                        <button 
+                            className="my-trip-card-btn-ticket" 
+                            disabled 
+                            style={{ 
+                                opacity: 0.6, 
+                                cursor: 'not-allowed', 
+                                backgroundColor: '#EF4444', 
+                                borderColor: '#EF4444', 
+                                color: 'white' 
+                            }}
+                        >
+                            Cancelado
+                        </button>
+                    ) : isDriver ? (
                         <button className="my-trip-card-btn-details" onClick={() => onViewDetails?.(trip)}>
                             Ver detalles
                         </button>
                     ) : isUpcoming ? (
-                        <button className="my-trip-card-btn-ticket" onClick={() => onViewTicket?.(trip)}>
-                            Ver billete
-                        </button>
-                    ) : (
                         <button className="my-trip-card-btn-details" onClick={() => onViewDetails?.(trip)}>
                             Ver detalles
+                        </button>
+                    ) : (
+                        <button className="my-trip-card-btn-ticket" onClick={() => onViewTicket?.(trip)}>
+                            Ver billete
                         </button>
                     )}
                 </div>

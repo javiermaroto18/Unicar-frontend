@@ -72,6 +72,22 @@ export default function App() {
                     } 
                 />
                 <Route 
+                    path="/manage-trip/:id" 
+                    element={
+                        <ProtectedRoute>
+                            <TripDetailView />
+                        </ProtectedRoute>
+                    } 
+                />
+                <Route 
+                    path="/trip-details/:id" 
+                    element={
+                        <ProtectedRoute>
+                            <TripDetailView />
+                        </ProtectedRoute>
+                    } 
+                />
+                <Route 
                     path="/ticket/:id" 
                     element={
                         <ProtectedRoute>

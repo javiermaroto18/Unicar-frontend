@@ -579,3 +579,90 @@ button { font-family: var(--font); cursor: pointer; border: none; background: no
     font-size: 0.75rem;
     color: var(--color-text-dim);
 }
+
+/* ============================================================
+   Driver Management Panel (Panel del Conductor)
+   ============================================================ */
+.status-badge--success {
+    color: #10B981;
+    font-weight: 700;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+}
+
+.driver-seats-section {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1rem;
+}
+
+.driver-passengers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.driver-passenger-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 0.75rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+}
+
+.driver-passenger-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.driver-passenger-name {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.driver-passenger-faculty {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.driver-passenger-seats {
+    font-size: 0.75rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    background: rgba(19, 127, 236, 0.1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+}
+
+.driver-total-section {
+    margin-top: 0.5rem;
+}
+
+.driver-seats-available {
+    font-size: 1.10rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.driver-revenue-section {
+    border-top: 1px solid var(--color-border);
+    padding-top: 1.5rem;
+}
+
+/* Forzamos el color verde para el texto del dinero recaudado */
+.driver-revenue-section .booking-card__total-amount {
+    color: #10B981; 
+}
+
+/* Sobrescribimos la clase base .btn-pay para el botón de cancelar */
+.btn-cancel-trip {
+    background-color: #EF4444;
+    box-shadow: 0 8px 20px rgba(239, 68, 68, 0.2);
+}
+
+.btn-cancel-trip:hover:not(:disabled) {
+    background-color: #DC2626; /* Un rojo ligeramente más oscuro al pasar el ratón */
+}
