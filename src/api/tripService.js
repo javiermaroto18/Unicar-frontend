@@ -1,7 +1,13 @@
 import apiClient from './apiClient';
 
-const getAllTrips = async (page = 1, filter = 'Todos') => {    
-    const response = await apiClient.get('/trips');
+const getAllTrips = async (page = 1, filter = 'date_asc', search = '') => {
+    let url = `/trips?page=${page}&filter=${filter}`;
+    
+    if (search) {
+        url += `&search=${encodeURIComponent(search)}`;
+    }
+
+    const response = await apiClient.get(url);
     return response;
 };
 

@@ -11,25 +11,24 @@ import Pagination   from '../common/Pagination.jsx';
 export default function DashboardPage() {
     const { user } = useAuth();
 
-    const [activeTab,   setActiveTab]   = useState('Todos');
+    const [activeTab,   setActiveTab]   = useState('date_asc');
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchQuery, setSearchQuery] = useState(''); // <--- NUEVO ESTADO
     const [totalPages,  setTotalPages]  = useState(1);
 
-    // Estado para los datos reales del backend
     const [trips, setTrips] = useState([]);
     const [isLoadingTrips, setIsLoadingTrips] = useState(true);
 
-    // Cargamos los viajes reales desde el backend al montar el componente
     useEffect(() => {
         const fetchTrips = async () => {
             setIsLoadingTrips(true);
             try {
-                const response = await tripService.getAllTrips(currentPage, activeTab);
-                const viajesReales = response.data || response; 
+                const response = await tripService.getAllTrips(currentPage, activeTab, searchQuery);
+                
+                const viajesReales = response.data?.data || response.data || response;
+                const metaInfo = response.data?.meta || response.meta;
 
-                // Transformamos el JSON de Laravel al formato de React
                 const viajesAdaptados = viajesReales.map(trip => {
-                    
                     let horaSalida = '--:--';
                     let horaLlegada = '--:--';
                     
@@ -37,15 +36,13 @@ export default function DashboardPage() {
                         const fechaLimpia = trip.departure_time.replace('T', ' ');
                         horaSalida = fechaLimpia.split(' ')[1]?.substring(0, 5) || '--:--';
 
-                        // Sumamos 40 minutos a la llegada
                         if (horaSalida !== '--:--') {
                             let [h, m] = horaSalida.split(':').map(Number);
                             m += 40;
                             if (m >= 60) {
-                                h = (h + 1) % 24; // Sumamos 1 hora y reiniciamos a 0 si pasa de las 23
-                                m -= 60;          // Restamos los 60 minutos
+                                h = (h + 1) % 24;
+                                m -= 60;
                             }
-                            // Formateamos la hora de llegada para que siempre tenga 2 dígitos
                             const hStr = h.toString().padStart(2, '0');
                             const mStr = m.toString().padStart(2, '0');
                             horaLlegada = `${hStr}:${mStr}`;
@@ -79,8 +76,12 @@ export default function DashboardPage() {
 
                 setTrips(viajesAdaptados);
 
-                if (response.meta && response.meta.last_page) {
-                    setTotalPages(response.meta.last_page);
+                if (metaInfo && metaInfo.last_page) {
+                    setTotalPages(metaInfo.last_page);
+                } else if (response.last_page) {
+                     setTotalPages(response.last_page);
+                } else {
+                     setTotalPages(1);
                 }
             } catch (error) {
                 console.error("Error cargando los viajes desde el servidor:", error);
@@ -89,8 +90,14 @@ export default function DashboardPage() {
             }
         };
 
-        fetchTrips();
-    }, [currentPage, activeTab]); // Si el usuario cambia de página o de filtro, se vuelve a ejecutar
+        const delayDebounceFn = setTimeout(() => {
+            fetchTrips();
+        }, 500); // Retardo de 500ms para evitar demasiadas llamadas en la busqueda
+
+        // Función de limpieza: cancela el timeout si el usuario escribe otra letra
+        return () => clearTimeout(delayDebounceFn);
+
+    }, [currentPage, activeTab, searchQuery]);
 
     function handleReserve(trip) {
         window.location.href = `/checkout/${trip.id}`;
@@ -100,13 +107,15 @@ export default function DashboardPage() {
         window.location.href = '/publish';
     }
 
+    // Al buscar reseteamos a la página 1 para mostrar los resultados desde el principio
     function handleSearch(query) {
-        console.log('Buscando:', query);
+        setSearchQuery(query);
+        setCurrentPage(1);
     }
 
     function handleTabChange(tab) {
         setActiveTab(tab);
-        setCurrentPage(1); // Volvemos a la página 1 al cambiar de filtro
+        setCurrentPage(1); 
     }
 
     return (
@@ -119,13 +128,8 @@ export default function DashboardPage() {
         >
             {user && !user.is_verified_driver && <VerifyBanner />}
 
-            <TripFilters
-                activeTab={activeTab}
-                onTabChange={handleTabChange}
-                onFilterOpen={() => {}}
-            />
+            <TripFilters activeFilter={activeTab} onFilterChange={handleTabChange} />
 
-            {/* Renderizado condicional basado en la carga de datos */}
             {isLoadingTrips ? (
                 <div style={{ padding: '3rem', textAlign: 'center', color: '#9CA3AF' }}>
                     <span className="material-symbols-outlined" style={{ fontSize: '2rem', animation: 'spin 1s linear infinite' }}>sync</span>
@@ -144,8 +148,8 @@ export default function DashboardPage() {
                 </>
             ) : (
                 <div style={{ padding: '3rem', textAlign: 'center', color: '#9CA3AF' }}>
-                    <span className="material-symbols-outlined" style={{ fontSize: '3rem' }}>directions_car_off</span>
-                    <p style={{ marginTop: '1rem' }}>No hay viajes disponibles para hoy con este filtro.</p>
+                    <span className="material-symbols-outlined" style={{ fontSize: '3rem' }}>search_off</span>
+                    <p style={{ marginTop: '1rem' }}>No hemos encontrado viajes con esa búsqueda.</p>
                 </div>
             )}
         </AppLayout>

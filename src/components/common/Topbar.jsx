@@ -8,6 +8,14 @@ export default function Topbar({ hasNotifications = false, showSearch = false, o
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
+    // Enviamos la búsqueda en tiempo real cada vez que el usuario teclea
+    function handleChange(e) {
+        const newValue = e.target.value;
+        setQuery(newValue);
+        onSearch?.(newValue); 
+    }
+
+    // Mantenemos la función del enter porque hay usuarios que prefieren escribir y darle al enter
     function handleKeyDown(e) {
         if (e.key === 'Enter') onSearch?.(query);
     }
@@ -31,7 +39,7 @@ export default function Topbar({ hasNotifications = false, showSearch = false, o
                                 type="text"
                                 placeholder="¿A dónde vas hoy? (o busca por conductor)"
                                 value={query}
-                                onChange={e => setQuery(e.target.value)}
+                                onChange={handleChange}
                                 onKeyDown={handleKeyDown}
                             />
                         </div>

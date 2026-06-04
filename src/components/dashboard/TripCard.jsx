@@ -19,6 +19,12 @@ export default function TripCard({ trip, onReserve }) {
         dateDisplay = dateDisplay.charAt(0).toUpperCase() + dateDisplay.slice(1);
     }
 
+    // Variable booleana para saber si está lleno y tener el código más limpio
+    const isFull = seatsAvailable === 0;
+    
+    // Variable para saber si el conductor está verificado
+    const isVerified = Boolean(driver.is_verified_driver);
+
     return (
         <div className="trip-card">
             <div className="trip-card-body">
@@ -46,15 +52,37 @@ export default function TripCard({ trip, onReserve }) {
                     </div>
                 </div>
 
-                <div className="trip-card-verified-badge"  
-                    style={{ 
-                        paddingTop: '0.5rem', 
-                        paddingBottom: '0.5rem',
-                        marginBottom: '1rem',
-                     }}
-                >
-                    Conductor verificado (carnet validado) {driver.faculty ? `| ${driver.faculty}` : ''}
-                </div>
+                {/* --- RENDERIZADO CONDICIONAL DEL BADGE --- */}
+                {isVerified ? (
+                    <div className="trip-card-verified-badge"  
+                        style={{ 
+                            paddingTop: '0.5rem', 
+                            paddingBottom: '0.5rem',
+                            marginBottom: '1rem',
+                        }}
+                    >
+                        Conductor verificado (carnet validado) {driver.faculty ? `| ${driver.faculty}` : ''}
+                    </div>
+                ) : (
+                    <div className="trip-card-verified-badge"  
+                        style={{ 
+                            paddingTop: '0.5rem', 
+                            paddingBottom: '0.5rem',
+                            marginBottom: '1rem',
+                            backgroundColor: 'rgba(234, 179, 8, 0.1)', // Fondo amarillo suave
+                            color: '#EAB308', // Texto amarillo
+                            border: '1px solid rgba(234, 179, 8, 0.2)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.25rem'
+                        }}
+                        title="Este usuario aún no ha verificado su cuenta subiendo el carnet universitario."
+                    >
+                        <span className="material-symbols-outlined" style={{ fontSize: '1.1rem' }}>warning</span>
+                        Conductor no verificado {driver.faculty ? `| ${driver.faculty}` : ''}
+                    </div>
+                )}
+                {/* ----------------------------------------- */}
 
                 <div className="trip-card-date">
                     <span className="material-symbols-outlined">calendar_month</span>
@@ -125,10 +153,24 @@ export default function TripCard({ trip, onReserve }) {
             <div className="trip-card-footer">
                 <button
                     className="trip-card-reserve-btn"
-                    onClick={() => onReserve?.(trip)} 
-                    style={{ fontFamily: 'Be Vietnam Pro, sans-serif', fontWeight: 500 }}
+                    onClick={() => !isFull && onReserve?.(trip)} 
+                    disabled={isFull}
+                    title={isFull ? 'Este viaje ya no tiene plazas disponibles' : 'Haz clic para reservar tu plaza'}
+                    style={{ 
+                        fontFamily: 'Be Vietnam Pro, sans-serif', 
+                        fontWeight: 500,
+                        ...(isFull ? {
+                            opacity: 0.6, 
+                            cursor: 'not-allowed', 
+                            backgroundColor: '#EF4444', 
+                            borderColor: '#EF4444', 
+                            transform: 'none',
+                            color: 'white'
+                        } : {})
+                    }}
+                    
                 >
-                    Reservar plaza
+                    {isFull ? 'Completo' : 'Reservar plaza'}
                 </button>
             </div>
         </div>

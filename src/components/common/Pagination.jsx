@@ -27,6 +27,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         const isBack = direction === 'back';
         return (
             <button
+                type="button" // <--- ESTO EVITA QUE LA PÁGINA SE RECARGUE
                 className={`pagination-btn ${isBack ? '' : 'pagination-btn-next'}`}
                 disabled={disabled}
                 onClick={onClick}
@@ -44,6 +45,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         const isActive = currentPage === page;
         return (
             <button
+                type="button" // <--- ESTO EVITA QUE LA PÁGINA SE RECARGUE
                 className={`pagination-page ${isActive ? 'pagination-page-active' : ''}`}
                 onClick={() => onPageChange(page)}
             >

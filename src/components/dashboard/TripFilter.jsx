@@ -1,8 +1,31 @@
+import { useState, useRef, useEffect } from 'react';
 import '../../styles/TripFilter.css';
 
-const TABS = ['Todos', 'Facultades', 'Interurbanos'];
+export default function TripFilters({ activeFilter, onFilterChange }) {
+    const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef(null);
 
-export default function TripFilters({ activeTab, onTabChange, onFilterOpen }) {
+    const filterOptions = [
+        { id: 'date_asc', label: 'Salida: Más próximos', icon: 'schedule' },
+        { id: 'price_asc', label: 'Precio: Más baratos', icon: 'payments' },
+        { id: 'name_asc', label: 'Conductor: A - Z', icon: 'sort_by_alpha' }
+    ];
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        }
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
+
+    const handleSelectOption = (optionId) => {
+        onFilterChange(optionId);
+        setIsOpen(false);
+    };
+
     return (
         <div className="trip-filters">
             <div className="trip-filters-heading">
@@ -15,23 +38,41 @@ export default function TripFilters({ activeTab, onTabChange, onFilterOpen }) {
             </div>
 
             <div className="trip-filters-controls">
-                {/* <div className="trip-filters-tabs">
-                    {TABS.map(tab => (
-                        <button
-                            key={tab}
-                            className={`trip-filters-tab${activeTab === tab ? ' trip-filters-tab-active' : ''}`}
-                            onClick={() => onTabChange(tab)}
+                <div className="trip-filters-dropdown-wrapper" ref={dropdownRef}>
+                    <button 
+                        type="button"
+                        className={`trip-filters-dropdown-btn ${isOpen ? 'is-open' : ''}`} 
+                        onClick={() => setIsOpen(!isOpen)}
+                    >
+                        <span className="material-symbols-outlined">sort</span>
+                        Ordenar y Filtrar
+                        <span 
+                            className="material-symbols-outlined" 
+                            style={{ 
+                                transform: isOpen ? 'rotate(180deg)' : 'none', 
+                                transition: 'transform 0.2s ease' 
+                            }}
                         >
-                            {tab}
-                        </button>
-                    ))}
-                </div> */}
+                            expand_more
+                        </span>
+                    </button>
 
-                <button className="trip-filters-dropdown-btn" onClick={onFilterOpen}>
-                    <span className="material-symbols-outlined">filter_list</span>
-                    Filtros
-                    <span className="material-symbols-outlined">expand_more</span>
-                </button>
+                    {isOpen && (
+                        <div className="trip-filters-dropdown-menu">
+                            {filterOptions.map((option) => (
+                                <button
+                                    key={option.id}
+                                    type="button" 
+                                    className={`trip-filters-dropdown-item ${activeFilter === option.id ? 'active' : ''}`}
+                                    onClick={() => handleSelectOption(option.id)}
+                                >
+                                    <span className="material-symbols-outlined">{option.icon}</span>
+                                    {option.label}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
