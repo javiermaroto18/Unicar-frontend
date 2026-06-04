@@ -22,9 +22,15 @@ const logoutAllDevices = async () => {
     return response.data;
 };
 
+const logoutOtherSessions = async () => {
+    const response = await apiClient.post('/logout-others');
+    return response.data;
+};
+
 export const authService = {
     login,
     register,
     logout,
-    logoutAllDevices
+    logoutAllDevices,
+    logoutOtherSessions
 };

@@ -15,6 +15,8 @@ export default function ProfileSectionSecurity() {
     const [showPasswordForm, setShowPasswordForm] = useState(false);
     const [passwords, setPasswords] = useState({ current: '', new: '', confirm: '' });
 
+    const [isLoggingOutOthers, setIsLoggingOutOthers] = useState(false);
+
     // Toggle de notificaciones
     const handleToggleNotifications = async (e) => {
         const isChecked = e.target.checked;
@@ -54,19 +56,22 @@ export default function ProfileSectionSecurity() {
         }
     };
 
-    // Cerrar todas las sesiones
-    const handleLogoutAll = async () => {
-        if (!window.confirm("Esto cerrará tu sesión en todos los demás dispositivos y en la tuya. ¿Deseas Continuar?")) return;
-        setIsLoading(true);
-        try {
-            await authService.logoutAllDevices();
-            alert("Sesiones cerradas en todos los dispositivos.");
-        } catch (error) {
-            alert("Error al cerrar las sesiones.");
-        } finally {
-            setIsLoading(false);
+    async function handleLogoutOtherSessions() {
+        if (!window.confirm("¿Estás seguro de que quieres cerrar sesión en todos los demás dispositivos?")) {
+            return;
         }
-    };
+
+        setIsLoggingOutOthers(true);
+        try {
+            await authService.logoutOtherSessions();
+            alert("¡Hecho! Se han cerrado todas las demás sesiones por seguridad.");
+        } catch (error) {
+            console.error("Error al cerrar otras sesiones:", error);
+            alert("Hubo un problema al intentar cerrar las demás sesiones.");
+        } finally {
+            setIsLoggingOutOthers(false);
+        }
+    }
 
     // Eliminar cuenta
     const handleDeleteAccount = async () => {
@@ -150,8 +155,12 @@ export default function ProfileSectionSecurity() {
                             <p className="prof-sec-card-subtexto">Cierra la sesión en otros móviles o PCs</p>
                         </div>
                     </div>
-                    <button className="prof-boton-accion-seguridad" onClick={handleLogoutAll} disabled={isLoading}>
-                        Cerrar otras sesiones
+                    <button
+                        className="btn-security-logout prof-boton-accion-seguridad"
+                        onClick={handleLogoutOtherSessions}
+                        disabled={isLoggingOutOthers}
+                    >
+                        {isLoggingOutOthers ? 'Cerrando sesiones...' : 'Cerrar otras sesiones'}
                     </button>
                 </div>
 
