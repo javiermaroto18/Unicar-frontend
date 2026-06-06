@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import '../../styles/trip-detail-view.css';
+import '../../styles/Trip-detail-view.css';
 
 export function PassengerManagementWidget({ reserva, trip, onCancelBooking }) {
     const navigate = useNavigate();

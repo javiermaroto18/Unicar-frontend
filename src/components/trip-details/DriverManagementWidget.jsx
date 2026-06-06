@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import '../../styles/trip-detail-view.css';
+import '../../styles/Trip-detail-view.css';
 
 function DriverManagementWidget({ trip, onCancelTrip }) {
     const [mockAvatars, setMockAvatars] = useState({});

@@ -14,7 +14,7 @@ import { BookingWidget } from '../trip-details/BookingWidget.jsx';
 import DriverManagementWidget from '../trip-details/DriverManagementWidget.jsx';
 import { PassengerManagementWidget } from '../trip-details/PassengerManagementWidget.jsx';
 
-import '../../styles/trip-detail-view.css';
+import '../../styles/Trip-detail-view.css';
 
 export default function TripDetailView() {
     const { id } = useParams();

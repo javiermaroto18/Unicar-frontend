@@ -12,7 +12,7 @@ import AuthPage from './components/pages/AuthPage.jsx';
 import TripDetailView from './components/pages/TripDetailView.jsx';
 import TicketView from './components/pages/TicketView.jsx';
 import LandingPage from './components/pages/LandingPage.jsx';
-import PublicarPage from './components/pages/PublicarPage.jsx';
+// import PublicarPage from './components/pages/PublicarPage.jsx'; // TODO: descomentar al terminar el feature de publicar
 import './App.css';
 
 export default function App() {
@@ -21,7 +21,7 @@ export default function App() {
             <Routes>
                 {/*RUTAS PUBLICAS*/}
                 <Route path='/' element={ <LandingPage />} />
-                <Route path='/publish' element={ <PublicarPage />} />
+                {/* <Route path='/publish' element={ <PublicarPage />} /> */}
                 {/* Ruta de redirección para usuarios autenticados */}
                 <Route 
                     path="/auth" 

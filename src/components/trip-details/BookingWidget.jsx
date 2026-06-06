@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import '../../styles/booking-widget.css';
+import '../../styles/Booking-widget.css';
 
 // Recibimos la función onConfirm y el estado isProcessing desde el padre
 export const BookingWidget = ({ pricePerSeat = 8, maxSeats = 4, onConfirm, isProcessing }) => {

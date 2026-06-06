@@ -1,4 +1,4 @@
-import '../../styles/trip-detail-view.css';
+import '../../styles/Trip-detail-view.css';
 
 export const DriverCard = ({ driver }) => {
     // Si el conductor no tiene avatar, usamos un generador de iniciales
