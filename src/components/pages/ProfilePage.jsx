@@ -50,7 +50,7 @@ export default function ProfilePage() {
                     user={MOCK_PROFILE_USER}
                     activeSection={activeSection}
                     onSectionChange={handleSectionChange}
-                    onLogout={() => { window.location.href = '/login'; }}
+                    onLogout={() => { window.location.href = '/auth'; }}
                 />
                 <div className="profile-content">
                     {SECTION_MAP[activeSection]}
