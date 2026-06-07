@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { tripService } from '../../api/tripService';
 
@@ -10,6 +11,7 @@ import Pagination   from '../common/Pagination.jsx';
 
 export default function DashboardPage() {
     const { user } = useAuth();
+    const navigate = useNavigate();
 
     const [activeTab,   setActiveTab]   = useState('date_asc');
     const [currentPage, setCurrentPage] = useState(1);
@@ -100,11 +102,11 @@ export default function DashboardPage() {
     }, [currentPage, activeTab, searchQuery]);
 
     function handleReserve(trip) {
-        window.location.href = `/checkout/${trip.id}`;
+        navigate(`/checkout/${trip.id}`); // navegación SPA: sin recarga completa ni refetch de /me
     }
 
     function handlePublish() {
-        window.location.href = '/publish';
+        navigate('/publish');
     }
 
     // Al buscar reseteamos a la página 1 para mostrar los resultados desde el principio

@@ -107,7 +107,7 @@ export default function TripsPage() {
         <AppLayout
             activeHref="/trips"
             hasNotifications
-            onPublish={() => { window.location.href = '/publish'; }}
+            onPublish={() => navigate('/publish')}
         >
             <PageHeader
                 title="Mis Viajes"

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 import AppLayout from '../common/AppLayout';
 import ProfileNav from '../profile/ProfileNav';
@@ -24,9 +26,20 @@ const SECTION_MAP = {
 };
 
 export default function ProfilePage() {
+    const navigate = useNavigate();
+    const { logout } = useAuth();
+
     const searchParams = new URLSearchParams(window.location.search);
     const sectionFromUrl = searchParams.get('section') || 'info';
     const [activeSection, setActiveSection] = useState(sectionFromUrl);
+
+    const handleLogout = async () => {
+        try {
+            await logout();
+        } finally {
+            navigate('/auth');
+        }
+    };
 
     // Manejamos el cambio de seccion con una funcion que actualiza la URL del navegador
     const handleSectionChange = (newSection) => {
@@ -42,7 +55,7 @@ export default function ProfilePage() {
             user={MOCK_USER}
             activeHref="/profile"
             hasNotifications
-            onPublish={() => { window.location.href = '/publish'; }}
+            onPublish={() => navigate('/publish')}
             hideTopbar={true}
         >
             <div className="profile-layout">
@@ -50,7 +63,7 @@ export default function ProfilePage() {
                     user={MOCK_PROFILE_USER}
                     activeSection={activeSection}
                     onSectionChange={handleSectionChange}
-                    onLogout={() => { window.location.href = '/auth'; }}
+                    onLogout={handleLogout}
                 />
                 <div className="profile-content">
                     {SECTION_MAP[activeSection]}

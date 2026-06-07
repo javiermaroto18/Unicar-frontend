@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import AppLayout             from '../common/AppLayout.jsx';
 import ListaConversaciones   from '../chat/ListaConversaciones.jsx';
@@ -10,6 +11,7 @@ import { MOCK_CONVERSACIONES }  from '../../utils/mockDataChat.js';
 import '../../styles/ChatLayout.css';
 
 export default function ChatPage() {
+    const navigate = useNavigate();
     const [idActivo, setIdActivo] = useState(MOCK_CONVERSACIONES[0].id);
 
     const conversacionActiva = MOCK_CONVERSACIONES.find(c => c.id === idActivo);
@@ -19,7 +21,7 @@ export default function ChatPage() {
             user={MOCK_USER}
             activeHref="/chat"
             hasNotifications
-            onPublish={() => { window.location.href = '/publish'; }}
+            onPublish={() => navigate('/publish')}
         >
             {/* El chat tiene su propio layout interno de dos columnas igual que el perfil */}
             <div className="chat-diseno">
