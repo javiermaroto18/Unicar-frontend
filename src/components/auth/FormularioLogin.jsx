@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/ToastContext.jsx';
 
 export default function FormularioLogin() {
     const [email,          setEmail]          = useState('');
@@ -11,6 +12,7 @@ export default function FormularioLogin() {
     // Conectamos con nuestro contexto global y el router de React
     const { login } = useAuth();
     const navigate = useNavigate();
+    const toast = useToast();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -23,7 +25,7 @@ export default function FormularioLogin() {
             navigate('/dashboard');
         } catch (error) {
             console.error("Error al iniciar sesión:", error);
-            alert("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
+            toast.error("Credenciales incorrectas. Por favor, inténtalo de nuevo.");
         } finally {
             setIsLoading(false);
         }

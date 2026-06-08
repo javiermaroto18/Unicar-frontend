@@ -3,6 +3,8 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { tripService } from '../../api/tripService';
 import { bookingService } from '../../api/bookingService';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/ToastContext.jsx';
+import { useConfirm } from '../../context/ConfirmContext.jsx';
 
 import Topbar from '../common/Topbar.jsx'; 
 import Footer from '../common/Footer.jsx'; 
@@ -21,7 +23,9 @@ export default function TripDetailView() {
     const navigate = useNavigate();
     const location = useLocation();
     const { user } = useAuth();
-    
+    const toast = useToast();
+    const confirm = useConfirm();
+
     const [trip, setTrip] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [isProcessing, setIsProcessing] = useState(false); 
@@ -78,40 +82,56 @@ export default function TripDetailView() {
         setIsProcessing(true);
         try {
             await bookingService.createBooking({ trip_id: trip.id, seats_booked: selectedSeats });
-            alert("¡Reserva confirmada con éxito!");
-            navigate('/trips'); 
+            toast.success("¡Reserva confirmada con éxito!");
+            navigate('/trips');
         } catch (error) {
-            alert("No se pudo completar la reserva.");
+            toast.error("No se pudo completar la reserva.");
         } finally {
             setIsProcessing(false);
         }
     };
 
     const handleCancelTrip = async () => {
-        if (!window.confirm("¿Estás seguro de que deseas cancelar este viaje? Los pasajeros serán notificados.")) return;
-        
+        const ok = await confirm({
+            title: 'Cancelar viaje',
+            message: 'Se cancelará el viaje y se avisará a los pasajeros con reserva. Esta acción no se puede deshacer.',
+            confirmText: 'Cancelar viaje',
+            cancelText: 'Volver',
+            variant: 'danger',
+            icon: 'directions_car',
+        });
+        if (!ok) return;
+
         setIsProcessing(true);
         try {
             await tripService.cancelTrip(trip.id);
-            alert("Viaje cancelado correctamente.");
+            toast.success("Viaje cancelado correctamente.");
             navigate('/trips');
         } catch (error) {
-            alert("Hubo un error al cancelar el viaje.");
+            toast.error("Hubo un error al cancelar el viaje.");
             setIsProcessing(false);
         }
     };
 
     const handleCancelBooking = async (bookingId) => {
-        if (!window.confirm("¿Seguro que quieres cancelar tu plaza? Se aplicarán las políticas de cancelación vigentes.")) return;
+        const ok = await confirm({
+            title: 'Cancelar tu plaza',
+            message: 'Se cancelará tu reserva y se liberará la plaza. Se aplicarán las políticas de cancelación vigentes.',
+            confirmText: 'Cancelar plaza',
+            cancelText: 'Volver',
+            variant: 'danger',
+            icon: 'event_busy',
+        });
+        if (!ok) return;
 
         setIsProcessing(true);
         try {
             await bookingService.cancelBooking(bookingId);
-            alert("Tu reserva ha sido cancelada.");
+            toast.success("Tu reserva ha sido cancelada.");
             navigate('/trips');
         } catch (error) {
             console.error("Error devuelto por Laravel al cancelar:", error);
-            alert("Hubo un error al cancelar tu reserva.");
+            toast.error("Hubo un error al cancelar tu reserva.");
             setIsProcessing(false);
         }
     };

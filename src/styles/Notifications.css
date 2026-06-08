@@ -1,0 +1,212 @@
+/* ===== Barra superior: pestañas + acción global ===== */
+.notif-barra {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.notif-tabs {
+    display: inline-flex;
+    gap: 0.25rem;
+    padding: 0.25rem;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+}
+
+.notif-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.notif-tab:hover {
+    color: var(--color-text);
+}
+
+.notif-tab--activa {
+    background-color: var(--color-primary);
+    color: #ffffff;
+}
+
+.notif-tab-contador {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.125rem;
+    height: 1.125rem;
+    padding: 0 0.35rem;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: #ef4444;
+    border-radius: var(--radius-full);
+}
+
+.notif-tab--activa .notif-tab-contador {
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+.notif-marcar-todas {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: color 0.2s, border-color 0.2s;
+}
+
+.notif-marcar-todas:hover:not(:disabled) {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+}
+
+.notif-marcar-todas:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.notif-marcar-todas .material-symbols-outlined {
+    font-size: 1.125rem;
+}
+
+/* ===== Lista ===== */
+.notif-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    max-width: 760px;
+}
+
+/* ===== Ítem ===== */
+.notif-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.875rem;
+    padding: 1rem;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.notif-item:hover {
+    border-color: var(--color-text-dim);
+}
+
+/* No leída: acento a la izquierda + fondo ligeramente más vivo */
+.notif-item--no-leida {
+    border-left: 3px solid var(--color-primary);
+    background-color: rgba(19, 127, 236, 0.06);
+}
+
+.notif-item-icono {
+    flex-shrink: 0;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+}
+
+.notif-item-icono .material-symbols-outlined {
+    font-size: 1.25rem;
+}
+
+/* Acento de color por tipo de notificación */
+.notif-item-icono--reserva { background-color: rgba(16, 185, 129, 0.12); color: var(--color-emerald); }
+.notif-item-icono--viaje   { background-color: rgba(19, 127, 236, 0.12); color: var(--color-primary); }
+.notif-item-icono--mensaje { background-color: rgba(245, 158, 11, 0.12); color: var(--color-amber); }
+.notif-item-icono--sistema { background-color: rgba(148, 163, 184, 0.14); color: var(--color-text-muted); }
+
+.notif-item-cuerpo {
+    flex: 1;
+    min-width: 0;
+}
+
+.notif-item-cabecera {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 0.2rem;
+}
+
+.notif-item-titulo {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.notif-item-tiempo {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--color-text-dim);
+}
+
+.notif-item-mensaje {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+}
+
+.notif-item-acciones {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex-shrink: 0;
+}
+
+.notif-item-boton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    color: var(--color-text-dim);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.notif-item-boton:hover {
+    background-color: var(--color-hover);
+    color: var(--color-primary);
+}
+
+.notif-item-boton--eliminar:hover {
+    color: #ef4444;
+}
+
+.notif-item-boton .material-symbols-outlined {
+    font-size: 1.125rem;
+}
+
+/* ===== Estado vacío ===== */
+.notif-vacio {
+    padding: 3rem;
+    text-align: center;
+    color: var(--color-text-muted);
+}
+
+.notif-vacio-icono {
+    font-size: 3rem;
+    color: var(--color-text-dim);
+}
+
+.notif-vacio-texto {
+    margin-top: 1rem;
+}

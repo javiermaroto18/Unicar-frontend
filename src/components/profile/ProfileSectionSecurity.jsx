@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/ToastContext.jsx';
+import { useConfirm } from '../../context/ConfirmContext.jsx';
 import { profileService } from '../../api/profileService';
 import { authService } from '../../api/authService';
 
@@ -8,6 +10,8 @@ import '../../styles/ProfileSectionOthers.css';
 
 export default function ProfileSectionSecurity() {
     const { user, logout } = useAuth();
+    const toast = useToast();
+    const confirm = useConfirm();
     const [isLoading, setIsLoading] = useState(false);
     const [notificationsOn, setNotificationsOn] = useState(
         user?.preferences?.notifications_on ?? true
@@ -29,7 +33,7 @@ export default function ProfileSectionSecurity() {
         } catch (error) {
             console.error(error);
             setNotificationsOn(!isChecked); // Revertir si falla
-            alert("Error al actualizar las notificaciones.");
+            toast.error("Error al actualizar las notificaciones.");
         }
     };
 
@@ -37,7 +41,8 @@ export default function ProfileSectionSecurity() {
     const handleChangePassword = async (e) => {
         e.preventDefault();
         if (passwords.new !== passwords.confirm) {
-            return alert("Las contraseñas nuevas no coinciden.");
+            toast.warning("Las contraseñas nuevas no coinciden.");
+            return;
         }
         setIsLoading(true);
         try {
@@ -46,28 +51,33 @@ export default function ProfileSectionSecurity() {
                 new_password: passwords.new,
                 new_password_confirmation: passwords.confirm
             });
-            alert("Contraseña actualizada con éxito.");
+            toast.success("Contraseña actualizada con éxito.");
             setShowPasswordForm(false);
             setPasswords({ current: '', new: '', confirm: '' });
         } catch (error) {
-            alert(error.message || "Error al cambiar la contraseña.");
+            toast.error(error.message || "Error al cambiar la contraseña.");
         } finally {
             setIsLoading(false);
         }
     };
 
     async function handleLogoutOtherSessions() {
-        if (!window.confirm("¿Estás seguro de que quieres cerrar sesión en todos los demás dispositivos?")) {
-            return;
-        }
+        const ok = await confirm({
+            title: 'Cerrar otras sesiones',
+            message: 'Se cerrará la sesión en todos los demás dispositivos. Tendrás que volver a iniciar sesión en ellos.',
+            confirmText: 'Cerrar otras sesiones',
+            variant: 'danger',
+            icon: 'devices',
+        });
+        if (!ok) return;
 
         setIsLoggingOutOthers(true);
         try {
             await authService.logoutOtherSessions();
-            alert("¡Hecho! Se han cerrado todas las demás sesiones por seguridad.");
+            toast.success("¡Hecho! Se han cerrado todas las demás sesiones por seguridad.");
         } catch (error) {
             console.error("Error al cerrar otras sesiones:", error);
-            alert("Hubo un problema al intentar cerrar las demás sesiones.");
+            toast.error("Hubo un problema al intentar cerrar las demás sesiones.");
         } finally {
             setIsLoggingOutOthers(false);
         }
@@ -75,16 +85,23 @@ export default function ProfileSectionSecurity() {
 
     // Eliminar cuenta
     const handleDeleteAccount = async () => {
-        const confirmText = prompt('Escribe "ELIMINAR" para confirmar que quieres borrar tu cuenta para siempre:');
-        if (confirmText !== 'ELIMINAR') return;
-        
+        const ok = await confirm({
+            title: 'Eliminar cuenta',
+            message: 'Esta acción es irreversible. Se borrarán para siempre tu perfil, vehículos, viajes y reservas.',
+            confirmText: 'Eliminar mi cuenta',
+            variant: 'danger',
+            icon: 'delete_forever',
+            requireText: 'ELIMINAR',
+        });
+        if (!ok) return;
+
         setIsLoading(true);
         try {
             await profileService.deleteAccount();
-            alert("Cuenta eliminada. Lamentamos verte partir.");
+            toast.success("Cuenta eliminada. Lamentamos verte partir.");
             logout(); // Expulsa al usuario al login
         } catch (error) {
-            alert("Error al eliminar la cuenta.");
+            toast.error("Error al eliminar la cuenta.");
             setIsLoading(false);
         }
     };

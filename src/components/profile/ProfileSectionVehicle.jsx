@@ -1,9 +1,13 @@
 import { useState, useEffect } from 'react';
 import apiClient from '../../api/apiClient';
+import { useToast } from '../../context/ToastContext.jsx';
+import { useConfirm } from '../../context/ConfirmContext.jsx';
 import '../../styles/ProfileShared.css';
 import '../../styles/ProfileSectionOthers.css';
 
 export default function ProfileSectionVehicle() {
+    const toast = useToast();
+    const confirm = useConfirm();
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
     
@@ -66,7 +70,7 @@ export default function ProfileSectionVehicle() {
     async function handleSave() {
         // Al crear exigimos la matrícula, pero al editar ya no es obligatoria enviarla
         if (!form.brand || !form.model || (!editingId && !form.license_plate)) {
-            alert("Por favor, rellena todos los campos.");
+            toast.warning("Por favor, rellena todos los campos.");
             return;
         }
 
@@ -82,20 +86,26 @@ export default function ProfileSectionVehicle() {
             setForm(initialFormState);
             setEditingId(null);
             setShowForm(false);
-            await fetchVehicles(); 
-            
+            await fetchVehicles();
+            toast.success(editingId ? "Vehículo actualizado correctamente." : "Vehículo registrado correctamente.");
+
         } catch (error) {
             console.error(error);
-            alert("Error al guardar el vehículo. Revisa los datos.");
+            toast.error("Error al guardar el vehículo. Revisa los datos.");
         } finally {
             setIsSaving(false);
         }
     }
 
     async function handleDelete(vehicle) {
-        if (!window.confirm(`¿Estás seguro de que quieres eliminar el vehículo con matrícula ${vehicle.license_plate}?`)) {
-            return;
-        }
+        const ok = await confirm({
+            title: 'Eliminar vehículo',
+            message: `Se eliminará el vehículo con matrícula ${vehicle.license_plate}. Dejará de estar disponible para publicar nuevos viajes.`,
+            confirmText: 'Eliminar',
+            variant: 'danger',
+            icon: 'directions_car',
+        });
+        if (!ok) return;
 
         try {
             await apiClient.delete(`/vehicles/${vehicle.id}`);
@@ -107,9 +117,10 @@ export default function ProfileSectionVehicle() {
             }
             // Recargamos la lista
             await fetchVehicles();
+            toast.success("Vehículo eliminado correctamente.");
         } catch (error) {
             console.error(error);
-            alert("Error al eliminar el vehículo.");
+            toast.error("Error al eliminar el vehículo.");
         }
     }
 

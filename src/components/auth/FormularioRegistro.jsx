@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/ToastContext.jsx';
 
 export default function FormularioRegistro() {
     const [nombre,      setNombre]      = useState('');
@@ -11,6 +12,7 @@ export default function FormularioRegistro() {
 
     const { register } = useAuth();
     const navigate = useNavigate();
+    const toast = useToast();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -22,7 +24,7 @@ export default function FormularioRegistro() {
             navigate('/dashboard');
         } catch (error) {
             console.error("Error al registrar:", error);
-            alert("Error al crear la cuenta. Revisa los datos ingresados.");
+            toast.error("Error al crear la cuenta. Revisa los datos ingresados.");
         } finally {
             setIsLoading(false);
         }

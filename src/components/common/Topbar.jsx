@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import NotificationsDropdown from '../notifications/NotificationsDropdown.jsx';
 import '../../styles/Topbar.css';
 
 export default function Topbar({ hasNotifications = false, showSearch = false, onSearch }) {
@@ -50,10 +51,7 @@ export default function Topbar({ hasNotifications = false, showSearch = false, o
             <div className="topbar-right">
                 {user ? (
                     <>
-                        <button className="topbar-notif-btn" aria-label="Notificaciones">
-                            <span className="material-symbols-outlined">notifications</span>
-                            {hasNotifications && <span className="topbar-notif-dot" />}
-                        </button>
+                        <NotificationsDropdown />
 
                         <div className="topbar-user">
                             <span className="topbar-user-greeting">

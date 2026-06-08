@@ -10,7 +10,8 @@ import GuestRoute from './components/common/GuestRoute.jsx';
 const DashboardPage  = lazy(() => import('./components/pages/DashboardPage.jsx'));
 const TripPage       = lazy(() => import('./components/pages/TripPage.jsx'));
 const ProfilePage    = lazy(() => import('./components/pages/ProfilePage.jsx'));
-const ChatPage       = lazy(() => import('./components/pages/ChatPage.jsx'));
+const ChatPage          = lazy(() => import('./components/pages/ChatPage.jsx'));
+const NotificationsPage = lazy(() => import('./components/pages/NotificationsPage.jsx'));
 const AuthPage       = lazy(() => import('./components/pages/AuthPage.jsx'));
 const TripDetailView = lazy(() => import('./components/pages/TripDetailView.jsx'));
 const TicketView     = lazy(() => import('./components/pages/TicketView.jsx'));
@@ -61,13 +62,21 @@ export default function App() {
                         </ProtectedRoute>
                     } 
                 />
-                <Route 
-                    path="/chat" 
+                <Route
+                    path="/chat"
                     element={
                         <ProtectedRoute>
                             <ChatPage />
                         </ProtectedRoute>
-                    } 
+                    }
+                />
+                <Route
+                    path="/notifications"
+                    element={
+                        <ProtectedRoute>
+                            <NotificationsPage />
+                        </ProtectedRoute>
+                    }
                 />
                 <Route 
                     path="/checkout/:id" 

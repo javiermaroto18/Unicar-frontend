@@ -1,11 +1,13 @@
 import { useState, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/ToastContext.jsx';
 import { profileService } from '../../api/profileService';
 import '../../styles/ProfileShared.css';
 import '../../styles/ProfileSectionInfo.css';
 
 export default function ProfileSectionInfo() {
     const { user } = useAuth();
+    const toast = useToast();
     const [isLoading, setIsLoading] = useState(false);
     
     const [form, setForm] = useState({
@@ -32,7 +34,7 @@ export default function ProfileSectionInfo() {
         const file = e.target.files[0];
         if (file) {
             if (file.size > 2 * 1024 * 1024) {
-                alert("La imagen es demasiado grande. El máximo es 2MB.");
+                toast.warning("La imagen es demasiado grande. El máximo es 2MB.");
                 return;
             }
             setAvatarFile(file);
@@ -58,12 +60,12 @@ export default function ProfileSectionInfo() {
 
             await profileService.updateProfile(formData);
             
-            setAvatarFile(null); 
-            
-            alert("Perfil actualizado correctamente. (Recarga para ver los cambios)");
+            setAvatarFile(null);
+
+            toast.success("Perfil actualizado correctamente. (Recarga para ver los cambios)");
         } catch (error) {
             console.error(error);
-            alert("Error al actualizar el perfil.");
+            toast.error("Error al actualizar el perfil.");
         } finally {
             setIsLoading(false);
         }

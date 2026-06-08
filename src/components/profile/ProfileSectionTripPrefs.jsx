@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useToast } from '../../context/ToastContext.jsx';
 import { profileService } from '../../api/profileService';
 import '../../styles/ProfileShared.css';
 import '../../styles/ProfileSectionOthers.css';
@@ -47,6 +48,7 @@ const PREFS_CONFIG = [
 
 export default function ProfileSectionTripPrefs() {
     const { user } = useAuth();
+    const toast = useToast();
     // Estados para manejar las preferencias y el estado de carga
     const [isLoading, setIsLoading] = useState(false);
     const initialPrefs = user?.preferences || Object.fromEntries(PREFS_CONFIG.map(p => [p.key, p.default]));    
@@ -59,11 +61,11 @@ export default function ProfileSectionTripPrefs() {
         setIsLoading(true);
         try {
             await profileService.updatePreferences({ preferences: prefs });
-            
-            alert("Preferencias actualizadas correctamente. (Recarga para ver los cambios)");
+
+            toast.success("Preferencias actualizadas correctamente. (Recarga para ver los cambios)");
         } catch (error) {
             console.error(error);
-            alert("Error al actualizar las preferencias.");
+            toast.error("Error al actualizar las preferencias.");
         } finally {
             setIsLoading(false);
         }

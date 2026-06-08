@@ -1,0 +1,164 @@
+/* Capa oscura que cubre la pantalla y centra el diálogo.
+   z-index por debajo de los toasts (9999) para que un aviso posterior se vea encima. */
+.confirm-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: rgba(8, 13, 20, 0.7);
+    backdrop-filter: blur(2px);
+    animation: confirm-overlay-entrada 0.18s ease-out;
+}
+
+.confirm-dialog {
+    width: 100%;
+    max-width: 420px;
+    padding: 1.75rem;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    animation: confirm-dialog-entrada 0.2s ease-out;
+}
+
+/* Icono circular con color según la variante */
+.confirm-icono {
+    width: 3.25rem;
+    height: 3.25rem;
+    margin: 0 auto 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+}
+
+.confirm-icono .material-symbols-outlined {
+    font-size: 1.6rem;
+}
+
+.confirm-icono--default {
+    background-color: rgba(19, 127, 236, 0.12);
+    color: var(--color-primary);
+}
+
+.confirm-icono--danger {
+    background-color: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+}
+
+.confirm-titulo {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+}
+
+.confirm-mensaje {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+}
+
+/* Campo de texto para confirmaciones que exigen teclear una palabra (ej. "ELIMINAR") */
+.confirm-campo {
+    margin-top: 1.25rem;
+    text-align: left;
+}
+
+.confirm-campo-etiqueta {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.4rem;
+}
+
+.confirm-campo-etiqueta strong {
+    color: var(--color-text);
+    letter-spacing: 0.03em;
+}
+
+.confirm-campo-input {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    font-family: var(--font);
+    font-size: 0.875rem;
+    color: var(--color-text);
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    transition: border-color 0.2s;
+}
+
+.confirm-campo-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+}
+
+/* Acciones */
+.confirm-acciones {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+}
+
+.confirm-btn {
+    flex: 1;
+    padding: 0.625rem 1rem;
+    font-family: var(--font);
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    transition: background-color 0.2s, border-color 0.2s, opacity 0.2s;
+}
+
+.confirm-btn--cancelar {
+    background-color: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text-muted);
+}
+
+.confirm-btn--cancelar:hover {
+    border-color: var(--color-text-dim);
+    color: var(--color-text);
+}
+
+.confirm-btn--confirmar {
+    color: #ffffff;
+}
+
+/* Botón de confirmar según variante */
+.confirm-btn--confirmar.confirm-btn--default {
+    background-color: var(--color-primary);
+}
+
+.confirm-btn--confirmar.confirm-btn--default:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.confirm-btn--confirmar.confirm-btn--danger {
+    background-color: #ef4444;
+}
+
+.confirm-btn--confirmar.confirm-btn--danger:hover {
+    background-color: #dc2626;
+}
+
+.confirm-btn--confirmar:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+@keyframes confirm-overlay-entrada {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes confirm-dialog-entrada {
+    from { opacity: 0; transform: translateY(12px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
