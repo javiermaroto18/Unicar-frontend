@@ -62,7 +62,10 @@ export function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={value}>
-            {!isLoading && children}
+            {/* Renderizamos siempre: las rutas comprueban el token por su cuenta y
+                los componentes que usan `user` ya lo protegen con `user && ...`.
+                Así la landing pública no espera al cold-start del backend. */}
+            {children}
         </AuthContext.Provider>
     );
 }

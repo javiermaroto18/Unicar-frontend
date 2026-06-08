@@ -1,23 +1,27 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // Componente de ruta protegida y redireccion
 import ProtectedRoute from './components/common/ProtectedRoute.jsx';
 import GuestRoute from './components/common/GuestRoute.jsx';
 
-import DashboardPage from './components/pages/DashboardPage.jsx';
-import TripPage from './components/pages/TripPage.jsx';
-import ProfilePage from './components/pages/ProfilePage.jsx';
-import ChatPage from './components/pages/ChatPage.jsx';
-import AuthPage from './components/pages/AuthPage.jsx';
-import TripDetailView from './components/pages/TripDetailView.jsx';
-import TicketView from './components/pages/TicketView.jsx';
-import LandingPage from './components/pages/LandingPage.jsx';
-// import PublicarPage from './components/pages/PublicarPage.jsx'; // TODO: descomentar al terminar el feature de publicar
+// Cargamos cada página de forma diferida (code splitting): Vite genera un chunk
+// por página, así la landing pública no descarga el código del resto de la app.
+const DashboardPage  = lazy(() => import('./components/pages/DashboardPage.jsx'));
+const TripPage       = lazy(() => import('./components/pages/TripPage.jsx'));
+const ProfilePage    = lazy(() => import('./components/pages/ProfilePage.jsx'));
+const ChatPage       = lazy(() => import('./components/pages/ChatPage.jsx'));
+const AuthPage       = lazy(() => import('./components/pages/AuthPage.jsx'));
+const TripDetailView = lazy(() => import('./components/pages/TripDetailView.jsx'));
+const TicketView     = lazy(() => import('./components/pages/TicketView.jsx'));
+const LandingPage    = lazy(() => import('./components/pages/LandingPage.jsx'));
+// const PublicarPage = lazy(() => import('./components/pages/PublicarPage.jsx')); // TODO: descomentar al terminar el feature de publicar
 import './App.css';
 
 export default function App() {
     return (
         <BrowserRouter>
+            <Suspense fallback={null}>
             <Routes>
                 {/*RUTAS PUBLICAS*/}
                 <Route path='/' element={ <LandingPage />} />
@@ -98,6 +102,7 @@ export default function App() {
                     } 
                 />
             </Routes>
+            </Suspense>
         </BrowserRouter>
     );
 }

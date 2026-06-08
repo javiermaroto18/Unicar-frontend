@@ -14,7 +14,7 @@ export default function LandingPage(){
     const navigate = useNavigate();
     const [displayAvatars, setDisplayAvatars] = useState([]);
     
-    const isLogged = !!localStorage.getItem('token');
+    const isLogged = !!localStorage.getItem('authToken');
     function irAAuth(tab) {
         navigate(`/auth#${tab}`);
     }
