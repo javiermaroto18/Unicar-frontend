@@ -1,4 +1,4 @@
-// Pestañas de filtrado de notificaciones. 'noLeidas' muestra un contador.
+// Control segmentado para filtrar notificaciones. 'noLeidas' muestra un contador.
 const TABS = [
     { id: 'todas',     label: 'Todas' },
     { id: 'noLeidas',  label: 'No leídas' },
@@ -19,7 +19,7 @@ export default function NotificationFilters({ filtroActivo, onCambiarFiltro, tot
                     >
                         {label}
                         {id === 'noLeidas' && totalNoLeidas > 0 && (
-                            <span className="notif-tab-contador">{totalNoLeidas}</span>
+                            <span className="notif-tab-contador">({totalNoLeidas})</span>
                         )}
                     </button>
                 ))}
@@ -32,7 +32,6 @@ export default function NotificationFilters({ filtroActivo, onCambiarFiltro, tot
                 onClick={onMarcarTodas}
                 disabled={totalNoLeidas === 0}
             >
-                <span className="material-symbols-outlined">done_all</span>
                 Marcar todas como leídas
             </button>
         </div>

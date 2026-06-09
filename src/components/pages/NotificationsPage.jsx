@@ -1,13 +1,15 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import AppLayout           from '../common/AppLayout.jsx';
-import PageHeader          from '../common/PageHeader.jsx';
-import NotificationFilters from '../notifications/NotificationFilters.jsx';
-import NotificationList    from '../notifications/NotificationList.jsx';
+import AppLayout            from '../common/AppLayout.jsx';
+import PageHeader           from '../common/PageHeader.jsx';
+import NotificationFilters  from '../notifications/NotificationFilters.jsx';
+import NotificationList     from '../notifications/NotificationList.jsx';
+import NotificationsSummary from '../notifications/NotificationsSummary.jsx';
+import ProximoViajeCard     from '../notifications/ProximoViajeCard.jsx';
 
 import { useToast } from '../../context/ToastContext.jsx';
-import { MOCK_NOTIFICACIONES } from '../../utils/mockDataNotifications.js';
+import { useNotifications } from '../../context/NotificationsContext.jsx';
 
 import '../../styles/Notifications.css';
 
@@ -15,62 +17,77 @@ export default function NotificationsPage() {
     const navigate = useNavigate();
     const toast = useToast();
 
-    // Estado local: hoy se inicializa con datos mock (Fase 2: vendrá del backend)
-    const [notificaciones, setNotificaciones] = useState(MOCK_NOTIFICACIONES);
-    const [filtro, setFiltro] = useState('todas');
+    const { notificaciones, marcarLeida, marcarTodas, eliminar } = useNotifications();
+    const [filtro, setFiltro] = useState('todas');       // estado de lectura: todas | noLeidas
+    const [tipoFiltro, setTipoFiltro] = useState(null);  // tipo: null | 'reserva' | 'viaje' | 'sistema'
 
     const totalNoLeidas = useMemo(
         () => notificaciones.filter((n) => !n.leida).length,
         [notificaciones]
     );
 
-    // Aplicamos el filtro de pestaña activo sobre la lista
+    // Combina el filtro de pestaña (lectura) con el filtro de tipo de la barra lateral
     const visibles = useMemo(() => {
-        if (filtro === 'noLeidas') {
-            return notificaciones.filter((n) => !n.leida);
-        }
-        return notificaciones;
-    }, [notificaciones, filtro]);
+        return notificaciones.filter((n) => {
+            if (filtro === 'noLeidas' && n.leida) return false;
+            if (tipoFiltro && (n.tipo || 'sistema') !== tipoFiltro) return false;
+            return true;
+        });
+    }, [notificaciones, filtro, tipoFiltro]);
 
-    function marcarLeida(id) {
-        setNotificaciones((prev) =>
-            prev.map((n) => (n.id === id ? { ...n, leida: true } : n))
-        );
+    // Al abrir una notificación: la marcamos leída y, si tiene destino, navegamos
+    function handleAbrir(n) {
+        if (!n.leida) marcarLeida(n.id);
+        if (n.enlace) navigate(n.enlace);
     }
 
-    function marcarTodasLeidas() {
-        setNotificaciones((prev) => prev.map((n) => ({ ...n, leida: true })));
+    function handleMarcarTodas() {
+        marcarTodas();
         toast.success('Todas las notificaciones se han marcado como leídas.');
     }
 
-    function eliminar(id) {
-        setNotificaciones((prev) => prev.filter((n) => n.id !== id));
+    function handleEliminar(id) {
+        eliminar(id);
         toast.info('Notificación eliminada.');
     }
 
     return (
         <AppLayout
             activeHref="/notifications"
-            hasNotifications={totalNoLeidas > 0}
             onPublish={() => navigate('/publish')}
         >
-            <PageHeader
-                title="Notificaciones"
-                subtitle="Reservas, viajes y avisos de tu actividad en UniCar."
-            />
+            <div className="notif-wrap">
+                <PageHeader
+                    title="Notificaciones"
+                    subtitle="Reservas, viajes y avisos de tu actividad en UniCar."
+                />
 
-            <NotificationFilters
-                filtroActivo={filtro}
-                onCambiarFiltro={setFiltro}
-                totalNoLeidas={totalNoLeidas}
-                onMarcarTodas={marcarTodasLeidas}
-            />
+                <div className="notif-page">
+                <div className="notif-main">
+                    <NotificationFilters
+                        filtroActivo={filtro}
+                        onCambiarFiltro={setFiltro}
+                        totalNoLeidas={totalNoLeidas}
+                        onMarcarTodas={handleMarcarTodas}
+                    />
+                    <NotificationList
+                        notificaciones={visibles}
+                        onAbrir={handleAbrir}
+                        onMarcarLeida={marcarLeida}
+                        onEliminar={handleEliminar}
+                    />
+                </div>
 
-            <NotificationList
-                notificaciones={visibles}
-                onMarcarLeida={marcarLeida}
-                onEliminar={eliminar}
-            />
+                <aside className="notif-aside">
+                    <NotificationsSummary
+                        notificaciones={notificaciones}
+                        tipoActivo={tipoFiltro}
+                        onTipoChange={setTipoFiltro}
+                    />
+                    <ProximoViajeCard />
+                </aside>
+                </div>
+            </div>
         </AppLayout>
     );
 }

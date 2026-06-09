@@ -5,6 +5,7 @@ import { bookingService } from '../../api/bookingService';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useConfirm } from '../../context/ConfirmContext.jsx';
+import { useNotifications } from '../../context/NotificationsContext.jsx';
 
 import Topbar from '../common/Topbar.jsx'; 
 import Footer from '../common/Footer.jsx'; 
@@ -25,6 +26,7 @@ export default function TripDetailView() {
     const { user } = useAuth();
     const toast = useToast();
     const confirm = useConfirm();
+    const { add: addNotificacion } = useNotifications();
 
     const [trip, setTrip] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -41,15 +43,13 @@ export default function TripDetailView() {
 
                 if (data.departure_time) {
                     const dateObj = new Date(data.departure_time);
-                    // Comprobamos si la fecha del viaje ya es pasada
-                    isPast = dateObj < new Date(); 
+                    isPast = dateObj < new Date();
                     
                     if (!isNaN(dateObj)) {
                         horaSalida = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                     }
                 }
 
-                // Lógica de estado inteligente para que el DriverManagementWidget reciba el dato correcto
                 let estadoFinal = data.status;
                 if (data.status !== 'cancelled' && (data.status === 'completed' || isPast)) {
                     estadoFinal = 'completed';
@@ -83,6 +83,12 @@ export default function TripDetailView() {
         try {
             await bookingService.createBooking({ trip_id: trip.id, seats_booked: selectedSeats });
             toast.success("¡Reserva confirmada con éxito!");
+            addNotificacion({
+                tipo: 'reserva',
+                titulo: 'Reserva confirmada',
+                mensaje: `Tu plaza en el viaje ${trip.origin} → ${trip.destination} está confirmada.`,
+                enlace: '/trips',
+            });
             navigate('/trips');
         } catch (error) {
             toast.error("No se pudo completar la reserva.");
@@ -106,6 +112,12 @@ export default function TripDetailView() {
         try {
             await tripService.cancelTrip(trip.id);
             toast.success("Viaje cancelado correctamente.");
+            addNotificacion({
+                tipo: 'viaje',
+                titulo: 'Has cancelado un viaje',
+                mensaje: `Tu viaje ${trip.origin} → ${trip.destination} se ha cancelado y se ha avisado a los pasajeros.`,
+                enlace: '/trips',
+            });
             navigate('/trips');
         } catch (error) {
             toast.error("Hubo un error al cancelar el viaje.");
@@ -128,6 +140,12 @@ export default function TripDetailView() {
         try {
             await bookingService.cancelBooking(bookingId);
             toast.success("Tu reserva ha sido cancelada.");
+            addNotificacion({
+                tipo: 'reserva',
+                titulo: 'Reserva cancelada',
+                mensaje: `Has cancelado tu plaza en el viaje ${trip.origin} → ${trip.destination}.`,
+                enlace: '/trips',
+            });
             navigate('/trips');
         } catch (error) {
             console.error("Error devuelto por Laravel al cancelar:", error);
@@ -183,7 +201,6 @@ export default function TripDetailView() {
                             <MapPlaceholder />
                         </div>
 
-                        {/* Renderizado condicional */}
                         {esElConductor ? (
                             <DriverManagementWidget trip={trip} onCancelTrip={handleCancelTrip} />
                         ) : yaEstaReservado ? (

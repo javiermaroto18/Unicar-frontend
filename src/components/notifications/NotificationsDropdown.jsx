@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getNotifConfig } from './notificationTypes.js';
-import { MOCK_NOTIFICACIONES } from '../../utils/mockDataNotifications.js';
+import { useNotifications } from '../../context/NotificationsContext.jsx';
 import '../../styles/NotificationsDropdown.css';
 
 // Nº de notificaciones que se muestran en el desplegable (las más recientes)
@@ -10,12 +10,13 @@ const VISTA_PREVIA = 2;
 
 export default function NotificationsDropdown() {
     const navigate = useNavigate();
+    const { notificaciones, marcarLeida } = useNotifications();
     const [abierto, setAbierto] = useState(false);
     const contenedorRef = useRef(null);
 
-    // Datos mock (Fase 2: vendrá del backend). El array ya está ordenado de más reciente a más antiguo.
-    const recientes = MOCK_NOTIFICACIONES.slice(0, VISTA_PREVIA);
-    const noLeidas = MOCK_NOTIFICACIONES.filter((n) => !n.leida).length;
+    // Estado compartido con la pantalla. El array está ordenado de más reciente a más antiguo.
+    const recientes = notificaciones.slice(0, VISTA_PREVIA);
+    const noLeidas = notificaciones.filter((n) => !n.leida).length;
 
     // Cerrar al hacer clic fuera o pulsar Escape
     useEffect(() => {
@@ -41,6 +42,13 @@ export default function NotificationsDropdown() {
     function irATodas() {
         setAbierto(false);
         navigate('/notifications');
+    }
+
+    // Abrir una notificación: cerrar panel, marcarla leída y navegar a su destino
+    function abrir(n) {
+        setAbierto(false);
+        if (!n.leida) marcarLeida(n.id);
+        if (n.enlace) navigate(n.enlace);
     }
 
     return (
@@ -80,7 +88,11 @@ export default function NotificationsDropdown() {
                                 return (
                                     <li
                                         key={n.id}
-                                        className={`notif-drop-item${n.leida ? '' : ' notif-drop-item--no-leida'}`}
+                                        className={`notif-drop-item${n.leida ? '' : ' notif-drop-item--no-leida'}${n.enlace ? ' notif-drop-item--clicable' : ''}`}
+                                        onClick={() => abrir(n)}
+                                        role={n.enlace ? 'button' : undefined}
+                                        tabIndex={n.enlace ? 0 : undefined}
+                                        onKeyDown={(e) => { if (n.enlace && e.key === 'Enter') abrir(n); }}
                                     >
                                         <div className={`notif-drop-icono notif-drop-icono--${tipo}`}>
                                             <span className="material-symbols-outlined">{icon}</span>

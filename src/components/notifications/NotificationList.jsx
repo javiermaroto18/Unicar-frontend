@@ -1,6 +1,6 @@
 import NotificationItem from './NotificationItem.jsx';
 
-export default function NotificationList({ notificaciones, onMarcarLeida, onEliminar }) {
+export default function NotificationList({ notificaciones, onAbrir, onMarcarLeida, onEliminar }) {
     // Estado vacío: mismo patrón visual que el "sin resultados" del Dashboard
     if (notificaciones.length === 0) {
         return (
@@ -17,6 +17,7 @@ export default function NotificationList({ notificaciones, onMarcarLeida, onElim
                 <NotificationItem
                     key={n.id}
                     notificacion={n}
+                    onAbrir={onAbrir}
                     onMarcarLeida={onMarcarLeida}
                     onEliminar={onEliminar}
                 />

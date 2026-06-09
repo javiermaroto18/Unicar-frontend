@@ -1,10 +1,18 @@
 import { getNotifConfig } from './notificationTypes.js';
 
-export default function NotificationItem({ notificacion, onMarcarLeida, onEliminar }) {
+export default function NotificationItem({ notificacion, onAbrir, onMarcarLeida, onEliminar }) {
     const { icon, tipo } = getNotifConfig(notificacion.tipo);
+    const clicable = Boolean(notificacion.enlace);
 
     return (
-        <article className={`notif-item${notificacion.leida ? '' : ' notif-item--no-leida'}`}>
+        <article
+            className={`notif-item${notificacion.leida ? '' : ' notif-item--no-leida'}${clicable ? ' notif-item--clicable' : ''}`}
+            onClick={() => onAbrir(notificacion)}
+            role={clicable ? 'button' : undefined}
+            tabIndex={clicable ? 0 : undefined}
+            onKeyDown={(e) => { if (clicable && e.key === 'Enter') onAbrir(notificacion); }}
+        >
+            <span className="notif-item-dot" aria-hidden="true" />
             <div className={`notif-item-icono notif-item-icono--${tipo}`}>
                 <span className="material-symbols-outlined">{icon}</span>
             </div>
@@ -18,12 +26,12 @@ export default function NotificationItem({ notificacion, onMarcarLeida, onElimin
             </div>
 
             <div className="notif-item-acciones">
-                {/* Marcar como leída: solo se ofrece si aún no lo está */}
+                {/* stopPropagation: los botones no deben disparar la apertura de la fila */}
                 {!notificacion.leida && (
                     <button
                         type="button"
                         className="notif-item-boton"
-                        onClick={() => onMarcarLeida(notificacion.id)}
+                        onClick={(e) => { e.stopPropagation(); onMarcarLeida(notificacion.id); }}
                         title="Marcar como leída"
                         aria-label="Marcar como leída"
                     >
@@ -33,7 +41,7 @@ export default function NotificationItem({ notificacion, onMarcarLeida, onElimin
                 <button
                     type="button"
                     className="notif-item-boton notif-item-boton--eliminar"
-                    onClick={() => onEliminar(notificacion.id)}
+                    onClick={(e) => { e.stopPropagation(); onEliminar(notificacion.id); }}
                     title="Eliminar notificación"
                     aria-label="Eliminar notificación"
                 >
