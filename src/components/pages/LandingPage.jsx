@@ -8,12 +8,10 @@ import BeneficiosLanding from '../landing/BeneficiosLanding.jsx'
 import CtaFinal from '../landing/CtaFinal.jsx'
 
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 
 export default function LandingPage(){
     const navigate = useNavigate();
-    const [displayAvatars, setDisplayAvatars] = useState([]);
-    
+
     const isLogged = !!localStorage.getItem('authToken');
     function irAAuth(tab) {
         navigate(`/auth#${tab}`);
@@ -35,10 +33,9 @@ export default function LandingPage(){
                 onLogin={(e) => { e.preventDefault(); irAAuth('login'); }} 
                 OnRegistro={(e) => { e.preventDefault(); irAAuth('registro'); }} 
             />
-            <HeroLanding 
-                isLogged={isLogged} 
-                displayAvatars={displayAvatars} 
-                onBuscar={irADashboard} 
+            <HeroLanding
+                isLogged={isLogged}
+                onBuscar={irADashboard}
                 onOfrecer={isLogged ? irADashboard : () => irAAuth('registro')} 
             />
             <BuscadorViaje onBuscar={handleBuscar} />

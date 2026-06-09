@@ -4,7 +4,6 @@ export const TripRoute = ({ origin, destination, time }) => {
     return (
         <section className="card">
             <div className="route">
-                {/* Origin */}
                 <div className="route__row">
                     <div className="route__indicator">
                         <div className="route__dot route__dot--primary">
@@ -20,7 +19,6 @@ export const TripRoute = ({ origin, destination, time }) => {
                         </p>
                     </div>
                 </div>
-                {/* Destination */}
                 <div className="route__row">
                     <div className="route__indicator">
                         <div className="route__dot route__dot--empty">

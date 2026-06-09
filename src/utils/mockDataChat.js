@@ -1,5 +1,3 @@
-// Añadir al final de mockData.js
-
 export const MOCK_CONVERSACIONES = [
     {
         id: 1,

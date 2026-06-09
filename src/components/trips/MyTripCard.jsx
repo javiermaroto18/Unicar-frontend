@@ -63,7 +63,6 @@ export default function MyTripCard({ trip, onViewTicket, onViewDetails, isDriver
                         {trip.price}€
                     </span>
                     
-                    {/* Renderizado inteligente del botón según el estado y rol */}
                     {isCancelled ? (
                         <button 
                             className="my-trip-card-btn-ticket" 

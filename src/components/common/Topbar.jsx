@@ -57,17 +57,6 @@ export default function Topbar({ hasNotifications = false, showSearch = false, o
                             <span className="topbar-user-greeting">
                                 Hola, <strong>{user.name}</strong>
                             </span>
-                            {/* {user.avatar ? (
-                                <img
-                                    className="topbar-user-avatar"
-                                    src={user.avatar}
-                                    alt={`Avatar de ${user.name}`}
-                                />
-                            ) : (
-                                <span className="material-symbols-outlined topbar-user-avatar-default">
-                                    person
-                                </span>
-                            )} */}
                             <button onClick={handleLogout} className="topbar-logout-btn">
                                 Salir
                             </button>

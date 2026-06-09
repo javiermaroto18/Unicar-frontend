@@ -5,7 +5,6 @@ import Topbar from './Topbar.jsx';
 export default function AppLayout({ activeHref, hasNotifications, showSearch = false, onSearch, onPublish, hideTopbar = false, children }) {
     return (
         <div className="app-layout">
-            {/* Pasamos las props correctas */}
             <Sidebar activeHref={activeHref} onPublish={onPublish} />
             
             <main className="app-layout-main">

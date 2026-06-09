@@ -67,7 +67,6 @@ export default function ProfileSectionVerification() {
                 </div>
             </div>
 
-            {/* Renderizado condicional del banner de alerta */}
             {!isVerified ? (
                 <div className="prof-alert-banner">
                     <div className="prof-alert-banner-icono-contenedor">

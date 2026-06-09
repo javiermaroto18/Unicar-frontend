@@ -1,5 +1,4 @@
-/* Capa oscura que cubre la pantalla y centra el diálogo.
-   z-index por debajo de los toasts (9999) para que un aviso posterior se vea encima. */
+/* Capa oscura que centra el diálogo (z-index bajo los toasts) */
 .confirm-overlay {
     position: fixed;
     inset: 0;

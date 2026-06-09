@@ -49,7 +49,6 @@ const PREFS_CONFIG = [
 export default function ProfileSectionTripPrefs() {
     const { user } = useAuth();
     const toast = useToast();
-    // Estados para manejar las preferencias y el estado de carga
     const [isLoading, setIsLoading] = useState(false);
     const initialPrefs = user?.preferences || Object.fromEntries(PREFS_CONFIG.map(p => [p.key, p.default]));    
     const [prefs, setPrefs] = useState(initialPrefs);

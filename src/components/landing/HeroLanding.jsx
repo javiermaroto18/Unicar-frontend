@@ -1,7 +1,7 @@
 import '../../styles/LandingShared.css'
 import '../../styles/HeroLanding.css'
 
-export default function HeroLanding({ isLogged, displayAvatars, onBuscar, onOfrecer }){
+export default function HeroLanding({ isLogged, onBuscar, onOfrecer }){
     return(
         <div className="landing-hero">
             {/* Overlay oscuro */}
@@ -28,25 +28,6 @@ export default function HeroLanding({ isLogged, displayAvatars, onBuscar, onOfre
                         {isLogged ? 'Publicar Viaje' : 'Ofrecer asiento'}
                     </button>
                 </div>
-            {/* 
-                {displayAvatars && displayAvatars.length > 0 && (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>
-                        <div style={{ display: 'flex', paddingLeft: '10px' }}>
-                            {displayAvatars.map((src, idx) => (
-                                <img 
-                                    key={idx} 
-                                    style={{ width: '40px', height: '40px', borderRadius: '50%', border: '2px solid #101922', marginLeft: '-10px', objectFit: 'cover' }} 
-                                    src={src} 
-                                    alt="Usuario UniCar" 
-                                />
-                            ))}
-                        </div>
-                        <span style={{ color: '#94a3b8', fontSize: '0.875rem', fontWeight: 500 }}>
-                            Únete a <span style={{ color: 'white', fontWeight: 700 }}>más de 2,500 estudiantes</span>
-                        </span>
-                    </div>
-                )} 
-            */}
             </div>
         </div>
     )

@@ -9,7 +9,6 @@ export default function FormularioLogin() {
     const [mostrarPass,    setMostrarPass]    = useState(false);
     const [isLoading,      setIsLoading]      = useState(false);
 
-    // Conectamos con nuestro contexto global y el router de React
     const { login } = useAuth();
     const navigate = useNavigate();
     const toast = useToast();
@@ -19,9 +18,7 @@ export default function FormularioLogin() {
         setIsLoading(true);
         
         try {
-            // Ejecutamos el login del contexto (que guarda el token y el usuario global)
             await login({ email, password });
-            // Redirigimos al dashboard automáticamente
             navigate('/dashboard');
         } catch (error) {
             console.error("Error al iniciar sesión:", error);

@@ -4,7 +4,6 @@ import '../../styles/Trip-detail-view.css';
 function DriverManagementWidget({ trip, onCancelTrip }) {
     const [mockAvatars, setMockAvatars] = useState({});
 
-    // Generador de avatares ficticios dinámicos para Social Proof
     useEffect(() => {
         const FICTIONAL_PHOTOS = [
             'https://randomuser.me/api/portraits/women/44.jpg',
@@ -33,15 +32,13 @@ function DriverManagementWidget({ trip, onCancelTrip }) {
 
     const isCancelled = trip.status === 'cancelled';
     const isCompleted = trip.status === 'completed';
-    const isScheduled = !isCancelled && !isCompleted; 
-
-    console.log("Renderizando DriverManagementWidget con estado:", { isCancelled, isCompleted, isScheduled });
+    const isScheduled = !isCancelled && !isCompleted;
 
     return (
         <aside className="col-right">
             <div className="booking-card">
                 
-                {/* --- CABECERA DINÁMICA --- */}
+                {/* Cabecera */}
                 <div className="booking-card__price-row">
                     <span className="booking-card__price-label">Estado de la Ruta</span>
                     {isScheduled && <span className="status-badge status-badge--success">Publicado</span>}
@@ -49,7 +46,7 @@ function DriverManagementWidget({ trip, onCancelTrip }) {
                     {isCancelled && <span className="status-badge" style={{ backgroundColor: '#450a0a', color: '#f87171', border: '1px solid #450a0a' }}>Cancelado</span>}
                 </div>
 
-                {/* --- ESTADO 1: CANCELADO --- */}
+                {/* Estado: cancelado */}
                 {isCancelled && (
                     <div style={{ marginTop: '1.5rem', padding: '1rem', backgroundColor: 'rgba(239, 68, 68, 0.1)', borderRadius: '8px', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#f87171', marginBottom: '0.5rem' }}>
@@ -62,7 +59,7 @@ function DriverManagementWidget({ trip, onCancelTrip }) {
                     </div>
                 )}
 
-                {/* --- ESTADO 2 Y 3: PROGRAMADO O COMPLETADO --- */}
+                {/* Estado: programado o completado */}
                 {(isScheduled || isCompleted) && (
                     <>
                         <div className="booking-card__seats driver-seats-section">

@@ -11,7 +11,6 @@ export default function TripCard({ trip, onReserve }) {
     const seatsAvailable = trip.seatsAvailable !== undefined ? trip.seatsAvailable : seatsTotal;
     const takenSeats = Math.max(0, seatsTotal - seatsAvailable);
 
-    // Lógica para mostrar la fecha en un formato entendible, con varias opciones de datos
     let dateDisplay = trip.date || trip.dateLabel || 'Fecha pendiente';
     if (!trip.date && !trip.dateLabel && trip.departure_time) {
         const d = new Date(trip.departure_time);
@@ -19,10 +18,7 @@ export default function TripCard({ trip, onReserve }) {
         dateDisplay = dateDisplay.charAt(0).toUpperCase() + dateDisplay.slice(1);
     }
 
-    // Variable booleana para saber si está lleno y tener el código más limpio
     const isFull = seatsAvailable === 0;
-    
-    // Variable para saber si el conductor está verificado
     const isVerified = Boolean(driver.is_verified_driver);
 
     return (
@@ -52,7 +48,6 @@ export default function TripCard({ trip, onReserve }) {
                     </div>
                 </div>
 
-                {/* --- RENDERIZADO CONDICIONAL DEL BADGE --- */}
                 {isVerified ? (
                     <div className="trip-card-verified-badge"  
                         style={{ 
@@ -69,8 +64,8 @@ export default function TripCard({ trip, onReserve }) {
                             paddingTop: '0.5rem', 
                             paddingBottom: '0.5rem',
                             marginBottom: '1rem',
-                            backgroundColor: 'rgba(234, 179, 8, 0.1)', // Fondo amarillo suave
-                            color: '#EAB308', // Texto amarillo
+                            backgroundColor: 'rgba(234, 179, 8, 0.1)',
+                            color: '#EAB308',
                             border: '1px solid rgba(234, 179, 8, 0.2)',
                             display: 'flex',
                             alignItems: 'center',
@@ -82,7 +77,6 @@ export default function TripCard({ trip, onReserve }) {
                         Conductor no verificado {driver.faculty ? `| ${driver.faculty}` : ''}
                     </div>
                 )}
-                {/* ----------------------------------------- */}
 
                 <div className="trip-card-date">
                     <span className="material-symbols-outlined">calendar_month</span>

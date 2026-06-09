@@ -28,7 +28,6 @@ export default function Sidebar({ activeHref = '/dashboard', onPublish }) {
             </div>
 
             <div className="sidebar-profile">
-                {/* Comprobamos que el usuario ya ha cargado */}
                 {user ? (
                     <div className="sidebar-profile-card">
                         {/* Si tiene avatar lo mostramos, en caso de que n o, mostramos un icono por defecto */}
