@@ -1,0 +1,29 @@
+.selector-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.selector-trigger-texto {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.selector-trigger-placeholder {
+    color: var(--color-text-dim);
+}
+
+.selector-flecha {
+    flex-shrink: 0;
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    transition: transform 0.2s;
+}
+
+.selector-flecha--abierto {
+    transform: rotate(180deg);
+}

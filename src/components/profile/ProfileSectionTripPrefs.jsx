@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext.jsx';
+import { useNotifications } from '../../context/NotificationsContext.jsx';
 import { profileService } from '../../api/profileService';
 import '../../styles/ProfileShared.css';
 import '../../styles/ProfileSectionOthers.css';
@@ -49,6 +50,7 @@ const PREFS_CONFIG = [
 export default function ProfileSectionTripPrefs() {
     const { user } = useAuth();
     const toast = useToast();
+    const { add: addNotificacion } = useNotifications();
     const [isLoading, setIsLoading] = useState(false);
     const initialPrefs = user?.preferences || Object.fromEntries(PREFS_CONFIG.map(p => [p.key, p.default]));    
     const [prefs, setPrefs] = useState(initialPrefs);
@@ -60,6 +62,14 @@ export default function ProfileSectionTripPrefs() {
         setIsLoading(true);
         try {
             await profileService.updatePreferences({ preferences: prefs });
+
+            addNotificacion({
+                tipo: 'sistema',
+                icono: 'tune',
+                titulo: 'Preferencias actualizadas',
+                mensaje: 'Has actualizado tus preferencias de viaje.',
+                enlace: '/profile',
+            });
 
             toast.success("Preferencias actualizadas correctamente. (Recarga para ver los cambios)");
         } catch (error) {

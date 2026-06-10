@@ -3,12 +3,14 @@ import apiClient from '../../api/apiClient';
 import Loader from '../common/Loader.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useConfirm } from '../../context/ConfirmContext.jsx';
+import { useNotifications } from '../../context/NotificationsContext.jsx';
 import '../../styles/ProfileShared.css';
 import '../../styles/ProfileSectionOthers.css';
 
 export default function ProfileSectionVehicle() {
     const toast = useToast();
     const confirm = useConfirm();
+    const { add: addNotificacion } = useNotifications();
     const [isLoading, setIsLoading] = useState(true);
     const [isSaving, setIsSaving] = useState(false);
     
@@ -83,7 +85,15 @@ export default function ProfileSectionVehicle() {
             } else {
                 await apiClient.post('/vehicles', form);
             }
-            
+
+            addNotificacion({
+                tipo: 'sistema',
+                icono: 'directions_car',
+                titulo: editingId ? 'Vehículo actualizado' : 'Vehículo registrado',
+                mensaje: `${form.brand} ${form.model}${editingId ? ' se ha actualizado.' : ' se ha añadido a tu cuenta.'}`,
+                enlace: '/profile',
+            });
+
             setForm(initialFormState);
             setEditingId(null);
             setShowForm(false);
@@ -118,6 +128,13 @@ export default function ProfileSectionVehicle() {
             }
             // Recargamos la lista
             await fetchVehicles();
+            addNotificacion({
+                tipo: 'sistema',
+                icono: 'directions_car',
+                titulo: 'Vehículo eliminado',
+                mensaje: `Has eliminado el vehículo con matrícula ${vehicle.license_plate}.`,
+                enlace: '/profile',
+            });
             toast.success("Vehículo eliminado correctamente.");
         } catch (error) {
             console.error(error);

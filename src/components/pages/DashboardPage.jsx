@@ -134,7 +134,7 @@ export default function DashboardPage() {
 
             {isLoadingTrips ? (
                 <div style={{ padding: '3rem', textAlign: 'center', color: '#9CA3AF' }}>
-                    <span className="material-symbols-outlined" style={{ fontSize: '2rem', animation: 'spin 1s linear infinite' }}>sync</span>
+                    <span className="material-symbols-outlined" style={{ fontSize: '2rem' }}>sync</span>
                     <p style={{ marginTop: '1rem' }}>Buscando rutas disponibles...</p>
                 </div>
             ) : trips.length > 0 ? (

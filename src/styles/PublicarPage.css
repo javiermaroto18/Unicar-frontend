@@ -1,0 +1,30 @@
+.publicar-pagina {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--color-bg);
+    font-family: var(--font);
+    color: var(--color-text);
+    -webkit-font-smoothing: antialiased;
+}
+
+.publicar-pagina_main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* En pantallas estrechas: formulario y mapa apilados, con scroll de página normal */
+@media (max-width: 900px) {
+    .publicar-pagina {
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+    }
+
+    .publicar-pagina_main {
+        flex-direction: column;
+        overflow: visible;
+    }
+}

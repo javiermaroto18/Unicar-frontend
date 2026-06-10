@@ -86,7 +86,7 @@ export function NotificationsProvider({ children }) {
 
     const add = useCallback((datos) => {
         setNotificaciones((prev) => [
-            { id: Date.now(), tiempo: 'Ahora', leida: false, tipo: 'sistema', ...datos },
+            { id: Date.now(), creadaEn: Date.now(), leida: false, tipo: 'sistema', ...datos },
             ...prev,
         ]);
     }, []);
@@ -211,7 +211,7 @@ export function NotificationsProvider({ children }) {
 
             if (nuevos.length > 0) {
                 setNotificaciones((prev) => [
-                    ...nuevos.map((n, i) => ({ id: Date.now() + i, tiempo: 'Ahora', leida: false, tipo: 'sistema', ...n })),
+                    ...nuevos.map((n, i) => ({ id: Date.now() + i, creadaEn: Date.now(), leida: false, tipo: 'sistema', ...n })),
                     ...prev,
                 ]);
             }

@@ -1,7 +1,7 @@
-import { getNotifConfig } from './notificationTypes.js';
+import { getNotifConfig, formatearTiempo } from './notificationTypes.js';
 
 export default function NotificationItem({ notificacion, onAbrir, onMarcarLeida, onEliminar }) {
-    const { icon, tipo } = getNotifConfig(notificacion.tipo);
+    const { icon, tipo } = getNotifConfig(notificacion.tipo, notificacion.icono);
     const clicable = Boolean(notificacion.enlace);
 
     return (
@@ -20,7 +20,7 @@ export default function NotificationItem({ notificacion, onAbrir, onMarcarLeida,
             <div className="notif-item-cuerpo">
                 <div className="notif-item-cabecera">
                     <p className="notif-item-titulo">{notificacion.titulo}</p>
-                    <span className="notif-item-tiempo">{notificacion.tiempo}</span>
+                    <span className="notif-item-tiempo">{formatearTiempo(notificacion.creadaEn ?? notificacion.id)}</span>
                 </div>
                 <p className="notif-item-mensaje">{notificacion.mensaje}</p>
             </div>

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useConfirm } from '../../context/ConfirmContext.jsx';
+import { useNotifications } from '../../context/NotificationsContext.jsx';
 import { profileService } from '../../api/profileService';
 import { authService } from '../../api/authService';
 
@@ -12,6 +13,7 @@ export default function ProfileSectionSecurity() {
     const { user, logout } = useAuth();
     const toast = useToast();
     const confirm = useConfirm();
+    const { add: addNotificacion } = useNotifications();
     const [isLoading, setIsLoading] = useState(false);
     const [notificationsOn, setNotificationsOn] = useState(
         user?.preferences?.notifications_on ?? true
@@ -51,6 +53,13 @@ export default function ProfileSectionSecurity() {
                 new_password: passwords.new,
                 new_password_confirmation: passwords.confirm
             });
+            addNotificacion({
+                tipo: 'sistema',
+                icono: 'lock',
+                titulo: 'Contraseña actualizada',
+                mensaje: 'Tu contraseña se ha cambiado correctamente.',
+                enlace: '/profile',
+            });
             toast.success("Contraseña actualizada con éxito.");
             setShowPasswordForm(false);
             setPasswords({ current: '', new: '', confirm: '' });
@@ -74,6 +83,13 @@ export default function ProfileSectionSecurity() {
         setIsLoggingOutOthers(true);
         try {
             await authService.logoutOtherSessions();
+            addNotificacion({
+                tipo: 'sistema',
+                icono: 'devices',
+                titulo: 'Sesiones cerradas',
+                mensaje: 'Se han cerrado todas las demás sesiones de tu cuenta por seguridad.',
+                enlace: '/profile',
+            });
             toast.success("¡Hecho! Se han cerrado todas las demás sesiones por seguridad.");
         } catch (error) {
             console.error("Error al cerrar otras sesiones:", error);

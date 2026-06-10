@@ -16,7 +16,7 @@ const AuthPage       = lazy(() => import('./components/pages/AuthPage.jsx'));
 const TripDetailView = lazy(() => import('./components/pages/TripDetailView.jsx'));
 const TicketView     = lazy(() => import('./components/pages/TicketView.jsx'));
 const LandingPage    = lazy(() => import('./components/pages/LandingPage.jsx'));
-// const PublicarPage = lazy(() => import('./components/pages/PublicarPage.jsx')); // TODO: descomentar al terminar el feature de publicar
+const PublicarPage   = lazy(() => import('./components/pages/PublicarPage.jsx'));
 import './App.css';
 
 export default function App() {
@@ -26,7 +26,6 @@ export default function App() {
             <Routes>
                 {/*RUTAS PUBLICAS*/}
                 <Route path='/' element={ <LandingPage />} />
-                {/* <Route path='/publish' element={ <PublicarPage />} /> */}
                 {/* Ruta de redirección para usuarios autenticados */}
                 <Route 
                     path="/auth" 
@@ -46,13 +45,21 @@ export default function App() {
                         </ProtectedRoute>
                     } 
                 />
-                <Route 
-                    path="/trips" 
+                <Route
+                    path="/trips"
                     element={
                         <ProtectedRoute>
                             <TripPage />
                         </ProtectedRoute>
-                    } 
+                    }
+                />
+                <Route
+                    path="/publish"
+                    element={
+                        <ProtectedRoute>
+                            <PublicarPage />
+                        </ProtectedRoute>
+                    }
                 />
                 <Route 
                     path="/profile" 

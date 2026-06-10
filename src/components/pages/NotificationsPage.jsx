@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import AppLayout            from '../common/AppLayout.jsx';
@@ -20,6 +20,14 @@ export default function NotificationsPage() {
     const { notificaciones, marcarLeida, marcarTodas, eliminar } = useNotifications();
     const [filtro, setFiltro] = useState('todas');       // estado de lectura: todas | noLeidas
     const [tipoFiltro, setTipoFiltro] = useState(null);  // tipo: null | 'reserva' | 'viaje' | 'sistema'
+
+    // Re-render cada 60s para refrescar las etiquetas "hace X min".
+    // Es un cálculo local en el navegador: no hace ninguna petición al servidor.
+    const [, setTick] = useState(0);
+    useEffect(() => {
+        const intervalo = setInterval(() => setTick(t => t + 1), 60000);
+        return () => clearInterval(intervalo);
+    }, []);
 
     const totalNoLeidas = useMemo(
         () => notificaciones.filter((n) => !n.leida).length,

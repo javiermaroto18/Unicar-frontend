@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext.jsx';
+import { useNotifications } from '../../context/NotificationsContext.jsx';
 import { profileService } from '../../api/profileService';
 import '../../styles/ProfileShared.css';
 import '../../styles/ProfileSectionInfo.css';
@@ -8,8 +9,9 @@ import '../../styles/ProfileSectionInfo.css';
 export default function ProfileSectionInfo() {
     const { user } = useAuth();
     const toast = useToast();
+    const { add: addNotificacion } = useNotifications();
     const [isLoading, setIsLoading] = useState(false);
-    
+
     const [form, setForm] = useState({
         name: user?.name || '',
         notification_email: user?.notification_email || '',
@@ -61,6 +63,14 @@ export default function ProfileSectionInfo() {
             await profileService.updateProfile(formData);
             
             setAvatarFile(null);
+
+            addNotificacion({
+                tipo: 'sistema',
+                icono: 'person',
+                titulo: 'Perfil actualizado',
+                mensaje: 'Has actualizado los datos de tu perfil.',
+                enlace: '/profile',
+            });
 
             toast.success("Perfil actualizado correctamente. (Recarga para ver los cambios)");
         } catch (error) {

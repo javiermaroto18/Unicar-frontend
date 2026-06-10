@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { getNotifConfig } from './notificationTypes.js';
+import { getNotifConfig, formatearTiempo } from './notificationTypes.js';
 import { useNotifications } from '../../context/NotificationsContext.jsx';
 import '../../styles/NotificationsDropdown.css';
 
@@ -84,7 +84,7 @@ export default function NotificationsDropdown() {
                     ) : (
                         <ul className="notif-drop-lista">
                             {recientes.map((n) => {
-                                const { icon, tipo } = getNotifConfig(n.tipo);
+                                const { icon, tipo } = getNotifConfig(n.tipo, n.icono);
                                 return (
                                     <li
                                         key={n.id}
@@ -100,7 +100,7 @@ export default function NotificationsDropdown() {
                                         <div className="notif-drop-item-cuerpo">
                                             <p className="notif-drop-item-titulo">{n.titulo}</p>
                                             <p className="notif-drop-item-mensaje">{n.mensaje}</p>
-                                            <span className="notif-drop-item-tiempo">{n.tiempo}</span>
+                                            <span className="notif-drop-item-tiempo">{formatearTiempo(n.creadaEn ?? n.id)}</span>
                                         </div>
                                         {!n.leida && <span className="notif-drop-punto" aria-hidden="true" />}
                                     </li>
