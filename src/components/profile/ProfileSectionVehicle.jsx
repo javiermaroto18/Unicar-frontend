@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import apiClient from '../../api/apiClient';
+import Loader from '../common/Loader.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useConfirm } from '../../context/ConfirmContext.jsx';
 import '../../styles/ProfileShared.css';
@@ -124,7 +125,7 @@ export default function ProfileSectionVehicle() {
         }
     }
 
-    if (isLoading) return <div className="psection" style={{padding: '2rem', color:'white'}}>Cargando vehículos...</div>;
+    if (isLoading) return <section className="psection"><Loader text="Cargando vehículos..." /></section>;
 
     return (
         <section className="psection">

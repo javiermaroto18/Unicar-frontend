@@ -1,0 +1,28 @@
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 3rem;
+    color: var(--color-text-muted);
+}
+
+.loader--full {
+    min-height: 100vh;
+}
+
+.loader-icono {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    animation: spin 1s linear infinite;
+}
+
+.loader-texto {
+    margin: 0;
+    font-size: 0.95rem;
+}

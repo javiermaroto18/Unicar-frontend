@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { tripService } from '../../api/tripService';
 import { useAuth } from '../../context/AuthContext';
+import Loader from '../common/Loader.jsx';
 import '../../styles/ticket-view.css';
 
 export default function TicketView() {
@@ -45,7 +46,7 @@ export default function TicketView() {
         fetchTripDetails();
     }, [id]);
 
-    if (isLoading) return <div style={{ padding: '5rem', textAlign: 'center', color: 'white' }}>Generando billete...</div>;
+    if (isLoading) return <Loader fullScreen text="Generando billete..." />;
     if (!trip) return <div style={{ padding: '5rem', textAlign: 'center', color: 'white' }}>Billete no encontrado</div>;
 
     const locatorCode = `UC-${id.toString().padStart(4, '0')}X`;  // Generamos un código localizador aleatorio para el TFG (Ej: UC-A7X9)

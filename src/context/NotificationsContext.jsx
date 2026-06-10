@@ -224,8 +224,18 @@ export function NotificationsProvider({ children }) {
     useEffect(() => {
         if (user?.id == null) return;
         sync();
-        const intervalo = setInterval(sync, INTERVALO_SYNC);
-        return () => clearInterval(intervalo);
+
+        const intervalo = setInterval(() => {
+            if (!document.hidden) sync();
+        }, INTERVALO_SYNC);
+
+        const alVolver = () => { if (!document.hidden) sync(); };
+        document.addEventListener('visibilitychange', alVolver);
+
+        return () => {
+            clearInterval(intervalo);
+            document.removeEventListener('visibilitychange', alVolver);
+        };
     }, [user?.id, sync]);
 
     const value = { notificaciones, add, marcarLeida, marcarTodas, eliminar, sync };

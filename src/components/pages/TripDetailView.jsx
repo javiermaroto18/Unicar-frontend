@@ -7,8 +7,9 @@ import { useToast } from '../../context/ToastContext.jsx';
 import { useConfirm } from '../../context/ConfirmContext.jsx';
 import { useNotifications } from '../../context/NotificationsContext.jsx';
 
-import Topbar from '../common/Topbar.jsx'; 
-import Footer from '../common/Footer.jsx'; 
+import Topbar from '../common/Topbar.jsx';
+import Footer from '../common/Footer.jsx';
+import Loader from '../common/Loader.jsx';
 
 import { TripRoute } from '../trip-details/TripRoute.jsx';
 import { DriverCard } from '../trip-details/DriverCard.jsx';
@@ -154,7 +155,7 @@ export default function TripDetailView() {
         }
     };
 
-    if (isLoading) return <div className="loading-state">Cargando viaje...</div>;
+    if (isLoading) return <Loader fullScreen text="Cargando viaje..." />;
     if (!trip) return <div className="error-state">Viaje no encontrado</div>;
 
     const esElConductor = Number(user?.id) === Number(trip.driverId);
