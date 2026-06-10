@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { tripService } from '../../api/tripService';
+import { horaDeSalida, horaLlegadaEstimada } from '../../utils/horas.js';
 
 import AppLayout    from '../common/AppLayout.jsx';
 import VerifyBanner from '../dashboard/VerifyBanner.jsx';
@@ -31,25 +32,8 @@ export default function DashboardPage() {
                 const metaInfo = response.data?.meta || response.meta;
 
                 const viajesAdaptados = viajesReales.map(trip => {
-                    let horaSalida = '--:--';
-                    let horaLlegada = '--:--';
-                    
-                    if (trip.departure_time) {
-                        const fechaLimpia = trip.departure_time.replace('T', ' ');
-                        horaSalida = fechaLimpia.split(' ')[1]?.substring(0, 5) || '--:--';
-
-                        if (horaSalida !== '--:--') {
-                            let [h, m] = horaSalida.split(':').map(Number);
-                            m += 40;
-                            if (m >= 60) {
-                                h = (h + 1) % 24;
-                                m -= 60;
-                            }
-                            const hStr = h.toString().padStart(2, '0');
-                            const mStr = m.toString().padStart(2, '0');
-                            horaLlegada = `${hStr}:${mStr}`;
-                        }
-                    }
+                    const horaSalida = horaDeSalida(trip.departure_time);
+                    const horaLlegada = horaLlegadaEstimada(horaSalida);
 
                     const conductor = trip.driver || trip.user || { 
                         name: 'Conductor anónimo', 

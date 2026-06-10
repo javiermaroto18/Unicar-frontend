@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { tripService } from '../../api/tripService';
+import { horaDeSalida, horaLlegadaEstimada } from '../../utils/horas.js';
 
 import AppLayout from '../common/AppLayout.jsx';
 import PageHeader from '../common/PageHeader.jsx';
@@ -34,19 +35,8 @@ export default function TripsPage() {
                 const viajesAdaptados = datosCrudos.map(item => {
                     const trip = activeTab === 'passenger' && item.trip ? item.trip : item;
 
-                    let horaSalida = '--:--';
-                    let horaLlegada = '--:--';
-                    if (trip.departure_time) {
-                        const fechaLimpia = trip.departure_time.replace('T', ' ');
-                        horaSalida = fechaLimpia.split(' ')[1]?.substring(0, 5) || '--:--';
-                        
-                        if (horaSalida !== '--:--') {
-                            let [h, m] = horaSalida.split(':').map(Number);
-                            m += 40;
-                            if (m >= 60) { h = (h + 1) % 24; m -= 60; }
-                            horaLlegada = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
-                        }
-                    }
+                    const horaSalida = horaDeSalida(trip.departure_time);
+                    const horaLlegada = horaLlegadaEstimada(horaSalida);
 
                     const dateObj = trip.departure_time ? new Date(trip.departure_time) : new Date();
                     const dateLabel = `${dateObj.toLocaleDateString('es-ES', { weekday: 'short', day: 'numeric', month: 'short' })}, ${horaSalida}`;
