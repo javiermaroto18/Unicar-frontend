@@ -205,3 +205,21 @@
         width: auto;
     }
 }
+
+@media (max-width: 640px) {
+    .landing-como-funciona {
+        padding: 4rem 1.25rem;
+    }
+
+    .landing-beneficios {
+        padding: 4rem 0;
+    }
+
+    .landing-beneficios_interior {
+        padding: 0 1.25rem;
+    }
+
+    .landing-cta-final {
+        padding: 2.5rem 1.25rem;
+    }
+}

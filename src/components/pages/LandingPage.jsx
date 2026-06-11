@@ -21,9 +21,12 @@ export default function LandingPage(){
         navigate('/dashboard');
     }
 
-    function handleBuscar(datos){
-        const params = new URLSearchParams(datos).toString();
-        navigate(`/dashboard?${params}`);
+    function handleBuscar(){
+        if (isLogged) {
+            navigate('/publish');
+        } else {
+            irAAuth('registro');
+        }
     }
 
     return (
@@ -35,8 +38,8 @@ export default function LandingPage(){
             />
             <HeroLanding
                 isLogged={isLogged}
-                onBuscar={irADashboard}
-                onOfrecer={isLogged ? irADashboard : () => irAAuth('registro')} 
+                onBuscar={isLogged ? irADashboard : () => irAAuth('registro')}
+                onOfrecer={isLogged ? () => navigate('/publish') : () => irAAuth('registro')}
             />
             <BuscadorViaje onBuscar={handleBuscar} />
             <ComoFunciona />

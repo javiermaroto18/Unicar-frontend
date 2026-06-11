@@ -78,3 +78,21 @@
         display: flex;
     }
 }
+
+@media (max-width: 640px) {
+    .landing-topbar {
+        padding: 0.5rem 0.25rem 0.25rem;
+    }
+
+    .landing-topbar_interior {
+        padding: 0 0.75rem;
+    }
+
+    .landing-topbar_acciones {
+        gap: 0.25rem;
+    }
+
+    .landing-topbar_login {
+        padding: 0.5rem 0.5rem;
+    }
+}
