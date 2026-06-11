@@ -1,7 +1,3 @@
-// Utilidades de horas para los viajes.
-// La duración real no se guarda en base de datos, así que la hora de llegada
-// de los listados es una estimación y se muestra con "~" delante.
-
 export const DURACION_ESTIMADA_MIN = 40;
 
 // "2026-06-15T08:30:00" -> "08:30"
