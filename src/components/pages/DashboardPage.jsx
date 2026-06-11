@@ -26,9 +26,6 @@ export default function DashboardPage() {
     useEffect(() => {
         const claveCache = `dashboard:${currentPage}:${activeTab}:${searchQuery}`;
 
-        // Si ya vimos este listado en esta sesión, lo mostramos al instante
-        // mientras pedimos la versión fresca al servidor (que puede tardar
-        // si el backend de Render está dormido)
         const guardado = leerCache(claveCache);
         if (guardado) {
             setTrips(guardado.trips);

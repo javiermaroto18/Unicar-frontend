@@ -15,6 +15,10 @@
     .publicar-fila-campos {
         grid-template-columns: 1fr;
     }
+
+    .publicar-fila-fechahora {
+        grid-template-columns: 1fr 1fr;
+    }
 }
 
 .publicar-columna-form_interior {
@@ -116,6 +120,7 @@
     flex-direction: column;
     gap: 0.375rem;
     flex: 1;
+    min-width: 0;
 }
 
 .publicar-campo_etiqueta {
@@ -167,6 +172,14 @@
 .publicar-campo_input:focus {
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.publicar-campo_input[type='date'],
+.publicar-campo_input[type='time'] {
+    -webkit-appearance: none;
+    appearance: none;
+    min-width: 0;
+    min-height: 2.65rem;
 }
 
 /* Fila de dos campos */

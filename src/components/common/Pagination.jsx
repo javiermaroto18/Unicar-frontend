@@ -2,8 +2,8 @@ import '../../styles/Pagination.css';
 
 export default function Pagination({ currentPage, totalPages, onPageChange }) {
     function getPageNumbers() {
-        // Si hay 7 páginas o menos, mostrarlas todas sin puntos
-        if (totalPages <= 7) {
+        // Si hay 5 páginas o menos, mostrarlas todas sin puntos
+        if (totalPages <= 5) {
             return Array.from({ length: totalPages }, (_, i) => i + 1);
         }
 
@@ -28,13 +28,14 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
         return (
             <button
                 type="button" // <--- ESTO EVITA QUE LA PÁGINA SE RECARGUE
-                className={`pagination-btn ${isBack ? '' : 'pagination-btn-next'}`}
+                className="pagination-btn"
                 disabled={disabled}
                 onClick={onClick}
+                aria-label={isBack ? 'Página anterior' : 'Página siguiente'}
             >
-                {isBack && <span className="material-symbols-outlined">arrow_back</span>}
-                {isBack ? 'Anteriores' : 'Siguientes'}
-                {!isBack && <span className="material-symbols-outlined">arrow_forward</span>}
+                <span className="material-symbols-outlined">
+                    {isBack ? 'arrow_back' : 'arrow_forward'}
+                </span>
             </button>
         );
     }

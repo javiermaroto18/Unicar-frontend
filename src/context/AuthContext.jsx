@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
         // Extraemos el token y el user directamente de la respuesta del login
         const { token, user: loggedInUser } = await authService.login(credentials);
 
-        limpiarCache(); // Por si quedaban datos cacheados de una sesión anterior
+        limpiarCache();
         localStorage.setItem('authToken', token);
         setUser(loggedInUser); // Aplicamos el user directamente desde la respuesta del login y ahorrar peticiones a la API
     };

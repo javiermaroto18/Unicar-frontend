@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { tripService } from '../../api/tripService';
 import { bookingService } from '../../api/bookingService';
 import { useAuth } from '../../context/AuthContext';
@@ -194,6 +194,10 @@ export default function TripDetailView() {
                     <div className="layout-cols">
                         
                         <div className="col-left">
+                            <Link to={isCheckoutRoute ? '/dashboard' : '/trips'} className="detalle-volver">
+                                <span className="material-symbols-outlined">arrow_back</span>
+                                {isCheckoutRoute ? 'Volver al inicio' : 'Volver a mis viajes'}
+                            </Link>
                             <h1 className="page-title">
                                 {esElConductor ? 'Panel de Gestión del Viaje' : yaEstaReservado ? 'Tu billete para este viaje' : 'Detalles de tu viaje'}
                             </h1>

@@ -174,3 +174,22 @@
     background-color: var(--color-primario-hover);
     color: white;
 }
+
+@media (max-width: 640px) {
+    .topbar {
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+
+    .topbar-right {
+        gap: 0.75rem;
+    }
+
+    .topbar-user {
+        padding-left: 0.75rem;
+    }
+
+    .topbar-logout-btn {
+        margin-left: 0;
+    }
+}

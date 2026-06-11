@@ -143,6 +143,25 @@ button { font-family: var(--font); cursor: pointer; border: none; background: no
     gap: 1.25rem;
 }
 
+.detalle-volver {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    width: fit-content;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1rem;
+    transition: color 0.2s;
+}
+
+.detalle-volver:hover {
+    color: var(--color-primary);
+}
+
+.detalle-volver .material-symbols-outlined {
+    font-size: 1.1rem;
+}
+
 .page-title {
     font-size: 2rem;
     font-weight: 900;

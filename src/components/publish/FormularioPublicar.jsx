@@ -133,7 +133,7 @@ export default function FormularioPublicar({ vehiculos, onPublicar, isSubmitting
                         </button>
                     </div>
 
-                    <div className="publicar-fila-campos">
+                    <div className="publicar-fila-campos publicar-fila-fechahora">
                         <div className="publicar-campo">
                             <label className="publicar-campo_etiqueta" htmlFor="pub-fecha">Fecha</label>
                             <div className="publicar-campo_wrap">

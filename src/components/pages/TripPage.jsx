@@ -22,8 +22,6 @@ export default function TripsPage() {
     useEffect(() => {
         const claveCache = `misviajes:${activeTab}`;
 
-        // Mismo patrón que en el Dashboard: mostramos el último listado guardado
-        // al instante y lo refrescamos en segundo plano
         const guardado = leerCache(claveCache);
         if (guardado) {
             setTrips(guardado);
