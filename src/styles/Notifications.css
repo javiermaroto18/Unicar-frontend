@@ -187,6 +187,12 @@
     opacity: 1;
 }
 
+@media (hover: none) {
+    .notif-item-acciones {
+        opacity: 1;
+    }
+}
+
 .notif-item-boton {
     display: flex;
     align-items: center;

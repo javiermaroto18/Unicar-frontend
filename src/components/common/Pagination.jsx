@@ -33,9 +33,9 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
                 onClick={onClick}
                 aria-label={isBack ? 'Página anterior' : 'Página siguiente'}
             >
-                <span className="material-symbols-outlined">
-                    {isBack ? 'arrow_back' : 'arrow_forward'}
-                </span>
+                {isBack && <span className="material-symbols-outlined">arrow_back</span>}
+                <span className="pagination-btn-texto">{isBack ? 'Anteriores' : 'Siguientes'}</span>
+                {!isBack && <span className="material-symbols-outlined">arrow_forward</span>}
             </button>
         );
     }

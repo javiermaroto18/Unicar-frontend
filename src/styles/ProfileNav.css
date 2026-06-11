@@ -174,3 +174,52 @@
     background-color: var(--color-amber);
     color: #000;
 }
+
+.profile-menu-btn {
+    display: none;
+}
+
+@media (max-width: 1023px) {
+    .profile-menu-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        width: fit-content;
+        padding: 0.5rem 1rem;
+        margin-bottom: 1rem;
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        font-size: 0.875rem;
+        font-weight: 600;
+        font-family: var(--font);
+        color: var(--color-text);
+    }
+
+    .profile-menu-btn .material-symbols-outlined {
+        font-size: 1.25rem;
+    }
+
+    .profile-nav-fondo {
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.55);
+        z-index: 55;
+    }
+
+    .profile-nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 270px;
+        z-index: 60;
+        transform: translateX(-100%);
+        transition: transform 0.25s ease;
+        box-shadow: 8px 0 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .profile-nav--abierto {
+        transform: translateX(0);
+    }
+}

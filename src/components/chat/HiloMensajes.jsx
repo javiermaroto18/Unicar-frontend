@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import '../../styles/HiloMensajes.css';
 
-export default function HiloMensajes({ conversacion }) {
+export default function HiloMensajes({ conversacion, onVolver }) {
     const [mensajes,  setMensajes]  = useState(conversacion.mensajes);
     const [texto,     setTexto]     = useState('');
     const scrollRef  = useRef(null);
@@ -54,8 +54,17 @@ export default function HiloMensajes({ conversacion }) {
         <section className="hilo-mensajes">
             <div className="hilo-mensajes_cabecera">
                 <div className="hilo-mensajes_cabecera-usuario">
-                    <img className="hilo-mensajes_cabecera-avatar"
-                        src={conversacion.avatar} alt={conversacion.nombre} />
+                    <button className="hilo-mensajes_btn-volver" onClick={onVolver} aria-label="Volver a la lista de chats">
+                        <span className="material-symbols-outlined">arrow_back</span>
+                    </button>
+                    {conversacion.esGrupo ? (
+                        <div className="hilo-mensajes_cabecera-avatar hilo-mensajes_avatar-grupo">
+                            <span className="material-symbols-outlined">group</span>
+                        </div>
+                    ) : (
+                        <img className="hilo-mensajes_cabecera-avatar"
+                            src={conversacion.avatar} alt={conversacion.nombre} />
+                    )}
                     <div>
                         <p className="hilo-mensajes_cabecera-nombre">{conversacion.nombre}</p>
                         {conversacion.conectado && (
@@ -102,8 +111,14 @@ export default function HiloMensajes({ conversacion }) {
                         <div key={msg.id}
                             className={`burbuja-mensaje${esSaliente ? ' burbuja-mensaje_saliente' : ' burbuja-mensaje_entrante'}`}>
                             {!esSaliente && (
-                                <img className="burbuja-mensaje_avatar"
-                                    src={conversacion.avatar} alt={conversacion.nombre} />
+                                conversacion.esGrupo ? (
+                                    <div className="burbuja-mensaje_avatar hilo-mensajes_avatar-grupo">
+                                        <span className="material-symbols-outlined">group</span>
+                                    </div>
+                                ) : (
+                                    <img className="burbuja-mensaje_avatar"
+                                        src={conversacion.avatar} alt={conversacion.nombre} />
+                                )
                             )}
                             <div className="burbuja-mensaje_contenido">
                                 <p className="burbuja-mensaje_texto">{msg.texto}</p>

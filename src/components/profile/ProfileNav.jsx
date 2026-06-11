@@ -47,7 +47,7 @@ function StarRating({ score }) {
     );
 }
 
-export default function ProfileNav({ activeSection, onSectionChange }) {
+export default function ProfileNav({ activeSection, onSectionChange, abierto = false }) {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
@@ -60,7 +60,7 @@ export default function ProfileNav({ activeSection, onSectionChange }) {
     };
 
     return (
-        <nav className="profile-nav">
+        <nav className={`profile-nav${abierto ? ' profile-nav--abierto' : ''}`}>
             <div className="profile-nav-usuario">
                 <div className="profile-nav-avatar-contenedor">
                     {/* Sirve para mostrar el avatar del usuario o un fallback si no tiene */}

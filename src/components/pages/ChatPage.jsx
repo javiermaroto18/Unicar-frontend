@@ -13,8 +13,14 @@ import '../../styles/ChatLayout.css';
 export default function ChatPage() {
     const navigate = useNavigate();
     const [idActivo, setIdActivo] = useState(MOCK_CONVERSACIONES[0].id);
+    const [hiloAbierto, setHiloAbierto] = useState(false);
 
     const conversacionActiva = MOCK_CONVERSACIONES.find(c => c.id === idActivo);
+
+    const seleccionarConversacion = (id) => {
+        setIdActivo(id);
+        setHiloAbierto(true);
+    };
 
     return (
         <AppLayout
@@ -24,13 +30,16 @@ export default function ChatPage() {
             onPublish={() => navigate('/publish')}
         >
             {/* El chat tiene su propio layout interno de dos columnas igual que el perfil */}
-            <div className="chat-diseno">
+            <div className={`chat-diseno${hiloAbierto ? ' chat-diseno--hilo' : ''}`}>
                 <ListaConversaciones
                     conversaciones={MOCK_CONVERSACIONES}
                     idActivo={idActivo}
-                    onSeleccionar={setIdActivo}
+                    onSeleccionar={seleccionarConversacion}
                 />
-                <HiloMensajes conversacion={conversacionActiva} />
+                <HiloMensajes
+                    conversacion={conversacionActiva}
+                    onVolver={() => setHiloAbierto(false)}
+                />
             </div>
         </AppLayout>
     );

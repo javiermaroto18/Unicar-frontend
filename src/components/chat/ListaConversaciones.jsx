@@ -11,7 +11,12 @@ export default function ListaConversaciones({ conversaciones, idActivo, onSelecc
     return (
         <aside className="lista-conversaciones">
             <div className="lista-conversaciones_cabecera">
-                <h2 className="lista-conversaciones_titulo">Mensajes</h2>
+                <div className="lista-conversaciones_titulo-wrap">
+                    <h2 className="lista-conversaciones_titulo">Mensajes</h2>
+                    <span className="lista-conversaciones_prototipo" title="Vista previa de diseño: la mensajería se integrará con el backend en próximas versiones">
+                        Prototipo
+                    </span>
+                </div>
                 <button className="lista-conversaciones_btn-nuevo" title="Nueva conversación">
                     <span className="material-symbols-outlined">edit_square</span>
                 </button>

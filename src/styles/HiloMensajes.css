@@ -36,6 +36,23 @@
     color: var(--color-text);
 }
 
+.hilo-mensajes_avatar-grupo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-hover);
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+}
+
+.hilo-mensajes_avatar-grupo .material-symbols-outlined {
+    font-size: 1.25rem;
+}
+
+.burbuja-mensaje_avatar.hilo-mensajes_avatar-grupo .material-symbols-outlined {
+    font-size: 1rem;
+}
+
 .hilo-mensajes_cabecera-estado {
     display: flex;
     align-items: center;
@@ -298,4 +315,45 @@
 .hilo-mensajes_btn-enviar .material-symbols-outlined {
     font-size: 1.125rem;
     font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.hilo-mensajes_btn-volver {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .hilo-mensajes_btn-volver {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        flex-shrink: 0;
+        border-radius: var(--radius-sm);
+        color: var(--color-text-muted);
+    }
+
+    .hilo-mensajes_cabecera {
+        padding: 0.875rem 1rem;
+    }
+
+    .hilo-mensajes_cabecera-usuario {
+        gap: 0.5rem;
+    }
+
+    .hilo-mensajes_pastilla-viaje {
+        padding: 0.5rem 1rem;
+    }
+
+    .hilo-mensajes_scroll {
+        padding: 1rem;
+    }
+
+    .burbuja-mensaje_contenido {
+        max-width: 80%;
+    }
+
+    .hilo-mensajes_area-escritura {
+        padding: 0.75rem 1rem;
+    }
 }

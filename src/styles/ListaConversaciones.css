@@ -21,6 +21,25 @@
     color: var(--color-text);
 }
 
+.lista-conversaciones_titulo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.lista-conversaciones_prototipo {
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-amber);
+    background-color: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.35);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-full);
+    cursor: help;
+}
+
 .lista-conversaciones_btn-nuevo {
     width: 2rem;
     height: 2rem;
@@ -99,6 +118,17 @@
     width: 100%;
     transition: background-color 0.15s;
     border: 1px solid transparent;
+    position: relative;
+}
+
+.elemento-conversacion:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--color-border);
 }
 
 .elemento-conversacion:hover {

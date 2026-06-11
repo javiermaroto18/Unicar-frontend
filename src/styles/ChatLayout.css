@@ -4,3 +4,22 @@
     height: 100%;
     overflow: hidden;
 }
+
+@media (max-width: 900px) {
+    .chat-diseno .lista-conversaciones {
+        width: 100%;
+        border-right: none;
+    }
+
+    .chat-diseno .hilo-mensajes {
+        display: none;
+    }
+
+    .chat-diseno--hilo .lista-conversaciones {
+        display: none;
+    }
+
+    .chat-diseno--hilo .hilo-mensajes {
+        display: flex;
+    }
+}

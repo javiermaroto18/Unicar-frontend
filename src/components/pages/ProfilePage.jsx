@@ -32,6 +32,7 @@ export default function ProfilePage() {
     const searchParams = new URLSearchParams(window.location.search);
     const sectionFromUrl = searchParams.get('section') || 'info';
     const [activeSection, setActiveSection] = useState(sectionFromUrl);
+    const [menuAbierto, setMenuAbierto] = useState(false);
 
     const handleLogout = async () => {
         try {
@@ -44,7 +45,8 @@ export default function ProfilePage() {
     // Manejamos el cambio de seccion con una funcion que actualiza la URL del navegador
     const handleSectionChange = (newSection) => {
         setActiveSection(newSection);
-        
+        setMenuAbierto(false);
+
         // Actualiza la URL del navegador sin recargar la página
         const newUrl = `${window.location.pathname}?section=${newSection}`;
         window.history.pushState({ path: newUrl }, '', newUrl);
@@ -59,11 +61,21 @@ export default function ProfilePage() {
             hideTopbar={true}
         >
             <div className="profile-layout">
+                <button className="profile-menu-btn" onClick={() => setMenuAbierto(true)}>
+                    <span className="material-symbols-outlined">menu</span>
+                    Secciones del perfil
+                </button>
+
+                {menuAbierto && (
+                    <div className="profile-nav-fondo" onClick={() => setMenuAbierto(false)} />
+                )}
+
                 <ProfileNav
                     user={MOCK_PROFILE_USER}
                     activeSection={activeSection}
                     onSectionChange={handleSectionChange}
                     onLogout={handleLogout}
+                    abierto={menuAbierto}
                 />
                 <div className="profile-content">
                     {SECTION_MAP[activeSection]}

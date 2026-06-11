@@ -11,6 +11,19 @@
     background-color: #0d1520;
 }
 
+@media (max-width: 1023px) {
+    .profile-layout {
+        flex-direction: column;
+        height: auto;
+        overflow: visible;
+    }
+
+    .profile-content {
+        overflow-y: visible;
+        padding: 1.25rem 1rem;
+    }
+}
+
 .psection {
     max-width: 52rem;
     margin: 0 auto;
@@ -70,6 +83,12 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
+}
+
+@media (max-width: 640px) {
+    .pform-fila {
+        grid-template-columns: 1fr;
+    }
 }
 
 .pfield {
