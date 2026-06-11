@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from 'react';
 import { authService } from '../api/authService';
 import { profileService } from '../api/profileService';
+import { limpiarCache } from '../utils/cacheListados';
 
 const AuthContext = createContext();
 
@@ -22,6 +23,7 @@ export function AuthProvider({ children }) {
                 } catch (error) {
                     console.error("Failed to fetch profile, token might be invalid.", error);
                     localStorage.removeItem('authToken');
+                    limpiarCache();
                     setUser(null);
                 }
             }
@@ -34,14 +36,16 @@ export function AuthProvider({ children }) {
     const login = async (credentials) => {
         // Extraemos el token y el user directamente de la respuesta del login
         const { token, user: loggedInUser } = await authService.login(credentials);
-        
+
+        limpiarCache(); // Por si quedaban datos cacheados de una sesión anterior
         localStorage.setItem('authToken', token);
         setUser(loggedInUser); // Aplicamos el user directamente desde la respuesta del login y ahorrar peticiones a la API
     };
 
     const register = async (userData) => {
         const { token, user: registeredUser } = await authService.register(userData);
-        
+
+        limpiarCache();
         localStorage.setItem('authToken', token);
         setUser(registeredUser);
     };
@@ -49,6 +53,7 @@ export function AuthProvider({ children }) {
     const logout = async () => {
         await authService.logout();
         localStorage.removeItem('authToken');
+        limpiarCache();
         setUser(null);
     };
 

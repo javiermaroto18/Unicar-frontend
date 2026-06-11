@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { tripService } from '../../api/tripService';
 import { horaDeSalida, horaLlegadaEstimada } from '../../utils/horas.js';
+import { leerCache, guardarCache } from '../../utils/cacheListados.js';
 
 import AppLayout    from '../common/AppLayout.jsx';
 import VerifyBanner from '../dashboard/VerifyBanner.jsx';
@@ -23,8 +24,21 @@ export default function DashboardPage() {
     const [isLoadingTrips, setIsLoadingTrips] = useState(true);
 
     useEffect(() => {
-        const fetchTrips = async () => {
+        const claveCache = `dashboard:${currentPage}:${activeTab}:${searchQuery}`;
+
+        // Si ya vimos este listado en esta sesión, lo mostramos al instante
+        // mientras pedimos la versión fresca al servidor (que puede tardar
+        // si el backend de Render está dormido)
+        const guardado = leerCache(claveCache);
+        if (guardado) {
+            setTrips(guardado.trips);
+            setTotalPages(guardado.totalPages);
+            setIsLoadingTrips(false);
+        } else {
             setIsLoadingTrips(true);
+        }
+
+        const fetchTrips = async () => {
             try {
                 const response = await tripService.getAllTrips(currentPage, activeTab, searchQuery);
                 
@@ -60,15 +74,16 @@ export default function DashboardPage() {
                     };
                 });
 
-                setTrips(viajesAdaptados);
-
+                let paginasTotales = 1;
                 if (metaInfo && metaInfo.last_page) {
-                    setTotalPages(metaInfo.last_page);
+                    paginasTotales = metaInfo.last_page;
                 } else if (response.last_page) {
-                     setTotalPages(response.last_page);
-                } else {
-                     setTotalPages(1);
+                    paginasTotales = response.last_page;
                 }
+
+                setTrips(viajesAdaptados);
+                setTotalPages(paginasTotales);
+                guardarCache(claveCache, { trips: viajesAdaptados, totalPages: paginasTotales });
             } catch (error) {
                 console.error("Error cargando los viajes desde el servidor:", error);
             } finally {

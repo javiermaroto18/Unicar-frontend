@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { tripService } from '../../api/tripService';
 import { horaDeSalida, horaLlegadaEstimada } from '../../utils/horas.js';
+import { leerCache, guardarCache } from '../../utils/cacheListados.js';
 
 import AppLayout from '../common/AppLayout.jsx';
 import PageHeader from '../common/PageHeader.jsx';
@@ -19,8 +20,19 @@ export default function TripsPage() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        const fetchMyTrips = async () => {
+        const claveCache = `misviajes:${activeTab}`;
+
+        // Mismo patrón que en el Dashboard: mostramos el último listado guardado
+        // al instante y lo refrescamos en segundo plano
+        const guardado = leerCache(claveCache);
+        if (guardado) {
+            setTrips(guardado);
+            setIsLoading(false);
+        } else {
             setIsLoading(true);
+        }
+
+        const fetchMyTrips = async () => {
             try {
                 let datosCrudos = [];
                 
@@ -65,6 +77,7 @@ export default function TripsPage() {
                 });
 
                 setTrips(viajesAdaptados);
+                guardarCache(claveCache, viajesAdaptados);
             } catch (error) {
                 console.error("Error cargando el historial de viajes:", error);
             } finally {
