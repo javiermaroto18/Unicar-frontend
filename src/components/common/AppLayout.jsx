@@ -3,9 +3,9 @@ import Sidebar from './Sidebar.jsx';
 import Topbar from './Topbar.jsx';
 import BottomNav from './BottomNav.jsx';
 
-export default function AppLayout({ activeHref, hasNotifications, showSearch = false, onSearch, onPublish, hideTopbar = false, children }) {
+export default function AppLayout({ activeHref, hasNotifications, showSearch = false, onSearch, onPublish, hideTopbar = false, hideBarsOnMobile = false, children }) {
     return (
-        <div className="app-layout">
+        <div className={`app-layout${hideBarsOnMobile ? ' app-layout--sin-barras-movil' : ''}`}>
             <Sidebar activeHref={activeHref} onPublish={onPublish} />
 
             <main className="app-layout-main">

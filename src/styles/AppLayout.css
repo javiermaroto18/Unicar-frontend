@@ -23,3 +23,14 @@
         padding-bottom: calc(4.75rem + env(safe-area-inset-bottom));
     }
 }
+
+@media (max-width: 900px) {
+    .app-layout--sin-barras-movil .topbar,
+    .app-layout--sin-barras-movil .bottomnav {
+        display: none;
+    }
+
+    .app-layout--sin-barras-movil .app-layout-content {
+        padding: 0;
+    }
+}

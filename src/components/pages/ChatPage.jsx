@@ -28,6 +28,7 @@ export default function ChatPage() {
             activeHref="/chat"
             hasNotifications
             onPublish={() => navigate('/publish')}
+            hideBarsOnMobile={hiloAbierto}
         >
             {/* El chat tiene su propio layout interno de dos columnas igual que el perfil */}
             <div className={`chat-diseno${hiloAbierto ? ' chat-diseno--hilo' : ''}`}>
