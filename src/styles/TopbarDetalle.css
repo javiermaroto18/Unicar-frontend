@@ -1,5 +1,6 @@
 .detalle-pagina {
     min-height: 100vh;
+    min-height: 100dvh;
     background-color: var(--color-bg);
     color: var(--color-text);
     font-family: var(--font);

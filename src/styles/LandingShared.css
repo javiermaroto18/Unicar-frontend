@@ -16,6 +16,7 @@
     position: relative;
     display: flex;
     min-height: 100vh;
+    min-height: 100dvh;
     width: 100%;
     flex-direction: column;
     margin: 0 auto;
